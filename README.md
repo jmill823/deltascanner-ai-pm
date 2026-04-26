@@ -1,4 +1,4 @@
-# DeltaScanner as an AI Product Management Case Study
+# Deltascanner as an AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an Operator Profile encoding how I work, model-agnostic, ported across the fleet. The layer it created didn't appear in any architecture diagram I'd seen.
 
@@ -22,7 +22,7 @@ A public record of one operator running an eight-agent fleet to ship a distresse
 
 ## What this repo is not
 
-A framework. A claim that this approach generalizes without modification. A finished system. DeltaScanner is in operation, not in retrospect. What's published here is what I learned running the system I have now — measured against the specific evidence available, with the limitations named where I can't defend a stronger claim.
+A framework. A claim that this approach generalizes without modification. A finished system. Deltascanner is in operation, not in retrospect. What's published here is what I learned running the system I have now — measured against the specific evidence available, with the limitations named where I can't defend a stronger claim.
 
 The "designed by operating" thesis is a description of the path that produced this system, not a methodology that generalizes to every multi-agent system. Whether it would have been faster to design these five layers upfront is unknowable; what's testable is whether the layers I have hold as the system scales.
 
@@ -66,9 +66,9 @@ If you came in through a supporting artifact (someone linked you a spec standard
 
 ---
 
-## About DeltaScanner
+## About Deltascanner
 
-DeltaScanner is a distressed property intelligence platform — live across thirteen U.S. markets, ~223,000 scored parcels. The product thesis is workflow compression: turn validated parcel-level distress signal into operator decisions in seconds. The AI-PM case study is what I learned running it.
+Deltascanner is a distressed property intelligence platform — live across thirteen U.S. markets, ~223,000 scored parcels. The product thesis is workflow compression: turn validated parcel-level distress signal into operator decisions in seconds. The AI-PM case study is what I learned running it.
 
 The case study is an artifact of work in motion. It's not a retrospective written at the end of a completed project. It's a snapshot of a system that's still operating, still surfacing failures that reveal new layers, still being shaped by the work it's doing.
 
