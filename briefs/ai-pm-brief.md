@@ -24,7 +24,7 @@ Three convergent signals across the intel stream:
 
 ### P1: The two hiring differentiators are skill version history and the learner loop.
 
-The two questions that separate builders from resume-updaters: *"Walk me through a skill you've built, and the evolution of the checklist over time"* and *"Show me the learner.md for one of your agents."* This repo already demonstrates both: every project file in the source system uses a versioned numeric suffix convention; the [`docs/solutions/`](./examples/solution-files/) directory IS the learner.md the question asks about. The case study doesn't invent these artifacts — it names what the system was already producing.
+The two questions that separate builders from resume-updaters: *"Walk me through a skill you've built, and the evolution of the checklist over time"* and *"Show me the learner.md for one of your agents."* This repo already demonstrates both: every project file in the source system uses a versioned numeric suffix convention; the [`docs/solutions/`](../examples/solution-files/) directory IS the learner.md the question asks about. The case study doesn't invent these artifacts — it names what the system was already producing.
 
 **Evidence:** Mahesh Yadav profile (#147), Garry Tan on skillification (#158), the source operator's Team OS positioning (#134-135).
 
