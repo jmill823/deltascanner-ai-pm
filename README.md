@@ -50,6 +50,7 @@ The "designed by operating" thesis is a description of the path that produced th
 ### Architecture Decision Records
 
 - [`architecture/adr-001-knowledge-compounding-protocol.md`](./architecture/adr-001-knowledge-compounding-protocol.md) — The decision to write structured solution files after every build and read them before every future build. Five alternatives considered. Honest limits names the causal-isolation problem, retrieval-degradation threshold, generalization risk, and Goodhart enforcement gap.
+- [`architecture/adr-002-model-routing.md`](./architecture/adr-002-model-routing.md) — The decision to split the agent fleet into three model tiers (Opus / Sonnet / GPT-4o-mini) with Codex as external checker. Five alternatives considered, including dropping skeptic review entirely. Honest limits names the borrowed-principle risk, unmeasured cross-family error correlation, unvalidated cost claim, and Sonnet-tier structural prior.
 
 ### Coming soon
 
