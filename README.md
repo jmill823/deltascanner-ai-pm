@@ -55,6 +55,7 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 - [`examples/spec-prod30-atomic-pipeline.md`](./examples/spec-prod30-atomic-pipeline.md) — Representative build spec following the template. The actual PROD30 build is the site of a pipeline-gate false positive, documented in the solution files.
 - [`examples/solution-files/`](./examples/solution-files/) — Three structured solution files from the Knowledge Compounding Protocol. Each one encodes a specific failure class the system caught in April 2026, with the rule that prevents recurrence. These are the files the fleet reads before every build.
 - [`examples/operator-profile.md`](./examples/operator-profile.md) — Sanitized v4 of the Layer 1 calibration file. Model-agnostic behavioral contract that ports across model versions. The v1→v4 changelog records four discipline sections added in real time as failure modes surfaced in a single April 26 session.
+- [`agent-fleet.md`](./agent-fleet.md) — Layer 3 expansion. Per-agent breakdown of the nine-agent fleet plus the CC spec standards doc: scope, what-it-does-NOT-do, handoff format, escalation paths, and version history for each.
 
 ### Architecture Decision Records
 
@@ -66,7 +67,6 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 
 ### Coming soon
 
-- `agent-fleet.md` — Layer 3 expanded. Overview of the eight agents: what each does, where it sits in the review flow, what handoff format it owns.
 - `metrics/gate-metrics.md` — Forward-logging of first-pass acceptance rate, defect traceback, and reject-reason categorization, so the Goodhart-risk mitigation isn't a claim but a record.
 
 ---
