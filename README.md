@@ -47,11 +47,15 @@ The "designed by operating" thesis is a description of the path that produced th
 - [`examples/solution-files/`](./examples/solution-files/) — Three structured solution files from the Knowledge Compounding Protocol. Each one encodes a specific failure class the system caught in April 2026, with the rule that prevents recurrence. These are the files the fleet reads before every build.
 - [`examples/operator-profile.md`](./examples/operator-profile.md) — Sanitized v4 of the Layer 1 calibration file. Model-agnostic behavioral contract that ports across model versions. The v1→v4 changelog records four discipline sections added in real time as failure modes surfaced in a single April 26 session.
 
+### Architecture Decision Records
+
+- [`architecture/adr-001-knowledge-compounding-protocol.md`](./architecture/adr-001-knowledge-compounding-protocol.md) — The decision to write structured solution files after every build and read them before every future build. Five alternatives considered. Honest limits names the causal-isolation problem, retrieval-degradation threshold, generalization risk, and Goodhart enforcement gap.
+
 ### Coming soon
 
 - `agent-fleet.md` — Layer 3 expanded. Overview of the eight agents: what each does, where it sits in the review flow, what handoff format it owns.
 - `metrics/gate-metrics.md` — Forward-logging of first-pass acceptance rate, defect traceback, and reject-reason categorization, so the Goodhart-risk mitigation isn't a claim but a record.
-- `architecture/` — Architecture Decision Records covering the recency ban, the universal YAML scorer, the curator-mode orchestration pattern, the Knowledge Compounding Protocol itself, and the model-routing logic.
+- Additional ADRs covering the recency ban, the universal YAML scorer, and the curator-mode orchestration pattern.
 - `architecture/fleet-diagram.mermaid` — Visual companion to the case study.
 
 ---
