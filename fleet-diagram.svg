@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 540" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">Deltascanner agent fleet — five-layer architecture</title>
+  <desc id="diagram-desc">Five horizontal layers (Interaction, Orchestration, Specialized Agents, Data, Model API) stacked vertically. Each layer is annotated on the right with the specific failure that caused its design. The operator is annotated on the left of Layer 2 (Orchestration), indicating they sit inside that layer as curator rather than router.</desc>
+  <defs>
+    <style><![CDATA[
+      svg {
+        --ds-text: #2c2c2a;
+        --ds-text-muted: #5f5e5a;
+        --ds-layer-fill: #f1efe8;
+        --ds-layer-stroke: #888780;
+        --ds-failure: #2c2c2a;
+        --ds-operator: #185fa5;
+      }
+      @media (prefers-color-scheme: dark) {
+        svg {
+          --ds-text: #f1efe8;
+          --ds-text-muted: #b4b2a9;
+          --ds-layer-fill: #2c2c2a;
+          --ds-layer-stroke: #5f5e5a;
+          --ds-failure: #f1efe8;
+          --ds-operator: #85b7eb;
+        }
+      }
+      .ds-t  { font: 400 14px "Anthropic Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; fill: var(--ds-text); }
+      .ds-ts { font: 400 12px "Anthropic Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; fill: var(--ds-text-muted); }
+      .ds-th { font: 500 14px "Anthropic Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; fill: var(--ds-text); }
+      .ds-layer    { fill: var(--ds-layer-fill); stroke: var(--ds-layer-stroke); stroke-width: 0.5; }
+      .ds-fail     { fill: var(--ds-failure); }
+      .ds-fail-ln  { stroke: var(--ds-failure); fill: none; stroke-width: 1; stroke-dasharray: 3 2; }
+      .ds-op       { fill: var(--ds-operator); }
+      .ds-op-ln    { stroke: var(--ds-operator); fill: none; stroke-width: 1.25; }
+    ]]></style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <text class="ds-th" x="40" y="36">Deltascanner agent fleet · five-layer architecture</text>
+  <text class="ds-ts" x="40" y="56">Each layer was forced by a specific failure while building — not architected top-down</text>
+
+  <rect class="ds-layer" x="120" y="90" width="340" height="70" rx="8"/>
+  <text class="ds-ts" x="136" y="116" dominant-baseline="central">L1</text>
+  <text class="ds-th" x="166" y="116" dominant-baseline="central">Interaction</text>
+  <text class="ds-ts" x="136" y="142" dominant-baseline="central">operator profile + product surface</text>
+  <line class="ds-fail-ln" x1="462" y1="125" x2="488" y2="125"/>
+  <text class="ds-ts ds-fail" x="494" y="113" letter-spacing="0.5">CAUSED BY</text>
+  <text class="ds-ts ds-fail" x="494" y="131">Model upgrade broke</text>
+  <text class="ds-ts ds-fail" x="494" y="147">calibration</text>
+
+  <rect class="ds-layer" x="120" y="172" width="340" height="70" rx="8"/>
+  <text class="ds-ts" x="136" y="198" dominant-baseline="central">L2</text>
+  <text class="ds-th" x="166" y="198" dominant-baseline="central">Orchestration</text>
+  <text class="ds-ts" x="136" y="224" dominant-baseline="central">curator-mode review + handoffs</text>
+  <line class="ds-fail-ln" x1="462" y1="207" x2="488" y2="207"/>
+  <text class="ds-ts ds-fail" x="494" y="195" letter-spacing="0.5">CAUSED BY</text>
+  <text class="ds-ts ds-fail" x="494" y="213">Substrate slipped 3×</text>
+  <text class="ds-ts ds-fail" x="494" y="229">in one session</text>
+  <line class="ds-op-ln" x1="95" y1="210" x2="118" y2="210" marker-end="url(#arrow)"/>
+  <text class="ds-ts ds-op" x="20" y="200">Operator</text>
+  <text class="ds-ts ds-op" x="20" y="220">sits inside</text>
+
+  <rect class="ds-layer" x="120" y="254" width="340" height="70" rx="8"/>
+  <text class="ds-ts" x="136" y="280" dominant-baseline="central">L3</text>
+  <text class="ds-th" x="166" y="280" dominant-baseline="central">Specialized Agents</text>
+  <text class="ds-ts" x="136" y="306" dominant-baseline="central">8 agents · single responsibilities</text>
+  <line class="ds-fail-ln" x1="462" y1="289" x2="488" y2="289"/>
+  <text class="ds-ts ds-fail" x="494" y="277" letter-spacing="0.5">CAUSED BY</text>
+  <text class="ds-ts ds-fail" x="494" y="295">Handoff failures,</text>
+  <text class="ds-ts ds-fail" x="494" y="311">lane drift</text>
+
+  <rect class="ds-layer" x="120" y="336" width="340" height="70" rx="8"/>
+  <text class="ds-ts" x="136" y="362" dominant-baseline="central">L4</text>
+  <text class="ds-th" x="166" y="362" dominant-baseline="central">Data</text>
+  <text class="ds-ts" x="136" y="388" dominant-baseline="central">knowledge compounding protocol</text>
+  <line class="ds-fail-ln" x1="462" y1="371" x2="488" y2="371"/>
+  <text class="ds-ts ds-fail" x="494" y="359" letter-spacing="0.5">CAUSED BY</text>
+  <text class="ds-ts ds-fail" x="494" y="377">Cross-session knowledge</text>
+  <text class="ds-ts ds-fail" x="494" y="393">was 100% dark</text>
+
+  <rect class="ds-layer" x="120" y="418" width="340" height="70" rx="8"/>
+  <text class="ds-ts" x="136" y="444" dominant-baseline="central">L5</text>
+  <text class="ds-th" x="166" y="444" dominant-baseline="central">Model API</text>
+  <text class="ds-ts" x="136" y="470" dominant-baseline="central">maker-checker across 4 model families</text>
+  <line class="ds-fail-ln" x1="462" y1="453" x2="488" y2="453"/>
+  <text class="ds-ts ds-fail" x="494" y="441" letter-spacing="0.5">CAUSED BY</text>
+  <text class="ds-ts ds-fail" x="494" y="459">Model audited</text>
+  <text class="ds-ts ds-fail" x="494" y="475">its own work</text>
+
+  <text class="ds-ts" x="120" y="514">8 agents · 4 model families · 13 cities · 223K parcels · zero ops headcount</text>
+</svg>
