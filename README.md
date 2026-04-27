@@ -28,6 +28,14 @@ The "designed by operating" thesis is a description of the path that produced th
 
 ---
 
+## Architecture diagram
+
+![DeltaScanner agent fleet — five-layer architecture](./architecture/fleet-diagram.svg)
+
+Visual companion to the case study. Each layer in the diagram corresponds to a section in [`case-study-full.md`](./case-study-full.md) that names the failure that produced it.
+
+---
+
 ## Repository contents
 
 ### The case study itself
@@ -58,7 +66,6 @@ The "designed by operating" thesis is a description of the path that produced th
 - `agent-fleet.md` — Layer 3 expanded. Overview of the eight agents: what each does, where it sits in the review flow, what handoff format it owns.
 - `metrics/gate-metrics.md` — Forward-logging of first-pass acceptance rate, defect traceback, and reject-reason categorization, so the Goodhart-risk mitigation isn't a claim but a record.
 - Additional ADRs covering the recency ban, the universal YAML scorer, and the curator-mode orchestration pattern.
-- `architecture/fleet-diagram.mermaid` — Visual companion to the case study.
 
 ---
 
