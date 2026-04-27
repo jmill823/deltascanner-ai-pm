@@ -56,6 +56,7 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 - [`examples/solution-files/`](./examples/solution-files/) — Three structured solution files from the Knowledge Compounding Protocol. Each one encodes a specific failure class the system caught in April 2026, with the rule that prevents recurrence. These are the files the fleet reads before every build.
 - [`examples/operator-profile.md`](./examples/operator-profile.md) — Sanitized v4 of the Layer 1 calibration file. Model-agnostic behavioral contract that ports across model versions. The v1→v4 changelog records four discipline sections added in real time as failure modes surfaced in a single April 26 session.
 - [`agent-fleet.md`](./agent-fleet.md) — Layer 3 expansion. Per-agent breakdown of the nine-agent fleet plus the CC spec standards doc: scope, what-it-does-NOT-do, handoff format, escalation paths, and version history for each.
+- [`metrics/gate-metrics.md`](./metrics/gate-metrics.md) — Forward-logging template for first-pass acceptance rate, six-category reject-reason scheme, and 30-day defect traceback. Sample rows are illustrative; the live log lives in a separate working file. Exists to keep the case-study claim about gate effectiveness falsifiable.
 
 ### Architecture Decision Records
 
@@ -64,10 +65,6 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 - [`architecture/adr-003-universal-yaml-scorer.md`](./architecture/adr-003-universal-yaml-scorer.md) — The architecture choice of one universal scorer plus 13 per-city YAML configs, versus 13 city-specific scripts. Includes the four-drifted-weights audit finding from March 30 as the empirical case for centralization, and the explainability argument against ML-driven adaptive weights.
 - [`architecture/adr-004-curator-mode-batched-review.md`](./architecture/adr-004-curator-mode-batched-review.md) — The choice to tier each agent (gate vs reviewer) rather than per-decision routing, and the batched-review cadence (Sunday + Tue/Thu) the tier architecture supports. Includes four honest-limits sections: queue-backup unmeasured, curator-collapse binary, tier-assignment heuristic, tier-shift trigger uncodified.
 - [`architecture/adr-005-recency-ban.md`](./architecture/adr-005-recency-ban.md) — The March 20, 2026 decision to ban recency components in distress scoring, replaced with duration where applicable. Schema-enforced April 1–2. Includes alternatives, honest limits on the structural-not-measured argument, and revisit triggers.
-
-### Coming soon
-
-- `metrics/gate-metrics.md` — Forward-logging of first-pass acceptance rate, defect traceback, and reject-reason categorization, so the Goodhart-risk mitigation isn't a claim but a record.
 
 ---
 
