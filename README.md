@@ -61,13 +61,13 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 - [`architecture/adr-001-knowledge-compounding-protocol.md`](./architecture/adr-001-knowledge-compounding-protocol.md) — The decision to write structured solution files after every build and read them before every future build. Five alternatives considered. Honest limits names the causal-isolation problem, retrieval-degradation threshold, generalization risk, and Goodhart enforcement gap.
 - [`architecture/adr-002-model-routing.md`](./architecture/adr-002-model-routing.md) — The decision to split the agent fleet into three model tiers (Opus / Sonnet / GPT-4o-mini) with Codex as external checker. Five alternatives considered, including dropping skeptic review entirely. Honest limits names the borrowed-principle risk, unmeasured cross-family error correlation, unvalidated cost claim, and Sonnet-tier structural prior.
 - [`architecture/adr-003-universal-yaml-scorer.md`](./architecture/adr-003-universal-yaml-scorer.md) — The architecture choice of one universal scorer plus 13 per-city YAML configs, versus 13 city-specific scripts. Includes the four-drifted-weights audit finding from March 30 as the empirical case for centralization, and the explainability argument against ML-driven adaptive weights.
+- [`architecture/adr-004-curator-mode-batched-review.md`](./architecture/adr-004-curator-mode-batched-review.md) — The choice to tier each agent (gate vs reviewer) rather than per-decision routing, and the batched-review cadence (Sunday + Tue/Thu) the tier architecture supports. Includes four honest-limits sections: queue-backup unmeasured, curator-collapse binary, tier-assignment heuristic, tier-shift trigger uncodified.
 - [`architecture/adr-005-recency-ban.md`](./architecture/adr-005-recency-ban.md) — The March 20, 2026 decision to ban recency components in distress scoring, replaced with duration where applicable. Schema-enforced April 1–2. Includes alternatives, honest limits on the structural-not-measured argument, and revisit triggers.
 
 ### Coming soon
 
 - `agent-fleet.md` — Layer 3 expanded. Overview of the eight agents: what each does, where it sits in the review flow, what handoff format it owns.
 - `metrics/gate-metrics.md` — Forward-logging of first-pass acceptance rate, defect traceback, and reject-reason categorization, so the Goodhart-risk mitigation isn't a claim but a record.
-- An additional ADR covering the curator-mode orchestration pattern.
 
 ---
 
