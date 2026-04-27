@@ -45,10 +45,10 @@ The "designed by operating" thesis is a description of the path that produced th
 - [`examples/cc-spec-standards.md`](./examples/cc-spec-standards.md) — The shared standard for every build spec destined for Claude Code. Acceptance tests required, written before build code. One of the four structural changes that moved first-pass build acceptance from 31% to 86%.
 - [`examples/spec-prod30-atomic-pipeline.md`](./examples/spec-prod30-atomic-pipeline.md) — Representative build spec following the template. The actual PROD30 build is the site of a pipeline-gate false positive, documented in the solution files.
 - [`examples/solution-files/`](./examples/solution-files/) — Three structured solution files from the Knowledge Compounding Protocol. Each one encodes a specific failure class the system caught in April 2026, with the rule that prevents recurrence. These are the files the fleet reads before every build.
+- [`examples/operator-profile.md`](./examples/operator-profile.md) — Sanitized v4 of the Layer 1 calibration file. Model-agnostic behavioral contract that ports across model versions. The v1→v4 changelog records four discipline sections added in real time as failure modes surfaced in a single April 26 session.
 
 ### Coming soon
 
-- `examples/operator-profile.md` — Sanitized version of the Layer 1 calibration file. Shows the structure and pattern of an operator profile without exposing every personal preference.
 - `agent-fleet.md` — Layer 3 expanded. Overview of the eight agents: what each does, where it sits in the review flow, what handoff format it owns.
 - `metrics/gate-metrics.md` — Forward-logging of first-pass acceptance rate, defect traceback, and reject-reason categorization, so the Goodhart-risk mitigation isn't a claim but a record.
 - `architecture/` — Architecture Decision Records covering the recency ban, the universal YAML scorer, the curator-mode orchestration pattern, the Knowledge Compounding Protocol itself, and the model-routing logic.
