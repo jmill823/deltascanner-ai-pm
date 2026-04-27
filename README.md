@@ -34,6 +34,7 @@ The "designed by operating" thesis is a description of the path that produced th
 
 - [`case-study-full.md`](./case-study-full.md) — ~3,500 words. Each of five layers walked in depth: what it does, the failure that created it, the evidence that it's working. Closes with consolidated honest limitations and forward measurement.
 - [`case-study-onepager.md`](./case-study-onepager.md) — ~600 words. Same thesis, compressed. Intended for a reader deciding whether to open the full version.
+- [`model-comparison-case-study.md`](./model-comparison-case-study.md) — *"The Layer Nobody Designs For."* Sister artifact focusing on the model-comparison slice of the same operating period. Documents 36 hours across Claude 4.6 and 4.7: four calibration misses, four operator-profile version bumps, the resulting four-layer portability architecture (Operator Profile / Skill Logic / Model Adapter / Benchmark Results), and a model-independent skill design lesson.
 
 ### Compounded intelligence
 
