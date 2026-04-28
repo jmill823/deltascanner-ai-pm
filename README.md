@@ -38,10 +38,19 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 
 ## Repository contents
 
-### The case study itself
+### One-pagers (60-second reads)
+
+All five one-pagers live in [`/one-pagers/`](./one-pagers/). Each follows the same compressed structure: context, decision or insight, what it reveals, honest limit. Each links to its long-form source for readers who want to drill down.
+
+- [`case-study-onepager.md`](./one-pagers/case-study-onepager.md) — The five-layer architecture, top-down. The case study compressed.
+- [`model-comparison-onepager.md`](./one-pagers/model-comparison-onepager.md) — *"The Layer Nobody Designs For."* The 36-hour pattern that surfaced the Operator Profile.
+- [`adr-001-onepager.md`](./one-pagers/adr-001-onepager.md) — Knowledge Compounding Protocol. Decision, alternatives, honest limit, revisit trigger.
+- [`adr-002-onepager.md`](./one-pagers/adr-002-onepager.md) — Multi-Provider Maker-Checker Routing. Decision, alternatives, honest limit, revisit triggers.
+- [`operator-profile-onepager.md`](./one-pagers/operator-profile-onepager.md) — The Layer 1 calibration file. Why it exists, what the structure encodes, generalization limit.
+
+### The case study itself (long-form)
 
 - [`case-study-full.md`](./case-study-full.md) — ~3,500 words. Each of five layers walked in depth: what it does, the failure that created it, the evidence that it's working. Closes with consolidated honest limitations and forward measurement.
-- [`case-study-onepager.md`](./case-study-onepager.md) — ~600 words. Same thesis, compressed. Intended for a reader deciding whether to open the full version.
 - [`model-comparison-case-study.md`](./model-comparison-case-study.md) — *"The Layer Nobody Designs For."* Sister artifact focusing on the model-comparison slice of the same operating period. Documents 36 hours across Claude 4.6 and 4.7: four calibration misses, four operator-profile version bumps, the resulting four-layer portability architecture (Operator Profile / Skill Logic / Model Adapter / Benchmark Results), and a model-independent skill design lesson.
 
 ### Compounded intelligence
@@ -70,11 +79,11 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 
 ## How to read this repo
 
+If you have 60 seconds, [`/one-pagers/`](./one-pagers/) is the front door. Each one-pager is a compressed entry point with a link to its long-form source.
+
 If you read the full case study, the supporting artifacts are the verification layer. Every mechanism the case study names has a corresponding file here.
 
-If you read the one-pager first, the full case study is the next step. The intelligence brief is parallel context — what convergent external signal informed the framing.
-
-If you came in through a supporting artifact (someone linked you a spec standard or a solution file), start with the one-pager to get the argument the artifacts support.
+If you came in through a supporting artifact (someone linked you a spec standard or a solution file), start with [`one-pagers/case-study-onepager.md`](./one-pagers/case-study-onepager.md) to get the argument the artifacts support.
 
 ---
 
