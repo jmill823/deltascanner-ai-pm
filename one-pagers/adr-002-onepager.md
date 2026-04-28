@@ -4,7 +4,7 @@
 
 ## Context
 
-Nine agents, all on Opus 4.6 by default — because that's what the chats opened with. Three pressures arrived the same week: cost (frontier prices for commodity work), a real failure (Codex audited a Strategy-chat-authored standing rules document and caught four file paths that didn't exist; same-family review had missed it because Strategy chat *was* the reviewer), and speed (some agents needed throughput, not depth).
+Ten agents, all on Opus 4.6 by default — because that's what the chats opened with. Three pressures arrived the same week: cost (frontier prices for commodity work), a real failure (Codex audited a Strategy-chat-authored standing rules document and caught four file paths that didn't exist; same-family review had missed it because Strategy chat *was* the reviewer), and speed (some agents needed throughput, not depth).
 
 ## Decision
 

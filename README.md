@@ -12,11 +12,11 @@ This repo is the working artifact of that approach. It contains the full case st
 
 ## What this repo is
 
-A public record of one operator running an eight-agent fleet to ship a distressed property intelligence platform across thirteen U.S. markets. The case study walks five architectural layers, top-down. Each layer has a documented origin failure that produced it:
+A public record of one operator running a 10-agent fleet to ship a distressed property intelligence platform across thirteen U.S. markets. The case study walks five architectural layers, top-down. Each layer has a documented origin failure that produced it:
 
 - **Layer 1 — Interaction.** Operator Profile + product surface. Origin: model upgrade broke calibration.
 - **Layer 2 — Orchestration.** Curator-mode batched review with handoff contracts. Origin: three substrate miscalibrations in one session.
-- **Layer 3 — Specialized Agents.** Eight agents with single responsibilities and versioned skill files. Origin: handoff failures and lane drift.
+- **Layer 3 — Specialized Agents.** Ten agents with single responsibilities and versioned skill files. Origin: handoff failures and lane drift.
 - **Layer 4 — Data.** The Knowledge Compounding Protocol — structured cross-session memory the fleet reads before every build and writes to after every build. Origin: cross-session knowledge was 100% dark.
 - **Layer 5 — Model API.** Maker-checker separation across four model families. Origin: same-model-as-its-own-auditor failure caught by independent review.
 
@@ -66,7 +66,7 @@ The long-form case study (~3,500 words) and the model-comparison sister artifact
 - [`examples/spec-prod30-atomic-pipeline.md`](./examples/spec-prod30-atomic-pipeline.md) — Representative build spec following the template. The actual PROD30 build is the site of a pipeline-gate false positive, documented in the solution files.
 - [`examples/solution-files/`](./examples/solution-files/) — Three structured solution files from the Knowledge Compounding Protocol. Each one encodes a specific failure class the system caught in April 2026, with the rule that prevents recurrence. These are the files the fleet reads before every build.
 - [`examples/operator-profile.md`](./examples/operator-profile.md) — Sanitized v5 of the Layer 1 calibration file. Model-agnostic behavioral contract that ports across model versions. The v1→v5 changelog records five discipline sections added in real time as failure modes surfaced in operating sessions across April 25–27, 2026.
-- [`agent-fleet.md`](./agent-fleet.md) — Layer 3 expansion. Per-agent breakdown of the nine-agent fleet plus the CC spec standards doc: scope, what-it-does-NOT-do, handoff format, escalation paths, and version history for each.
+- [`agent-fleet.md`](./agent-fleet.md) — Layer 3 expansion. Per-agent breakdown of the 10-agent fleet: scope, what-it-does-NOT-do, handoff format, escalation paths, and version history for each.
 - [`metrics/gate-metrics.md`](./metrics/gate-metrics.md) — Forward-logging template for first-pass acceptance rate, six-category reject-reason scheme, and 30-day defect traceback. Sample rows are illustrative; the live log lives in a separate working file. Exists to keep the case-study claim about gate effectiveness falsifiable.
 
 ### Architecture Decision Records

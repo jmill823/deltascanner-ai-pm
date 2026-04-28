@@ -36,7 +36,7 @@ The five-layer stack (#170) is the skeleton most agentic systems converge toward
 |---|---|---|
 | 1 | Interaction | Operator Profile + `deltascanner.com` |
 | 2 | Orchestration | Strategy chat — routing, gates, handoff contracts |
-| 3 | Specialized Agents | Eight agents with versioned skill files |
+| 3 | Specialized Agents | Ten agents with versioned skill files |
 | 4 | Data | Compounding intel repo + `docs/solutions/` |
 | 5 | Model API | Multi-provider routing (Claude, Claude Code, Perplexity, ChatGPT/Codex) — by design, not by convenience |
 

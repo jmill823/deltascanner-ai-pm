@@ -1,6 +1,6 @@
 # Agent Fleet
 
-The platform is operated by a fleet of nine bounded agents, each governed by an explicit skill file. This page is the layer-3 expansion of the operator profile and ADR-004: it covers what each agent does, what it explicitly does *not* do, how its output flows downstream, when it escalates, and how it has changed over time.
+The platform is operated by a fleet of ten bounded agents, each governed by an explicit skill file. This page is the layer-3 expansion of the operator profile and ADR-004: it covers what each agent does, what it explicitly does *not* do, how its output flows downstream, when it escalates, and how it has changed over time.
 
 The fleet was designed under one constraint: **the founder is the reviewer, not the router.** Each agent's scope is defined to make that constraint hold — agents that touch customer-facing surfaces require approval before action; agents that operate inside controlled bounds run autonomously and surface their work for batched review. ADR-004 covers the tier architecture; this page covers the agents.
 

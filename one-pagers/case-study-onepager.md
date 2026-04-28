@@ -10,7 +10,7 @@ I'm a non-technical solo founder. I do not write build code. The agents write, b
 
 *Layer 2 — Orchestration.* Strategy chat as the routing layer. Curator-mode review, every handoff a [contract](../handoff-template.md), every spec required to include reproduction steps, acceptance tests, post-deploy QA, scope boundary. Origin: three substrate miscalibrations in one session and a queue-backup failure mode that degrades the operator into a rubber stamp.
 
-*Layer 3 — Specialized Agents.* Eight agents with single responsibilities and versioned skill files: PRR Tracker, Outreach Drafter, QA Triage, Product, Strategy, Claude Code (build), Data Discovery, Deliverable QA. Origin: each agent accreted because a class of work needed its own lane and quality standard.
+*Layer 3 — Specialized Agents.* Ten agents with single responsibilities and versioned skill files: Strategy, Product, Outreach Drafter, PRR Tracker, Claude Code (build), CC Intel Queue, QA Triage, Data Discovery, Deliverable QA, CC Spec Standards. Origin: each agent accreted because a class of work needed its own lane and quality standard.
 
 *Layer 4 — Data.* The [Knowledge Compounding Protocol](../examples/solution-files/) — Claude Code writes a structured solution file after every build, reads all prior files before every new build, surfaces contradictions as BLOCKING flags. 36 files seeded. Origin: cross-session knowledge was 100% dark; every build paid the cost of every prior build's discoveries.
 
