@@ -26,6 +26,6 @@ The portability architecture has four layers (Operator Profile / Skill Logic / M
 
 ---
 
-**Full case study available** in [`model-comparison-case-study.md`](../model-comparison-case-study.md). Walks the rubric, the four misses, the model-independent miss, and the portability architecture in depth.
+**Long-form available on request.** Walks the rubric, the four misses, the model-independent miss, and the portability architecture in depth.
 
 *Operator Profile: [`examples/operator-profile.md`](../examples/operator-profile.md)*

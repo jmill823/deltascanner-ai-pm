@@ -35,4 +35,4 @@ The Knowledge Compounding Protocol currently runs on one agent. Extending it to 
 
 ---
 
-**Full case study available** in [`case-study-full.md`](../case-study-full.md). It walks each layer in depth, names the specific failures that produced each one, presents the metrics the system is measured against, and surfaces the experiments running now that would change my mind about the thesis.
+**Long-form available on request.** Walks each layer in depth, names the specific failures that produced each one, presents the metrics the system is measured against, and surfaces the experiments running now that would change my mind about the thesis.
