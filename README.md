@@ -1,4 +1,4 @@
-# DeltaScanner as an AI Product Management Case Study
+# Deltascanner as an AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an Operator Profile encoding how I work, model-agnostic, ported across the fleet. The layer it created didn't appear in any architecture diagram I'd seen.
 
@@ -6,7 +6,7 @@ That's the case study. The architecture wasn't designed; it was discovered throu
 
 I'm a non-technical solo founder. I do not write build code. The agents write, build, deploy, and surface work for review. I approve, reject, or defer at scheduled gates. Between gates, my inbox is empty by design. Every layer in the stack exists because something specific broke and I encoded the fix.
 
-This repo is the working artifact of that approach. It contains the full case study, a shorter distillation, the compounded intelligence brief that informs the framing, and the supporting documents that make the case study verifiable rather than rhetorical — real spec standards, real handoff contracts, real solution files showing the system catching real regressions.
+This repo is the working artifact of that approach. It contains the full case study, a shorter distillation, the compounded intelligence brief that informs the framing, and the supporting documents that make the case study verifiable rather than rhetorical — spec standards, handoff contracts, solution files showing the system catching regressions.
 
 ---
 
@@ -22,7 +22,7 @@ A public record of one operator running a 10-agent fleet to ship a distressed pr
 
 ## What this repo is not
 
-A framework. A claim that this approach generalizes without modification. A finished system. DeltaScanner is in operation, not in retrospect. What's published here is what I learned running the system I have now — measured against the specific evidence available, with the limitations named where I can't defend a stronger claim.
+A framework. A claim that this approach generalizes without modification. A finished system. Deltascanner is in operation, not in retrospect. What's published here is what I learned running the system I have now — measured against the specific evidence available, with the limitations named where I can't defend a stronger claim.
 
 The "designed by operating" thesis is a description of the path that produced this system, not a methodology that generalizes to every multi-agent system. Whether it would have been faster to design these five layers upfront is unknowable; what's testable is whether the layers I have hold as the system scales.
 
@@ -30,7 +30,7 @@ The "designed by operating" thesis is a description of the path that produced th
 
 ## Architecture diagram
 
-![DeltaScanner agent fleet — five-layer architecture](./architecture/fleet-diagram.svg)
+![Deltascanner agent fleet — five-layer architecture](./architecture/fleet-diagram.svg)
 
 Visual companion to the case study. Each layer in the diagram corresponds to a section in the [case study one-pager](./one-pagers/case-study-onepager.md) and its long-form source, naming the failure that produced it.
 
@@ -40,7 +40,7 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 
 ### One-pagers (60-second reads)
 
-All eight one-pagers live in [`/one-pagers/`](./one-pagers/). Each follows the same compressed structure: context, decision or insight, what it reveals, honest limit. Each links to its long-form source for readers who want to drill down.
+One-pagers live in [`/one-pagers/`](./one-pagers/). Each follows the same compressed structure: context, decision or insight, what it reveals, honest limit. Each links to its long-form source for readers who want to drill down.
 
 - [`case-study-onepager.md`](./one-pagers/case-study-onepager.md) — The five-layer architecture, top-down. The case study compressed.
 - [`model-comparison-onepager.md`](./one-pagers/model-comparison-onepager.md) — *"The Layer Nobody Designs For."* The 36-hour pattern that surfaced the Operator Profile.
@@ -89,9 +89,9 @@ If you came in through a supporting artifact (someone linked you a spec standard
 
 ---
 
-## About DeltaScanner
+## About Deltascanner
 
-DeltaScanner is a distressed property intelligence platform — live across thirteen U.S. markets, ~223,000 scored parcels. The product thesis is workflow compression: turn validated parcel-level distress signal into operator decisions in seconds. The AI-PM case study is what I learned running it.
+Deltascanner is a distressed property intelligence platform — live across thirteen U.S. markets, ~223,000 scored parcels. The product thesis is workflow compression: turn validated parcel-level distress signal into operator decisions in seconds. The AI-PM case study is what I learned running it.
 
 The case study is an artifact of work in motion. It's not a retrospective written at the end of a completed project. It's a snapshot of a system that's still operating, still surfacing failures that reveal new layers, still being shaped by the work it's doing.
 
