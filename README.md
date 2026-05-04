@@ -1,4 +1,4 @@
-https://github.com/jmill823/Deltascanner-ai-pm# Deltascanner as an AI Product Management Case Study
+# Deltascanner as an AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an Operator Profile encoding how I work, model-agnostic, ported across the fleet. The layer it created didn't appear in any architecture diagram I'd seen.
 
@@ -101,7 +101,7 @@ The case study is an artifact of work in motion. It's not a retrospective writte
 
 The Knowledge Compounding Protocol currently runs on one agent. Extending it to the Outreach Drafter — which produces a measurable outcome every time it drafts a message — is the near-term test of whether the protocol generalizes beyond Claude Code. If it does, Layer 4 is mechanism, not Claude-Code-specific accident. If it doesn't, the protocol's scope narrows and the case study revises in that direction.
 
-That result is due within six weeks of publication. This README will be updated with the outcome.
+That result is due by mid-June 2026. This README will be updated with the outcome.
 
 ---
 
