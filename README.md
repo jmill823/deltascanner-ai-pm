@@ -36,6 +36,17 @@ Visual companion to the case study. Each layer in the diagram corresponds to a s
 
 ---
 
+## Case studies
+
+Two case studies live in this repo, each answering a different question.
+
+- **[`case-studies/agent-operator.md`](./case-studies/agent-operator.md)** — *Agent Operator discipline at scale.* Captured 2026-05-08. A four-hour session retrofitting three private repositories onto a unified architecture. Five operating disciplines, three verbatim session excerpts, and the moment a 1,205-line foundation commit was almost discarded as drift before an operator-side gate reversed the call. This artifact is about *how I operate the agents that build*.
+- **Architecture case study (long-form)** — *Five-layer architecture, discovered by operating.* Available on request. Compressed version lives at [`one-pagers/case-study-onepager.md`](./one-pagers/case-study-onepager.md). This artifact is about *what was built and the failures that produced each layer*.
+
+The architecture case study describes what was built. The Agent Operator case study describes how I run the agents that built it. They're companion artifacts.
+
+---
+
 ## Repository contents
 
 ### One-pagers (60-second reads)
@@ -53,7 +64,9 @@ One-pagers live in [`/one-pagers/`](./one-pagers/). Each follows the same compre
 
 ### Long-form sources
 
-The long-form case study (~3,500 words) and the model-comparison sister artifact are available on request. The one-pagers in `/one-pagers/` carry the canonical compressed versions. The long-form files walk each layer in depth: what it does, the failure that created it, the evidence that it's working, and consolidated honest limitations.
+The long-form architecture case study (~3,500 words) and the model-comparison sister artifact are available on request. The one-pagers in `/one-pagers/` carry the canonical compressed versions. The long-form files walk each layer in depth: what it does, the failure that created it, the evidence that it's working, and consolidated honest limitations.
+
+The Agent Operator case study is published in full at [`case-studies/agent-operator.md`](./case-studies/agent-operator.md).
 
 ### Compounded intelligence
 
