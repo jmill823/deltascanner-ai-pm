@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Structural Mistrust — an eval framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0d10; --bg2:#131519; --bg3:#1a1d23; --bg4:#21252d;
+    --line:#262a32; --line2:#323843;
+    --ink:#e9e7e1; --dim:#9aa0aa; --faint:#5c626d;
+    --machine:#5aa7d6;   /* mechanical / structural */
+    --human:#e2776b;     /* drift / failure / accountable hold */
+    --trust:#4ec9b0;     /* trust earned over time */
+    --pos:#7fb069;       /* validated / passing */
+    --mid:#e8a13c;       /* mid-stakes / ambiguous */
+    --defer:#717784;     /* designed, not yet running */
+    --serif:"Newsreader",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(900px 520px at 82% -8%, rgba(90,167,214,.07), transparent 60%),
+                     radial-gradient(760px 420px at -8% 8%, rgba(226,119,107,.05), transparent 60%);
+    background-attachment:fixed;}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px 100px}
+  ::selection{background:rgba(90,167,214,.3)}
+
+  /* ---- masthead ---- */
+  .mast{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .kicker b{color:var(--machine);font-weight:500}
+  h1{font-family:var(--serif);font-weight:500;font-size:46px;line-height:1.04;letter-spacing:-.012em;margin:16px 0 0}
+  .lede{font-family:var(--serif);font-size:19px;line-height:1.52;color:var(--dim);max-width:780px;margin:18px 0 0}
+  .lede em{color:var(--ink);font-style:italic}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;padding:5px 10px;border:1px solid var(--line2);border-radius:2px;color:var(--dim);background:var(--bg2)}
+  .chip.warn{border-color:rgba(226,119,107,.45);color:var(--human)}
+
+  /* ---- legend ---- */
+  .legend{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim);
+    margin:22px 0 0;padding:13px 16px;background:var(--bg2);border:1px solid var(--line);border-radius:5px;letter-spacing:.02em}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .sw{width:22px;border-top:2px solid var(--ink)}
+  .sw-dash{border-top:2px dashed var(--defer)}
+  .sw-h{border-top:3px solid var(--human)}
+  .sw-t{border-top:3px solid var(--trust)}
+
+  /* ---- sections ---- */
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  .sec-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+  h2{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.01em;margin:8px 0 16px;line-height:1.12}
+  .quadcol{color:var(--qc)}
+  .prose{font-family:var(--serif);font-size:17px;line-height:1.62;color:#d6d3cc;max-width:none}
+  .prose p{margin:0 0 15px}
+  .prose strong{color:var(--ink);font-weight:600}
+  .prose em{font-style:italic}
+  .ma{color:var(--machine);font-style:italic}
+  .hu{color:var(--human);font-style:italic}
+  .pull{font-family:var(--serif);font-size:20px;line-height:1.42;color:var(--ink);font-style:italic;
+    border-left:2px solid var(--qc,var(--machine));padding:3px 0 3px 18px;margin:20px 0;max-width:720px}
+  .how{list-style:none;padding:0;margin:4px 0 6px;max-width:none}
+  .how li{position:relative;padding-left:22px;margin-bottom:11px;font-family:var(--serif);font-size:17px;line-height:1.55;color:#d6d3cc}
+  .how li::before{content:"";position:absolute;left:3px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--qc,var(--machine))}
+  .how li strong{color:var(--ink);font-weight:600}
+  .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500}
+
+  /* ---- class header chips ---- */
+  .ctag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--qc);border:1px solid var(--qc);border-radius:2px;padding:2px 8px;margin-bottom:10px;opacity:.9}
+
+  /* ---- diagrams ---- */
+  .fig{margin:26px 0 6px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:22px 22px 14px;transition:.18s}
+  .fig:hover{border-color:var(--line2)}
+  .fig svg{display:block;width:100%;height:auto;font-family:var(--mono)}
+  .fig text{font-family:var(--mono)}
+  .figmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .ftag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:3px 8px;border-radius:2px}
+  .ftag.canon{background:var(--machine);color:#08222f}
+  .ftag.extra{background:transparent;color:var(--faint);border:1px solid var(--line2)}
+  .ftitle{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--dim);text-transform:lowercase}
+  .figcap{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dim);margin-top:12px;line-height:1.45;max-width:780px}
+
+  /* ---- ledger table (receipts) ---- */
+  .ledger{margin-top:8px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg2)}
+  .ledger-head{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px;background:var(--bg);border-bottom:1px solid var(--line);flex-wrap:wrap;gap:6px}
+  .ledger-head h3{font-family:var(--sans);font-weight:600;font-size:13px;margin:0;color:var(--ink);letter-spacing:.02em}
+  .ledger-head .meta{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    text-align:left;font-weight:500;padding:9px 16px;border-bottom:1px solid var(--line2)}
+  td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top;color:#cfd2d8;font-family:var(--serif);font-size:15px;line-height:1.5}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--bg)}
+  .rn{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--machine);white-space:nowrap}
+  .st{font-family:var(--mono);font-size:10px;padding:2px 9px;border-radius:10px;white-space:nowrap}
+  .st.pin{color:var(--trust);border:1px solid rgba(78,201,176,.4)}
+  .st.tx{color:var(--defer);border:1px solid var(--line2)}
+
+  /* ---- restraint note ---- */
+  .note{font-family:var(--serif);font-size:16px;line-height:1.58;color:var(--dim);max-width:none;
+    border-left:2px solid var(--human);padding:6px 0 6px 18px;margin-top:18px}
+  .note b{color:var(--ink);font-weight:600}
+
+  footer{padding:30px 0 0;display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  footer .nm{color:var(--ink);font-weight:600}
+
+  @media(max-width:680px){
+    h1{font-size:34px}.lede{font-size:17px}h2{font-size:25px}
+    .prose,.how li,td{font-size:16px}
+    .ins-hide{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ MASTHEAD (Pitch as lede) ============ -->
+  <div class="mast">
+    <div class="kicker">eval framework · <b>brief</b> · structural mistrust</div>
+    <h1>Structural Mistrust</h1>
+    <p class="lede">I build trustworthy surfaces through one discipline: structural mistrust. Nothing freezes as settled until it survives disagreement, and the trust that produces is meant to be verified over time — <em>earned, not asserted</em>.</p>
+    <div class="chips">
+      <span class="chip">four classes · two tracks · one operator loop</span>
+      <span class="chip">first person · numbers earn their place</span>
+      <span class="chip warn">outcome loop: instrumented, not yet running</span>
+    </div>
+    <div class="legend">
+      <span><span class="sw"></span>built &amp; defensible</span>
+      <span><span class="sw sw-dash"></span>designed, not yet running</span>
+      <span><span class="sw sw-h"></span>drift / failure path</span>
+      <span><span class="sw sw-t"></span>trust earned over time</span>
+    </div>
+  </div>
+
+  <!-- ============ 01 · OPENER ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">01 · opener</div>
+    <h2>A trustworthy user surface is never settled.</h2>
+    <div class="prose">
+      <p>Drift never stops pulling at it. The framework defends it on two tracks: a <em>surface track</em> (loud, fast — calibration drift, then process rot) and a <em>silent track</em> (slow, deep — doc drift, then discipline drift). The tracks are coupled: the surface only holds if the silent track underneath is intact.</p>
+      <p>Underneath all of it runs one cycle — the operator loop — and everything below is an artifact inside it.</p>
+    </div>
+
+    <!-- FIG 1: operator loop (canonical) -->
+    <div class="fig">
+      <div class="figmeta"><span class="ftag canon">fig 1 · canonical</span><span class="ftitle">the operator loop</span></div>
+      <svg viewBox="0 0 820 320" role="img" aria-label="The operator loop">
+        <rect x="20" y="40" width="166" height="58" rx="7" fill="#1a1d23" stroke="#5aa7d6" stroke-width="1.4"/>
+        <text x="103" y="65" font-size="12.5" text-anchor="middle" fill="#e9e7e1">Author under</text>
+        <text x="103" y="82" font-size="12.5" text-anchor="middle" fill="#e9e7e1">mistrust</text>
+        <path d="M188 69 L238 69" stroke="#5aa7d6" stroke-width="1.5" marker-end="url(#ol-b)"/>
+        <rect x="240" y="40" width="150" height="58" rx="7" fill="#1a1d23" stroke="#5aa7d6" stroke-width="1.4"/>
+        <text x="315" y="73" font-size="12.5" text-anchor="middle" fill="#e9e7e1">Freeze the few</text>
+        <path d="M392 69 L442 69" stroke="#5aa7d6" stroke-width="1.5" marker-end="url(#ol-b)"/>
+        <rect x="444" y="40" width="190" height="58" rx="7" fill="#5aa7d6"/>
+        <text x="539" y="65" font-size="12.5" text-anchor="middle" fill="#08222f" font-weight="600">Guard at runtime</text>
+        <text x="539" y="82" font-size="10.5" text-anchor="middle" fill="#0c3a4d">the four classes</text>
+
+        <path d="M539 100 L539 150" stroke="#5aa7d6" stroke-width="1.5" marker-end="url(#ol-b)"/>
+
+        <rect x="444" y="152" width="190" height="58" rx="7" fill="#1a1d23" stroke="#5aa7d6" stroke-width="1.4"/>
+        <text x="539" y="185" font-size="12.5" text-anchor="middle" fill="#e9e7e1">Surface catches</text>
+        <path d="M442 181 L392 181" stroke="#717784" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ol-d)"/>
+        <rect x="240" y="152" width="150" height="58" rx="7" fill="#131519" stroke="#717784" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="315" y="178" font-size="12" text-anchor="middle" fill="#9aa0aa">Reconcile vs</text>
+        <text x="315" y="194" font-size="12" text-anchor="middle" fill="#9aa0aa">outcomes</text>
+        <path d="M238 181 L188 181" stroke="#717784" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ol-d)"/>
+        <rect x="20" y="152" width="166" height="58" rx="7" fill="#131519" stroke="#717784" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="103" y="178" font-size="12" text-anchor="middle" fill="#9aa0aa">Move freeze line</text>
+        <text x="103" y="194" font-size="12" text-anchor="middle" fill="#9aa0aa">back to authoring</text>
+
+        <path d="M103 152 L103 98" stroke="#717784" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ol-d)"/>
+        <text x="116" y="129" font-size="10.5" fill="#4ec9b0" font-weight="600">as outcomes earn trust</text>
+
+        <rect x="250" y="254" width="320" height="42" rx="5" fill="none" stroke="#717784" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="410" y="271" font-size="10.5" text-anchor="middle" fill="#9aa0aa">dashed = designed, not yet running</text>
+        <text x="410" y="287" font-size="10.5" text-anchor="middle" fill="#5c626d">(outcome loop · freeze-line defrost)</text>
+        <defs>
+          <marker id="ol-b" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#5aa7d6"/></marker>
+          <marker id="ol-d" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#717784"/></marker>
+        </defs>
+      </svg>
+      <div class="figcap">One cycle under everything: author under mistrust → freeze the few → guard at runtime → surface catches → reconcile against outcomes → move the freeze line back, as outcomes earn trust. The reconcile-and-defrost half is designed, not yet running.</div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · CLASS 1 ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">02 · class 1</div>
+    <span class="ctag">calibration drift</span>
+    <h2>Calibration drift</h2>
+    <div class="prose">
+      <p><span class="lbl">What.</span> &nbsp;Defends against outputs that overclaim their certainty. Most teams gate on a threshold and tune until it passes — which buries the failures that scored just under it.</p>
+    </div>
+    <p class="lbl" style="margin-bottom:2px">How.</p>
+    <ul class="how">
+      <li><strong>Gradient, not gate</strong> — every output ships with a confidence score computed from its own inputs: mechanical, not editorial.</li>
+      <li><strong>Independent check</strong> — the validator is authored separately from the scorer, so the system never grades its own homework.</li>
+    </ul>
+    <p class="pull">A low score is the system telling the truth about itself — worth more than a clean pass that hides its weak spots.</p>
+  </section>
+
+  <!-- ============ 03 · CLASS 2 ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">03 · class 2</div>
+    <span class="ctag">process rot</span>
+    <h2>Process rot</h2>
+    <div class="prose">
+      <p><span class="lbl">What.</span> &nbsp;Defends against erosion that still looks clean — the output passes, the metrics read fine, but the discipline producing them is decaying underneath.</p>
+    </div>
+    <p class="lbl" style="margin-bottom:2px">How.</p>
+    <ul class="how">
+      <li><strong>Failure is a valid ship state</strong> — when a check fails, ship it marked low with a revisit locked, never tune until it passes (which turns the eval adversarial to honesty).</li>
+      <li><strong>Friction matched to blast radius</strong> — routine changes are easy; re-authoring a frozen judgment is hard, and a fork on a high-stakes decision is the signal the spec is too loose.</li>
+    </ul>
+    <p class="pull">Decouple shipping from passing and the eval stays a real signal — there's nothing to fake, because faking buys nothing.</p>
+  </section>
+
+  <!-- ============ 04 · CLASS 3 ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">04 · class 3</div>
+    <span class="ctag">documentation drift</span>
+    <h2>Documentation drift</h2>
+    <div class="prose">
+      <p><span class="lbl">What.</span> &nbsp;The hidden twin of Class 1 — the same overclaim moved where you won't look: the record says the system is sound while the path underneath rots.</p>
+    </div>
+    <p class="lbl" style="margin-bottom:2px">How.</p>
+    <ul class="how">
+      <li><strong>Doc-vs-code</strong> — documentation is checked against deployed reality; when they disagree, the doc is wrong until proven otherwise.</li>
+      <li><strong>Append-only audit</strong> — the record is superseded, never silently overwritten, so there's always a preserved trail to verify against.</li>
+    </ul>
+    <p class="pull">It's the quietest failure because it covers for the others — and the preserved trail is the legitimacy floor of the whole framework.</p>
+  </section>
+
+  <!-- ============ 05 · CLASS 4 ============ -->
+  <section style="--qc:var(--human)">
+    <div class="sec-no">05 · class 4</div>
+    <span class="ctag">discipline drift</span>
+    <h2>Discipline drift</h2>
+    <div class="prose">
+      <p><span class="lbl">What.</span> &nbsp;Decay moved out of sight — not the steps rotting, but the <em>why</em> behind them. The rule still gets followed, by rote, by people who no longer know what it protected against.</p>
+    </div>
+    <p class="lbl" style="margin-bottom:2px">How.</p>
+    <ul class="how">
+      <li><strong>Every rule carries its scar</strong> — the specific failure that made it necessary travels with the rule, so it can't hollow out.</li>
+      <li><strong>The system surfaces its own history</strong> — recurrences and skipped rules get flagged; the seeing is mechanical and ports, the accountable call to reopen stays with me.</li>
+    </ul>
+    <p class="pull">This is the floor. A forgotten why becomes a skipped step, becomes a fragile path, becomes an overclaim the user feels. Defended here, none of it starts.</p>
+  </section>
+
+  <!-- ============ FIG 2 + 06 · COUPLING ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">06 · coupling</div>
+    <h2>A system fails two ways — it can overclaim or it can erode.</h2>
+
+    <div class="fig">
+      <div class="figmeta"><span class="ftag canon">fig 2 · canonical</span><span class="ftitle">coupling map — the 2×2</span></div>
+      <svg viewBox="0 0 760 460" role="img" aria-label="Coupling 2x2">
+        <text x="380" y="24" font-size="12" font-weight="600" fill="#9aa0aa" text-anchor="middle" letter-spacing="1.5">FAILURE TYPE</text>
+        <text x="245" y="46" font-size="11.5" fill="#e2776b" text-anchor="middle" font-weight="600">overclaim</text>
+        <text x="515" y="46" font-size="11.5" fill="#e8a13c" text-anchor="middle" font-weight="600">erode</text>
+        <text x="24" y="240" font-size="12" font-weight="600" fill="#9aa0aa" text-anchor="middle" letter-spacing="1.5" transform="rotate(-90 24 240)">VISIBILITY</text>
+        <text x="66" y="150" font-size="11.5" fill="#5aa7d6" text-anchor="middle" font-weight="600" transform="rotate(-90 66 150)">surface</text>
+        <text x="66" y="350" font-size="11.5" fill="#5c626d" text-anchor="middle" font-weight="600" transform="rotate(-90 66 350)">silent</text>
+
+        <rect x="108" y="58" width="272" height="172" rx="7" fill="#1a1d23" stroke="#5aa7d6" stroke-width="1.4"/>
+        <text x="244" y="134" font-size="15" text-anchor="middle" fill="#e9e7e1" font-weight="600">calibration drift</text>
+        <text x="244" y="157" font-size="10.5" text-anchor="middle" fill="#5c626d">Class 1</text>
+        <rect x="380" y="58" width="272" height="172" rx="7" fill="#5aa7d6"/>
+        <text x="516" y="130" font-size="15" text-anchor="middle" fill="#08222f" font-weight="600">process rot</text>
+        <text x="516" y="152" font-size="10.5" text-anchor="middle" fill="#0c3a4d">Class 2 · the hub</text>
+        <rect x="108" y="230" width="272" height="172" rx="7" fill="#131519" stroke="#323843" stroke-width="1.4"/>
+        <text x="244" y="306" font-size="15" text-anchor="middle" fill="#9aa0aa" font-weight="600">doc drift</text>
+        <text x="244" y="329" font-size="10.5" text-anchor="middle" fill="#5c626d">Class 3</text>
+        <rect x="380" y="230" width="272" height="172" rx="7" fill="#131519" stroke="#323843" stroke-width="1.4"/>
+        <text x="516" y="306" font-size="15" text-anchor="middle" fill="#9aa0aa" font-weight="600">discipline drift</text>
+        <text x="516" y="329" font-size="10.5" text-anchor="middle" fill="#5c626d">Class 4</text>
+
+        <path d="M300 292 L460 150" stroke="#717784" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#cp-d)"/>
+        <text x="388" y="228" font-size="10" fill="#717784" text-anchor="middle" transform="rotate(-41 388 218)">conceal diagonal</text>
+        <path d="M516 230 L516 158" stroke="#e2776b" stroke-width="1.8" marker-end="url(#cp-r)"/>
+        <text x="560" y="200" font-size="10" fill="#e2776b">cascade</text>
+
+        <text x="380" y="438" font-size="10.5" text-anchor="middle" fill="#5c626d">two links run through the hub — the cascade climbs; the conceal diagonal hides</text>
+        <defs>
+          <marker id="cp-d" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#717784"/></marker>
+          <marker id="cp-r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e2776b"/></marker>
+        </defs>
+      </svg>
+      <div class="figcap">Visibility × failure type. The silent row is the surface row hidden: doc drift is calibration drift concealed; discipline drift is process rot concealed. Process rot is the hub both links pass through.</div>
+    </div>
+
+    <div class="prose">
+      <p>A system fails two ways — it can overclaim (claim a confidence it hasn't earned) or erode (let the discipline behind its judgments decay) — and each happens where you see it or where you can't. The silent row is the surface row with the lights off: doc drift is calibration drift hidden, discipline drift is process rot hidden. Two paths run through process rot, the hub: the cascade (a forgotten why climbs into a skipped step, then an overclaim) and the conceal diagonal (the hidden overclaim covers for the surfaced rot).</p>
+    </div>
+  </section>
+
+  <!-- ============ 07 · THE ENGINE ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">07 · the engine</div>
+    <h2>The judgment has to be authored well enough to freeze.</h2>
+    <div class="prose">
+      <p>Before any of this guards a live surface, that authoring is design-time work. For decisions that come down to a pick from a short list, I run the same authoring decision across multiple model runs and count how often the answer forks; where the runs split is where judgment is load-bearing and a human should look before freezing. The freeze line itself is set by three readings — blast radius, trust, and cost to reopen — and it moves: as outcomes earn trust, a frozen decision defrosts back to the live model.</p>
+    </div>
+
+    <div class="fig">
+      <div class="figmeta"><span class="ftag canon">fig 3 · canonical</span><span class="ftitle">the freeze line — and where it moves</span></div>
+      <svg viewBox="0 0 760 370" role="img" aria-label="Freeze line">
+        <line x1="90" y1="312" x2="700" y2="312" stroke="#323843" stroke-width="1.4"/>
+        <line x1="90" y1="38" x2="90" y2="312" stroke="#323843" stroke-width="1.4"/>
+        <text x="395" y="350" font-size="11.5" text-anchor="middle" fill="#9aa0aa">trust (outcomes accumulated) →</text>
+        <text x="46" y="180" font-size="11.5" text-anchor="middle" fill="#9aa0aa" transform="rotate(-90 46 180)">blast radius →</text>
+        <path d="M110 68 C 280 108, 420 224, 690 292" fill="none" stroke="#5aa7d6" stroke-width="2.6"/>
+        <text x="250" y="92" font-size="11.5" fill="#5aa7d6" font-weight="600">freeze line</text>
+        <text x="200" y="176" font-size="13" text-anchor="middle" fill="#bcd9ea" font-weight="600">frozen judgment</text>
+        <text x="200" y="196" font-size="10.5" text-anchor="middle" fill="#9aa0aa">high-blast non-negotiables</text>
+        <text x="540" y="226" font-size="13" text-anchor="middle" fill="#4ec9b0" font-weight="600">live model</text>
+        <text x="540" y="246" font-size="10.5" text-anchor="middle" fill="#9aa0aa">owns the surface</text>
+        <path d="M250 148 C 360 172, 430 196, 500 220" fill="none" stroke="#717784" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#fz-a)"/>
+        <text x="392" y="158" font-size="10.5" fill="#717784">defrost — designed, not yet running</text>
+        <text x="120" y="300" font-size="10" fill="#5c626d">cost to reopen sets the gate</text>
+        <defs>
+          <marker id="fz-a" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#717784"/></marker>
+        </defs>
+      </svg>
+      <div class="figcap">Three readings draw it: blast radius, trust, cost to reopen. As outcomes earn trust, a frozen decision defrosts back to the live model — that defrost is designed, not yet running.</div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · RECEIPTS ============ -->
+  <section style="--qc:var(--trust)">
+    <div class="sec-no">08 · receipts</div>
+    <h2>The bar is strict.</h2>
+    <div class="prose">
+      <p>A check fired on a real error that would have shipped — provably wrong, with real blast radius. Four caught before ship:</p>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-head">
+        <h3>Caught before ship</h3>
+        <span class="meta">4 catches · 3 pinned to commits · 1 transcript</span>
+      </div>
+      <table>
+        <thead><tr><th>Receipt</th><th>What it caught</th><th class="ins-hide">Trace</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="rn">delete-the-foundation</span></td>
+            <td>A handoff matched a 1,205-line commit's filenames to known throwaways and recommended deleting it; reading the content showed it was the architecture everything downstream sits on.</td>
+            <td class="ins-hide"><span class="st pin">pinned</span></td>
+          </tr>
+          <tr>
+            <td><span class="rn">wipe-the-worktrees</span></td>
+            <td>An agent set to force-remove five worktrees, three of them load-bearing with no remote to recover from; a pre-flight stopped it before it ran.</td>
+            <td class="ins-hide"><span class="st pin">pinned</span></td>
+          </tr>
+          <tr>
+            <td><span class="rn">the refused derivation</span></td>
+            <td>The build refused to invent a rule the spec asserted but never defined, and shipped an honest placeholder instead of guessing.</td>
+            <td class="ins-hide"><span class="st pin">pinned</span></td>
+          </tr>
+          <tr>
+            <td><span class="rn">the contradiction trace</span></td>
+            <td>Flagged two rules that contradict when their signs disagree, and routed the disagreement to human review.</td>
+            <td class="ins-hide"><span class="st tx">transcript</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Three are pinned to commits you can inspect. <b>None of these is the product being right over time</b> — that's a separate measurement, still open.</p>
+  </section>
+
+  <!-- ============ 09 · HONEST LIMITS ============ -->
+  <section style="--qc:var(--human)">
+    <div class="sec-no">09 · honest limits</div>
+    <h2>Built and defensible — but not yet validated by outcomes.</h2>
+    <div class="prose">
+      <p>The over-time reconciliation is instrumented but hasn't accumulated enough reality to score against. So three parts — the <span class="hu">outcome loop</span>, <span class="hu">Class 4's automated seeing</span>, and the <span class="hu">freeze line's defrost</span> — are designed, not yet claimed as running.</p>
+    </div>
+  </section>
+
+  <!-- ============ 10 · CLOSE ============ -->
+  <section style="--qc:var(--machine);border-bottom:none">
+    <div class="sec-no">10 · close</div>
+    <h2>What's new isn't the parts.</h2>
+    <div class="prose">
+      <p>Goodhart, error budgets, immutable logs are all borrowed. It's the stack: four classes, two tracks, and a freeze line that moves on outcomes, knitted into one operator loop, with room for a fifth class when one proves out.</p>
+      <p class="pull" style="border-color:var(--trust)">The claim is small and exact: not that the system is correct, but that it's honest about what it knows — and instrumented to stay honest over time.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>structural mistrust · eval framework · brief</span>
+    <span class="nm">Jeff Millett</span>
+  </footer>
+
+</div>
+</body>
+</html>
