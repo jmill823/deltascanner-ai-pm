@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intel Launchpad — compression-to-execution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js"></script>
+<style>
+  :root{
+    --bg:#0c0d10; --bg2:#131519; --bg3:#1a1d23; --bg4:#21252d;
+    --line:#262a32; --line2:#323843;
+    --ink:#e9e7e1; --dim:#9aa0aa; --faint:#5c626d;
+    --do:#e8a13c; --big:#4ec9b0; --easy:#7fb069; --defer:#717784;
+    --human:#e2776b; --machine:#5aa7d6;
+    --serif:"Newsreader",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(900px 500px at 80% -10%, rgba(90,167,214,.06), transparent 60%),
+                     radial-gradient(700px 400px at -10% 10%, rgba(226,119,107,.05), transparent 60%);
+    background-attachment:fixed;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--machine);text-decoration:none}
+  ::selection{background:rgba(226,119,107,.3)}
+
+  /* ---- masthead ---- */
+  .mast{padding:52px 0 26px;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .kicker b{color:var(--human)}
+  h1{font-family:var(--serif);font-weight:500;font-size:42px;line-height:1.06;letter-spacing:-.01em;margin:14px 0 0}
+  .lede{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--dim);max-width:760px;margin:18px 0 0}
+  .lede em{color:var(--ink);font-style:italic}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:5px 10px;border:1px solid var(--line2);border-radius:2px;color:var(--dim);background:var(--bg2)}
+  .chip.warn{border-color:rgba(226,119,107,.4);color:var(--human)}
+
+  /* ---- sections ---- */
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  .sec-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+  h2{font-family:var(--serif);font-weight:500;font-size:27px;letter-spacing:-.01em;margin:8px 0 14px;line-height:1.15}
+  .prose{font-family:var(--serif);font-size:17px;line-height:1.62;color:#d6d3cc;max-width:740px}
+  .prose p{margin:0 0 15px}
+  .prose strong{color:var(--ink);font-weight:600}
+  .prose .hu{color:var(--human);font-style:italic}
+  .prose .ma{color:var(--machine);font-style:italic}
+  .pull{font-family:var(--serif);font-size:21px;line-height:1.4;color:var(--ink);border-left:2px solid var(--human);padding:2px 0 2px 18px;margin:22px 0;max-width:720px}
+
+  /* ---- diagrams ---- */
+  .fig{margin:26px 0 6px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:24px 22px 14px}
+  .fig svg{display:block;width:100%;height:auto}
+  .figcap{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:12px;letter-spacing:.02em}
+  .figcap b{color:var(--dim)}
+
+  /* ---- surface shell ---- */
+  .surface{margin-top:8px;border:1px solid var(--line2);border-radius:8px;background:var(--bg2);overflow:hidden;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9)}
+  .surface-bar{display:flex;align-items:center;gap:2px;padding:10px 12px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .tab{font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.01em;color:var(--dim);
+    background:transparent;border:1px solid transparent;border-radius:5px;padding:7px 14px;cursor:pointer;transition:.15s}
+  .tab small{display:block;font-weight:400;font-size:10px;color:var(--faint);font-family:var(--mono);letter-spacing:.04em;margin-top:1px}
+  .tab:hover{color:var(--ink);background:var(--bg3)}
+  .tab.on{color:var(--ink);background:var(--bg3);border-color:var(--line2)}
+  .tab.on small{color:var(--dim)}
+  .bar-spacer{flex:1}
+  .barnote{font-family:var(--mono);font-size:10.5px;color:var(--faint);padding-right:6px;display:flex;align-items:center;gap:6px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--human);box-shadow:0 0 8px var(--human)}
+  .body{padding:20px}
+
+  /* ---- ledger table ---- */
+  .ledger-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .ledger-head h3{font-family:var(--sans);font-weight:600;font-size:14px;margin:0;color:var(--ink)}
+  .ledger-head .meta{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    text-align:left;font-weight:500;padding:6px 8px;border-bottom:1px solid var(--line2)}
+  td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top;color:#cfd2d8}
+  tr:hover td{background:var(--bg)}
+  .ins-txt{max-width:420px}
+  .src{font-family:var(--mono);font-size:11px;color:var(--machine)}
+  .tag{font-family:var(--mono);font-size:10px;color:var(--faint)}
+  .st{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:10px;white-space:nowrap}
+  .st.clustered{color:var(--big);border:1px solid rgba(78,201,176,.35)}
+  .st.dormant{color:var(--defer);border:1px solid var(--line2)}
+  .sc{font-family:var(--mono);font-weight:600}
+
+  /* ---- quadrants ---- */
+  .quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative}
+  .quad-axes{position:absolute;inset:0;pointer-events:none}
+  .quad{border:1px solid var(--line2);border-radius:7px;padding:14px;min-height:188px;cursor:pointer;
+    background:var(--bg);transition:.18s;position:relative;overflow:hidden}
+  .quad:hover{border-color:var(--qc);transform:translateY(-2px);box-shadow:0 14px 30px -22px var(--qc)}
+  .quad-glow{position:absolute;width:160px;height:160px;border-radius:50%;filter:blur(50px);opacity:.13;background:var(--qc);top:-40px;right:-40px}
+  .quad-name{font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--qc);text-transform:uppercase}
+  .quad-sub{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:2px}
+  .bubbles{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;align-items:flex-end}
+  .bub{border:1px solid var(--qc);color:var(--ink);border-radius:50px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:10px;text-align:center;padding:0 4px;background:color-mix(in srgb,var(--qc) 12%, transparent);line-height:1.1}
+  .bub.single{border-style:dashed}
+  .axis-lbl{position:absolute;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---- cluster zoom + detail ---- */
+  .crumbs{font-family:var(--mono);font-size:11px;color:var(--faint);margin-bottom:14px}
+  .crumbs span{cursor:pointer;color:var(--machine)}
+  .crumbs span:hover{text-decoration:underline}
+  .clist{display:flex;flex-direction:column;gap:8px}
+  .crow{display:flex;gap:14px;align-items:center;border:1px solid var(--line2);border-radius:7px;padding:13px 15px;cursor:pointer;background:var(--bg);transition:.15s}
+  .crow:hover{border-color:var(--qc);background:var(--bg3)}
+  .csig{width:38px;height:38px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--qc);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--qc);
+    background:color-mix(in srgb,var(--qc) 10%, transparent)}
+  .cmain{flex:1;min-width:0}
+  .ctitle{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink)}
+  .cone{font-size:12.5px;color:var(--dim);margin-top:2px}
+  .cstat{font-family:var(--mono);font-size:10px;color:var(--faint);text-align:right;flex-shrink:0}
+  .cstat b{color:var(--ink);font-weight:600}
+
+  /* ---- detail panel ---- */
+  .detail-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .detail-top h3{font-family:var(--serif);font-weight:500;font-size:23px;margin:0;line-height:1.15;color:var(--ink)}
+  .detail-meta{display:flex;gap:18px;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .detail-meta b{color:var(--ink)}
+  .block{margin-top:20px}
+  .block-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+  .block-lbl .ln{flex:1;height:1px;background:var(--line)}
+  .tracerow{border:1px solid var(--line);border-left:2px solid var(--human);border-radius:5px;padding:9px 12px;margin-bottom:7px;background:var(--bg)}
+  .tracerow .t{font-size:13px;color:#d6d3cc}
+  .tracerow .s{font-family:var(--mono);font-size:10.5px;color:var(--machine);margin-top:4px}
+
+  /* ---- launch / prompt ---- */
+  .promptbox{background:#0a0b0e;border:1px solid var(--line2);border-radius:7px;overflow:hidden}
+  .ph{display:flex;align-items:center;gap:8px;padding:9px 13px;border-bottom:1px solid var(--line);background:var(--bg)}
+  .ph .route{font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .ph .route b{color:var(--big)}
+  .pbody{padding:15px;font-family:var(--mono);font-size:12px;line-height:1.65;color:#cdd1d8;white-space:pre-wrap;max-height:340px;overflow:auto}
+  .pbody .sys{color:var(--faint)}
+  .pbody .inl{color:var(--human)}
+  .pbody .prov{color:var(--machine)}
+  .copyrow{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+
+  /* ---- buttons ---- */
+  .btn{font-family:var(--sans);font-weight:600;font-size:13px;border-radius:6px;padding:10px 18px;cursor:pointer;transition:.15s;border:1px solid var(--line2);background:var(--bg3);color:var(--ink)}
+  .btn:hover{border-color:var(--human);color:#fff}
+  .btn.go{background:var(--human);border-color:var(--human);color:#1a0e0c}
+  .btn.go:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent}
+  .btn.sm{padding:7px 13px;font-size:12px}
+
+  /* ---- discuss ---- */
+  .discuss{border:1px solid var(--line2);border-radius:7px;background:var(--bg);overflow:hidden}
+  .dmsg{padding:12px 15px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.55}
+  .dmsg:last-child{border-bottom:none}
+  .drole{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+  .dmsg.op .drole{color:var(--human)} .dmsg.ai .drole{color:var(--machine)}
+  .dmsg .grounded{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:6px}
+
+  /* ---- result chain / outcome ---- */
+  .chain{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .step{flex:1;min-width:120px;border:1px solid var(--line2);border-radius:6px;padding:11px 12px;background:var(--bg);position:relative}
+  .step + .step{margin-left:18px}
+  .step + .step::before{content:"";position:absolute;left:-15px;top:50%;width:12px;height:1px;background:var(--line2)}
+  .step + .step::after{content:"";position:absolute;left:-7px;top:calc(50% - 3px);border:3px solid transparent;border-left-color:var(--line2)}
+  .step .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .step .v{font-size:13px;color:var(--ink);margin-top:4px}
+  .twotier{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .tier{border:1px solid var(--line2);border-radius:7px;padding:14px}
+  .tier.machine{border-left:2px solid var(--machine)}
+  .tier.human{border-left:2px solid var(--human)}
+  .tier .th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+  .tier.machine .th{color:var(--machine)} .tier.human .th{color:var(--human)}
+  .tier .q{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--ink);margin:6px 0 8px}
+  .tier .d{font-size:12.5px;color:var(--dim);line-height:1.5}
+  .tier .badge{font-family:var(--mono);font-size:10px;margin-top:9px;padding:3px 8px;border-radius:10px;display:inline-block}
+  .tier.machine .badge{color:var(--big);border:1px solid rgba(78,201,176,.35)}
+  .tier.human .badge{color:var(--human);border:1px dashed rgba(226,119,107,.5)}
+
+  /* ---- whats-working ---- */
+  .ww{border:1px dashed var(--line2);border-radius:7px;padding:16px;margin-top:18px;background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 10px,rgba(255,255,255,.012) 10px,rgba(255,255,255,.012) 20px)}
+  .ww-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .pill{font-family:var(--mono);font-size:9.5px;padding:2px 8px;border:1px solid var(--human);color:var(--human);border-radius:10px}
+  .ww p{font-family:var(--serif);font-size:15px;color:var(--dim);margin:0;max-width:640px;line-height:1.55}
+
+  .footnote{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:14px;line-height:1.6}
+  .footnote b{color:var(--dim)}
+  @media(max-width:720px){
+    h1{font-size:33px}.quad-grid{grid-template-columns:1fr}.twotier{grid-template-columns:1fr}
+    .step+.step{margin-left:0;margin-top:14px}.step+.step::before,.step+.step::after{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const {useState} = React;
+
+/* =========================================================================
+   SEED DATA — illustrative, drawn from the Deltascanner property-intel
+   domain. The outcome loop is built & instrumented but UNUSED: zero real
+   outcomes logged. The DONE example below is seeded.
+   ========================================================================= */
+const INSIGHTS = [
+  {id:"i01", t:"Administrative abatements read as distress signals but aren't — they need a separate flag or they inflate the score.", src:"validation log · batch review", tag:"scoring", p:91, cost:22, cluster:"c1"},
+  {id:"i02", t:"A recency signal predicted the wrong direction in several markets — banned until re-validated against outcomes.", src:"model audit · notes", tag:"signals", p:84, cost:18, cluster:"c1"},
+  {id:"i03", t:"Forced-sale language varies by platform — a shared extraction rule beats per-source regexes that drift apart.", src:"pipeline review", tag:"extraction", p:80, cost:15, cluster:"c1"},
+  {id:"i04", t:"~48% of top-scored parcels are invisible to standard web search — the discoverability gap is the product's moat.", src:"discoverability study", tag:"positioning", p:88, cost:60, cluster:"c2"},
+  {id:"i05", t:"One config-driven scorer is cheaper to audit than 13 bespoke scripts — a single place to change a weight.", src:"architecture audit · wiki", tag:"architecture", p:86, cost:64, cluster:"c2"},
+  {id:"i06", t:"Confidence computed from input completeness + agreement survives review; an editorial number talked into place doesn't.", src:"eval design · wiki", tag:"eval", p:82, cost:70, cluster:"c2"},
+  {id:"i07", t:"Socrata and ArcGIS endpoints rate-limit differently — staggered pulls cut failed batches with no code change.", src:"pipeline log", tag:"ingestion", p:64, cost:8, cluster:"c3"},
+  {id:"i08", t:"Parcel IDs collide across counties — namespace them on ingest or dedupe silently merges distinct parcels downstream.", src:"self-audit · pipeline", tag:"data", p:58, cost:6, cluster:null},
+  {id:"i09", t:"A scored parcel with no path to reach the owner can't be acted on — capture contact viability at scoring time.", src:"validation log · wiki", tag:"workflow", p:72, cost:30, cluster:"c1"},
+  {id:"i10", t:"Florida NAL fixed-width files drift column positions year to year — pin the schema by vintage or parsing rots.", src:"ingestion notes", tag:"data", p:40, cost:5, cluster:null},
+  {id:"i11", t:"Manual validation rounds cluster naturally by failure type — affinity grouping before triage saves whole passes.", src:"research ops · notes", tag:"clustering", p:36, cost:12, cluster:null},
+  {id:"i12", t:"Impact-effort triage is prior art for the parcel-review queue — concede it; the compounding store is the real claim.", src:"synthesis · wiki", tag:"prior-art", p:30, cost:9, cluster:null},
+];
+
+const CLUSTERS = {
+  c1:{id:"c1", title:"Ship the validation-driven scoring fixes", quad:"do", p:88, cost:19, signal:4,
+      one:"Compile the batch-review insights into one scoring-engine change, routed to the build agent.",
+      dest:"CC · scoring-engine", members:["i01","i02","i03","i09"], status:"done"},
+  c2:{id:"c2", title:"Stand up the config-driven scoring engine", quad:"big", p:85, cost:65, signal:3,
+      one:"Replace 13 bespoke scoring scripts with one config-driven engine — a multi-session CC build.",
+      dest:"CC · deltascanner", members:["i04","i05","i06"], status:"open"},
+  c3:{id:"c3", title:"Stagger the Socrata / ArcGIS ingest pulls", quad:"easy", p:64, cost:8, signal:2,
+      one:"Reorder the ingest schedule so rate-limited endpoints don't collide; nothing to design, just execute.",
+      dest:"pipeline cron", members:["i07"], status:"open"},
+  s1:{id:"s1", title:"Namespace parcel IDs on ingest", quad:"easy", p:58, cost:6, signal:1, single:true,
+      one:"High-score single — the dedupe-integrity fix.",
+      dest:"github.com/jmill823/deltascanner-ai-pm", members:["i08"], status:"open"},
+};
+
+const QUADS = {
+  do:{name:"DO NOW", sub:"high priority · low cost", color:"var(--do)", clusters:["c1"]},
+  big:{name:"BIG BETS", sub:"high priority · high cost", color:"var(--big)", clusters:["c2"]},
+  easy:{name:"EASY FILLS", sub:"low priority · low cost", color:"var(--easy)", clusters:["c3","s1"]},
+  defer:{name:"DEFER", sub:"dormant · un-clustered · nothing falls off", color:"var(--defer)", clusters:[]},
+};
+const dormant = INSIGHTS.filter(i=>!i.cluster);
+
+/* ---------- small helpers ---------- */
+const ins = id => INSIGHTS.find(i=>i.id===id);
+function Crumbs({path, onGo}){
+  return <div className="crumbs">
+    {path.map((p,i)=> <React.Fragment key={i}>
+      {i>0 && <span style={{color:"var(--faint)",cursor:"default"}}> / </span>}
+      {p.go ? <span onClick={()=>onGo(p.go)}>{p.label}</span> : <span style={{color:"var(--dim)",cursor:"default"}}>{p.label}</span>}
+    </React.Fragment>)}
+  </div>;
+}
+
+/* =====================  DIAGRAMS  ===================== */
+function FigSpine(){ return (
+  <div className="fig"><svg viewBox="0 0 920 150">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#5c626d"/></marker></defs>
+    {/* nodes */}
+    <g fontFamily="'IBM Plex Mono', monospace" fontSize="11">
+      <rect x="8" y="46" width="150" height="58" rx="6" fill="none" stroke="#e2776b"/>
+      <text x="83" y="70" textAnchor="middle" fill="#e2776b" fontSize="12" fontWeight="600">CAPTURE EDGE</text>
+      <text x="83" y="88" textAnchor="middle" fill="#9aa0aa">what's worth capturing</text>
+
+      <rect x="210" y="32" width="290" height="86" rx="6" fill="rgba(90,167,214,.06)" stroke="#5aa7d6"/>
+      <text x="355" y="54" textAnchor="middle" fill="#5aa7d6" fontSize="12" fontWeight="600">MACHINE MIDDLE</text>
+      <text x="355" y="74" textAnchor="middle" fill="#9aa0aa" fontSize="10">compile · cluster · score · route</text>
+      <text x="355" y="104" textAnchor="middle" fill="#5c626d" fontSize="9.5">the compounding middle — the actual hard part</text>
+
+      <rect x="552" y="46" width="120" height="58" rx="6" fill="none" stroke="#717784"/>
+      <text x="612" y="78" textAnchor="middle" fill="#9aa0aa" fontWeight="600" fontSize="10">RUN / ROUTE</text>
+
+      <rect x="724" y="46" width="188" height="58" rx="6" fill="none" stroke="#e2776b"/>
+      <text x="818" y="70" textAnchor="middle" fill="#e2776b" fontSize="12" fontWeight="600">TERMINAL EDGE</text>
+      <text x="818" y="88" textAnchor="middle" fill="#9aa0aa">what actually mattered</text>
+    </g>
+    <g stroke="#5c626d" strokeWidth="1.2" markerEnd="url(#ar)">
+      <line x1="160" y1="75" x2="206" y2="75"/>
+      <line x1="502" y1="75" x2="548" y2="75"/>
+      <line x1="674" y1="75" x2="720" y2="75"/>
+    </g>
+    <text x="83" y="128" textAnchor="middle" fontFamily="'IBM Plex Mono', monospace" fontSize="9.5" fill="#e2776b">taste · human</text>
+    <text x="818" y="128" textAnchor="middle" fontFamily="'IBM Plex Mono', monospace" fontSize="9.5" fill="#e2776b">taste · human</text>
+    <text x="355" y="138" textAnchor="middle" fontFamily="'IBM Plex Mono', monospace" fontSize="9.5" fill="#5aa7d6">mechanical · machine-owned</text>
+  </svg>
+  <div className="figcap"><b>Fig. 1 — the human-edge wrap.</b> The machine owns exactly one segment. The human owns both ends, and both ends are the same faculty: taste.</div></div>
+);}
+
+function FigKeystone(){ return (
+  <div className="fig"><svg viewBox="0 0 920 196">
+    <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#5c626d"/></marker></defs>
+    <rect x="8" y="74" width="150" height="48" rx="6" fill="none" stroke="#717784"/>
+    <text x="83" y="103" textAnchor="middle" fontFamily="'IBM Plex Mono', monospace" fontSize="12" fill="#9aa0aa" fontWeight="600">LEDGER</text>
+
+    {/* top path: digest */}
+    <g fontFamily="'IBM Plex Mono', monospace" fontSize="10.5">
+      <line x1="158" y1="86" x2="246" y2="50" stroke="#5c626d" strokeWidth="1.2" markerEnd="url(#ar2)"/>
+      <rect x="250" y="26" width="250" height="48" rx="6" fill="none" stroke="#717784"/>
+      <text x="375" y="46" textAnchor="middle" fill="#9aa0aa" fontWeight="600">DIGEST · compress-to-comprehension</text>
+      <text x="375" y="63" textAnchor="middle" fill="#5c626d">something you read</text>
+      <line x1="500" y1="50" x2="566" y2="50" stroke="#5c626d" strokeWidth="1.2" markerEnd="url(#ar2)"/>
+      <rect x="570" y="26" width="120" height="48" rx="6" fill="none" stroke="#717784"/>
+      <text x="630" y="55" textAnchor="middle" fill="#9aa0aa">READ</text>
+      <text x="730" y="55" textAnchor="middle" fill="#e2776b" fontSize="22">✗</text>
+      <text x="822" y="46" textAnchor="middle" fill="#717784">no discrete unit —</text>
+      <text x="822" y="61" textAnchor="middle" fill="#717784">nothing to measure</text>
+    </g>
+
+    {/* bottom path: executable */}
+    <g fontFamily="'IBM Plex Mono', monospace" fontSize="10.5">
+      <line x1="158" y1="110" x2="246" y2="146" stroke="#5aa7d6" strokeWidth="1.4" markerEnd="url(#ar2)"/>
+      <rect x="250" y="122" width="250" height="48" rx="6" fill="rgba(90,167,214,.07)" stroke="#5aa7d6"/>
+      <text x="375" y="142" textAnchor="middle" fill="#5aa7d6" fontWeight="600">EXECUTABLE UNIT · compress-to-execution</text>
+      <text x="375" y="159" textAnchor="middle" fill="#9aa0aa">something you run</text>
+      <line x1="500" y1="146" x2="566" y2="146" stroke="#5aa7d6" strokeWidth="1.4" markerEnd="url(#ar2)"/>
+      <rect x="570" y="122" width="120" height="48" rx="6" fill="none" stroke="#4ec9b0"/>
+      <text x="630" y="151" textAnchor="middle" fill="#4ec9b0">RUN</text>
+      <text x="730" y="151" textAnchor="middle" fill="#4ec9b0" fontSize="22">✓</text>
+      <text x="822" y="142" textAnchor="middle" fill="#4ec9b0">one discrete unit —</text>
+      <text x="822" y="157" textAnchor="middle" fill="#4ec9b0">you can mark what it did</text>
+    </g>
+  </svg>
+  <div className="figcap"><b>Fig. 2 — the keystone dependency.</b> The shape of the output secretly decides whether you can ever measure it. Compression-to-execution <i>creates the unit</i> that outcome-eval evaluates.</div></div>
+);}
+
+/* =====================  SURFACE  ===================== */
+function Surface(){
+  const [tab,setTab] = useState("decide");
+  const [view,setView] = useState("overview");   // overview | quad | cluster | launch | done
+  const [quad,setQuad] = useState(null);
+  const [cid,setCid] = useState(null);
+  const [discuss,setDiscuss] = useState(false);
+  const [copied,setCopied] = useState(false);
+
+  const goTab = t => { setTab(t); if(t==="work"){setView("overview");} };
+  const openQuad = q => { setQuad(q); setView("quad"); };
+  const openCluster = c => { setCid(c); setView(CLUSTERS[c].status==="done"?"done":"cluster"); setDiscuss(false); };
+  const cl = cid ? CLUSTERS[cid] : null;
+
+  const compiledPrompt = (c) => {
+    const rows = c.members.map(m=>{const x=ins(m);return `  • ${x.t}\n    ↳ provenance: ${x.src}  ·  captured to ledger #${x.id}`;}).join("\n");
+    return {rows};
+  };
+
+  return (
+    <div className="surface">
+      <div className="surface-bar">
+        <button className={"tab"+(tab==="work"?" on":"")} onClick={()=>goTab("work")}>
+          WORK <small>the ledger · all insights</small></button>
+        <button className={"tab"+(tab==="decide"?" on":"")} onClick={()=>goTab("decide")}>
+          DECIDE <small>the launchpad · action window</small></button>
+        <span className="bar-spacer"></span>
+        <span className="barnote"><span className="dot"></span> live surface · seed data</span>
+      </div>
+
+      <div className="body">
+      {tab==="work" && (
+        <div>
+          <div className="ledger-head">
+            <h3>The compounding store</h3>
+            <span className="meta">{INSIGHTS.length} insights · everything, forever · {dormant.length} dormant waiting in DEFER</span>
+          </div>
+          <table>
+            <thead><tr><th>Insight</th><th>Provenance</th><th>P</th><th>State</th></tr></thead>
+            <tbody>
+              {INSIGHTS.map(i=> <tr key={i.id}>
+                <td className="ins-txt">{i.t}<div className="tag">#{i.tag} · {i.id}</div></td>
+                <td className="src">{i.src}</td>
+                <td className="sc">{i.p}</td>
+                <td>{i.cluster
+                  ? <span className="st clustered">in launchpad</span>
+                  : <span className="st dormant">dormant → DEFER</span>}</td>
+              </tr>)}
+            </tbody>
+          </table>
+          <div className="footnote"><b>Why this matters:</b> the ledger is the store; the launchpad is a window onto it. Un-clustered insights don't fall off — they wait. Switch to <b>DECIDE</b> to watch the compression happen.</div>
+        </div>
+      )}
+
+      {tab==="decide" && view==="overview" && (
+        <div>
+          <Crumbs path={[{label:"launchpad"}]} onGo={()=>{}}/>
+          <div style={{position:"relative"}}>
+            <div className="quad-grid">
+              {["do","big","easy","defer"].map(q=>{
+                const Q=QUADS[q];
+                return <div key={q} className="quad" style={{"--qc":Q.color}} onClick={()=>openQuad(q)}>
+                  <div className="quad-glow"></div>
+                  <div className="quad-name">{Q.name}</div>
+                  <div className="quad-sub">{Q.sub}</div>
+                  <div className="bubbles">
+                    {q==="defer"
+                      ? dormant.map(d=> <div key={d.id} className="bub single" style={{width:34,height:34}} title={d.t}>#{d.id.slice(1)}</div>)
+                      : Q.clusters.map(c=>{const C=CLUSTERS[c];const s=28+C.signal*9;
+                          return <div key={c} className={"bub"+(C.single?" single":"")} style={{width:s,height:s}} title={C.title}>{C.single?"1":C.members.length}</div>;})}
+                  </div>
+                </div>;
+              })}
+            </div>
+          </div>
+          <div className="footnote">Bubble size = signal (accumulated evidence). Singletons render dashed — a high-score single is still a discrete launchable unit. <b>Click a quadrant to zoom.</b></div>
+        </div>
+      )}
+
+      {tab==="decide" && view==="quad" && (
+        <div>
+          <Crumbs path={[{label:"launchpad",go:"overview"},{label:QUADS[quad].name}]} onGo={v=>setView(v)}/>
+          <div className="clist">
+            {(QUADS[quad].clusters.length? QUADS[quad].clusters.map(c=>CLUSTERS[c]) : []).map(C=>(
+              <div key={C.id} className="crow" style={{"--qc":QUADS[quad].color}} onClick={()=>openCluster(C.id)}>
+                <div className="csig">{C.single?"1":C.members.length}</div>
+                <div className="cmain">
+                  <div className="ctitle">{C.title}{C.status==="done" && <span style={{color:"var(--big)",fontFamily:"var(--mono)",fontSize:10,marginLeft:8}}>● done</span>}</div>
+                  <div className="cone">{C.one}</div>
+                </div>
+                <div className="cstat">P <b>{C.p}</b> · cost <b>{C.cost}</b><br/>{C.members.length} raw rows</div>
+              </div>
+            ))}
+            {quad==="defer" && dormant.map(d=>(
+              <div key={d.id} className="crow" style={{"--qc":"var(--defer)",cursor:"default"}}>
+                <div className="csig">·</div>
+                <div className="cmain"><div className="ctitle" style={{fontWeight:500}}>{d.t}</div>
+                  <div className="cone">dormant — not yet clustered, not yet load-bearing</div></div>
+                <div className="cstat">P <b>{d.p}</b><br/>{d.src}</div>
+              </div>
+            ))}
+          </div>
+          {quad==="defer" && <div className="footnote">DEFER is the holding pen, not the trash. A dormant insight that later graduates into a cluster makes that cluster's signal rise — <b>corroboration</b>, the cheapest front-end calibration there is.</div>}
+        </div>
+      )}
+
+      {tab==="decide" && view==="cluster" && cl && (
+        <div>
+          <Crumbs path={[{label:"launchpad",go:"overview"},{label:QUADS[cl.quad].name,go:"quad"},{label:"cluster"}]} onGo={v=>setView(v)}/>
+          <div className="detail-top">
+            <div>
+              <h3>{cl.title}</h3>
+              <div className="detail-meta"><span>priority <b>{cl.p}</b></span><span>cost <b>{cl.cost}</b></span><span>quadrant <b>{QUADS[cl.quad].name}</b></span></div>
+            </div>
+          </div>
+
+          <div className="block">
+            <div className="block-lbl">trace-back · raw insights compiled into this unit <span className="ln"></span></div>
+            {cl.members.map(m=>{const x=ins(m);return (
+              <div key={m} className="tracerow"><div className="t">{x.t}</div><div className="s">↳ {x.src} · ledger #{x.id}</div></div>
+            );})}
+          </div>
+
+          <div className="copyrow">
+            <button className="btn go" onClick={()=>setView("launch")}>▸ LAUNCH — compile to executable unit</button>
+            <button className="btn ghost" onClick={()=>{setDiscuss(true);setView("launch");}}>◇ DISCUSS first</button>
+          </div>
+          <div className="footnote">Provenance travels <b>with</b> the action — every raw row above gets inlined into the prompt, not parked in a separate log.</div>
+        </div>
+      )}
+
+      {tab==="decide" && view==="launch" && cl && (
+        <div>
+          <Crumbs path={[{label:"launchpad",go:"overview"},{label:QUADS[cl.quad].name,go:"quad"},{label:"cluster",go:"cluster"},{label:"launch"}]} onGo={v=>setView(v)}/>
+
+          {discuss && (
+            <div className="block">
+              <div className="block-lbl">discuss · grounded synthesis <span className="ln"></span></div>
+              <div className="discuss">
+                <div className="dmsg op"><div className="drole">operator</div>These four rows keep showing up together. What's the one change that makes all of them pay off?</div>
+                <div className="dmsg ai"><div className="drole">model · grounded in the 4 traced rows</div>
+                  All four are the same failure surfacing differently — a signal that looks like distress but isn't, a parcel scored without a path to act on it. Frame one scoring-engine change: flag administrative abatements, ban the recency signal until re-validated, and gate scoring on contact viability — then route it as a single build.
+                  <div className="grounded">grounded in: #i01 · #i02 · #i03 · #i09 — no outside claims introduced</div>
+                </div>
+                <div className="dmsg op"><div className="drole">operator</div>Good. Compile it.</div>
+              </div>
+              <div className="footnote" style={{marginBottom:8}}><b>Stack note:</b> the live v6 surface calls the Claude API here. This portable build ships a canned thread so the demo runs without keys.</div>
+            </div>
+          )}
+
+          <div className="block">
+            <div className="block-lbl">compiled operator prompt — provenance inlined <span className="ln"></span></div>
+            <div className="promptbox">
+              <div className="ph"><span className="route">routed to → <b>{cl.dest}</b></span></div>
+              <div className="pbody">
+<span className="sys"># Task compiled from launchpad cluster "{cl.title}"</span>{"\n"}
+<span className="sys"># priority {cl.p} · cost {cl.cost} · {cl.members.length} source rows</span>{"\n\n"}
+<span className="inl">Goal:</span> {cl.one}{"\n\n"}
+<span className="inl">Grounding — the raw insights this task compresses (provenance carried in):</span>{"\n"}
+{cl.members.map(m=>{const x=ins(m);return (
+<React.Fragment key={m}>{"  • "}{x.t}{"\n"}<span className="prov">{"    ↳ "}{x.src}{" · ledger #"}{x.id}{"\n"}</span></React.Fragment>);})}
+{"\n"}<span className="inl">Constraint:</span> claim the mechanism, not the result. Mark any feedback the loop hasn't validated as instrumented-not-trained.
+              </div>
+            </div>
+            <div className="copyrow">
+              <button className="btn" onClick={()=>{const {rows}=compiledPrompt(cl);navigator.clipboard&&navigator.clipboard.writeText(rows);setCopied(true);setTimeout(()=>setCopied(false),1400);}}>{copied?"✓ copied":"⧉ copy prompt"}</button>
+              <button className="btn go" onClick={()=>setView("done")}>▸ ROUTE &amp; MARK DONE</button>
+            </div>
+          </div>
+          <div className="footnote"><b>This is the leverage half:</b> paste-and-go, the operator out of the mechanical middle. The same discrete unit is also the eval half — one thing got produced, so one result can attach to it.</div>
+        </div>
+      )}
+
+      {tab==="decide" && (view==="done") && cl && (
+        <div>
+          <Crumbs path={[{label:"launchpad",go:"overview"},{label:QUADS[cl.quad].name,go:"quad"},{label:"cluster",go:"cluster"},{label:"result"}]} onGo={v=>setView(v)}/>
+          <div className="detail-top"><div><h3>{cl.title}</h3>
+            <div className="detail-meta"><span style={{color:"var(--big)"}}>● routed &amp; done</span><span>→ {cl.dest}</span></div></div></div>
+
+          <div className="block">
+            <div className="block-lbl">result chain <span className="ln"></span></div>
+            <div className="chain">
+              <div className="step"><div className="k">launched</div><div className="v">compiled → {cl.dest}</div></div>
+              <div className="step"><div className="k">produced</div><div className="v">commit landed · PR #214 merged</div></div>
+              <div className="step"><div className="k">terminal</div><div className="v">pending operator verdict</div></div>
+            </div>
+          </div>
+
+          <div className="block">
+            <div className="block-lbl">two-tier outcome <span className="ln"></span></div>
+            <div className="twotier">
+              <div className="tier machine">
+                <div className="th">machine label · proximate</div>
+                <div className="q">"did it produce?"</div>
+                <div className="d">Observable, no judgment. Auto-tracked as the unit executes — the live corpus watches commits land via GitHub MCP. Hard-measured, not self-reported.</div>
+                <div className="badge">✓ produced — auto-detected</div>
+              </div>
+              <div className="tier human">
+                <div className="th">human label · terminal</div>
+                <div className="q">"did it matter?"</div>
+                <div className="d">Happens offline; the machine can't see it. The taste verdict, stripped of the mechanical part. A narrowed edge — not erased.</div>
+                <div className="badge">◇ awaiting verdict — seeded example</div>
+              </div>
+            </div>
+            <div className="footnote">The "what's working" readout learns from the <b>mattered</b> verdict, <b>gated by</b> the <b>produced</b> label. Produced → eligible to be judged for mattering. That gate is the keystone applied to the outcome step itself.</div>
+          </div>
+
+          <div className="ww">
+            <div className="ww-lbl">what's working <span className="pill">instrumented · not trained</span></div>
+            <p>The loop is wired and watching. <b>Zero real outcomes have been logged</b> — so today the surface runs on the score's <i>prior</i>, which the outcome loop has not yet corrected. The feedback arrow is real; it has not yet carried data. Saying so is what makes the rest of the surface trustworthy.</p>
+          </div>
+
+          <div className="copyrow"><button className="btn ghost sm" onClick={()=>setView("overview")}>← back to launchpad</button></div>
+        </div>
+      )}
+      </div>
+    </div>
+  );
+}
+
+/* =====================  PAGE  ===================== */
+function App(){
+  return <div className="wrap">
+    <div className="mast">
+      <div className="kicker">intel compounding loop · <b>launchpad surface v6</b> · live</div>
+      <h1>From Ledger to Launchpad</h1>
+      <p className="lede">An intel surface that compresses a compounding ledger into discrete, executable, provenance-carrying actions — built so the human stays only at the two taste edges (<em>what to capture, what mattered</em>) while the machine owns the middle, and built to grade itself by what acting on it produces.</p>
+      <div className="chips">
+        <span className="chip">capability demo · not a proposal</span>
+        <span className="chip">a thing I run</span>
+        <span className="chip warn">outcome loop: instrumented, unused — seed data</span>
+      </div>
+    </div>
+
+    <section>
+      <div className="sec-no">01 · the keystone</div>
+      <h2>A digest you read can't be graded. A unit you run can. The output form decides which.</h2>
+      <div className="prose">
+        <p>Most intel tools compress a ledger into a <strong>summary</strong> — a digest you <em>read</em>. This loop compresses it into something you <em>run</em>: a discrete, routed, provenance-carrying <strong>instruction</strong>.</p>
+        <p>You can't attach a result to prose — there's nothing discrete that "got done." You can attach one to a unit that ran. So the output form silently decides whether measurement is ever possible — and you pick it <em>before</em> you're thinking about measurement at all.</p>
+        <p className="pull">Neither half is new alone. Compression-to-execution <strong>creates the unit</strong> that outcome-eval evaluates. The dependency between them is the novelty — not the integration.</p>
+        <p>This is a <strong>leverage-and-eval</strong> story, not a trust story. One design choice does two jobs: leverage (paste-and-go, operator out of the mechanical middle) and eval (one discrete thing → you can mark what it produced). Speed now, learning later, same object.</p>
+      </div>
+      <FigKeystone/>
+    </section>
+
+    <section>
+      <div className="sec-no">02 · the wrap</div>
+      <h2>The human stays at the two edges; the machine eats the middle.</h2>
+      <div className="prose">
+        <p>You sense at the <span className="hu">capture edge</span> → the machine compresses to an executable unit → you act → you judge the <span className="hu">terminal outcome</span>. The machine owns exactly one segment. Both human ends are the same faculty — taste: <em>what's worth capturing</em> in, <em>what actually mattered</em> out.</p>
+        <p>"Keep the human at the edges" reads two ways. The wrong read: <em>clings to manual work, doesn't trust agents.</em> The honest read: <strong>the operator pulled out of the compounding middle</strong> — compile, cluster, score, route, all owned by the agent pipeline — and kept only the two irreducible-judgment points. This is a <strong>more</strong> aggressive automation thesis than scrape-everything, not a softer one.</p>
+        <p>The human's contribution isn't secret data — the sources are public. And it isn't line-level curation: the operator doesn't pick the sentences. It's earlier and coarser — <em>this source is worth keeping, and here's the lens to read it through</em> (the author, a tool, a technical angle, the business, the landscape). Extraction is handed to the model, on purpose. <strong>Relevance and direction, not framing.</strong></p>
+        <p>And that <strong>edge recedes</strong>. Today the operator sets relevance and direction; as the model gets better at proposing what's worth keeping, the call relocates up a level — from "is this worth keeping" to "which direction to bet, what to even look for." The task compresses; the position doesn't. The edge was never a fixed faculty — it's occupying the frontier that keeps receding.</p>
+      </div>
+      <FigSpine/>
+    </section>
+
+    <section>
+      <div className="sec-no">03 · the walk</div>
+      <h2>The navigation is the argument.</h2>
+      <div className="prose">
+        <p>Two tabs. <strong>Work</strong> is the ledger — every insight, forever, the compounding store. <strong>Decide</strong> is the launchpad — clusters plus high-score singles, the compressed action window. Switching between them <em>enacts</em> ledger → launchpad; the UI doesn't describe the thesis, it walks you through it. Dormant insights surface in <strong>DEFER</strong> — nothing falls off.</p>
+        <p>Below is the surface itself. Open <strong>Decide → DO NOW</strong> and walk a cluster from raw rows to a routed, self-grading action. The fully-walked example (the scoring fix) is marked <em>done</em>.</p>
+      </div>
+      <Surface/>
+    </section>
+
+    <section>
+      <div className="sec-no">04 · the eval step</div>
+      <h2>Two labels, split along observable vs. taste.</h2>
+      <div className="prose">
+        <p>The outcome splits cleanly. The <span className="ma">machine label</span> answers <em>"did it produce?"</em> — observable, auto-tracked as the unit executes, no judgment. It fixes the usual input/output asymmetry: the proximate outcome becomes hard-measured, not self-reported. The <span className="hu">human label</span> answers <em>"did it matter?"</em> — offline, the taste verdict the machine can't see. Same judgment as the capture edge, now a much smaller edge: the machine took the mechanical "log what got produced" part.</p>
+        <p>The readout learns from the <strong>mattered</strong> label, gated by the <strong>produced</strong> label. That gate is the keystone applied to the outcome step itself.</p>
+      </div>
+    </section>
+
+    <section style={{borderBottom:"none"}}>
+      <div className="sec-no">05 · prior art &amp; honesty</div>
+      <h2>The components are recombined known patterns. The dependency is the claim.</h2>
+      <div className="prose">
+        <p>Conceding this is what lets the keystone read as the real contribution: the priority × cost quadrant is Eisenhower / impact-effort; the provenance-inlined prompt is RAG with citations; insight clustering is affinity mapping; done → result-chain is OKR / outcome analytics. The novelty is the keystone dependency, not the assembly.</p>
+        <p>And the honest line, held throughout: <strong>the outcome loop is built and instrumented but unused.</strong> Zero real outcomes logged. The surface claims the mechanism, never the result — a thing built to grade itself by what acting on it produces, not a thing that has learned what works. Front-end calibration (corroboration, operator overrides, cost-from-actuals) is available today; the outcome loop is the slower back-end path. The dashed feedback arrow is real, and it hasn't carried data yet. That restraint is the point.</p>
+      </div>
+      <div className="footnote" style={{maxWidth:740}}>
+        Trust is a property this surface happens to have — mistrust resolves into inlined provenance and measured priority. It makes the system trustworthy; it is not what makes it new. Built on the live <b>intel-v6</b> surface; data shown is seed/illustrative pending real outcome volume.
+      </div>
+    </section>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
