@@ -46,7 +46,7 @@
   section{padding:40px 0;border-bottom:1px solid var(--line)}
   .sec-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
   h2{font-family:var(--serif);font-weight:500;font-size:27px;letter-spacing:-.01em;margin:8px 0 14px;line-height:1.15}
-  .prose{font-family:var(--serif);font-size:17px;line-height:1.62;color:#d6d3cc;max-width:740px}
+  .prose{font-family:var(--serif);font-size:17px;line-height:1.62;color:#d6d3cc;max-width:none}
   .prose p{margin:0 0 15px}
   .prose strong{color:var(--ink);font-weight:600}
   .prose .hu{color:var(--human);font-style:italic}
@@ -568,7 +568,7 @@ function App(){
         <p>Most intel tools compress a ledger into a <strong>summary</strong> — a digest you <em>read</em>. This loop compresses it into something you <em>run</em>: a discrete, routed, provenance-carrying <strong>instruction</strong>.</p>
         <p>You can't attach a result to prose — there's nothing discrete that "got done." You can attach one to a unit that ran. So the output form silently decides whether measurement is ever possible — and you pick it <em>before</em> you're thinking about measurement at all.</p>
         <p className="pull">Neither half is new alone. Compression-to-execution <strong>creates the unit</strong> that outcome-eval evaluates. The dependency between them is the novelty — not the integration.</p>
-        <p>This is a <strong>leverage-and-eval</strong> story, not a trust story. One design choice does two jobs: leverage (paste-and-go, operator out of the mechanical middle) and eval (one discrete thing → you can mark what it produced). Speed now, learning later, same object.</p>
+        <p>This is a <strong>leverage-and-eval</strong> story. One design choice does two jobs: leverage (paste-and-go, operator out of the mechanical middle) and eval (one discrete thing → you can mark what it produced). Speed now, learning later, same object.</p>
       </div>
       <FigKeystone/>
     </section>
@@ -578,7 +578,7 @@ function App(){
       <h2>The human stays at the two edges; the machine eats the middle.</h2>
       <div className="prose">
         <p>You sense at the <span className="hu">capture edge</span> → the machine compresses to an executable unit → you act → you judge the <span className="hu">terminal outcome</span>. The machine owns exactly one segment. Both human ends are the same faculty — taste: <em>what's worth capturing</em> in, <em>what actually mattered</em> out.</p>
-        <p>"Keep the human at the edges" reads two ways. The wrong read: <em>clings to manual work, doesn't trust agents.</em> The honest read: <strong>the operator pulled out of the compounding middle</strong> — compile, cluster, score, route, all owned by the agent pipeline — and kept only the two irreducible-judgment points. This is a <strong>more</strong> aggressive automation thesis than scrape-everything, not a softer one.</p>
+        <p>"Keep the human at the edges" reads two ways. The misread: <em>clings to manual work, doesn't trust agents.</em> The accurate read: <strong>the operator pulled out of the compounding middle</strong> — compile, cluster, score, route, all owned by the agent pipeline — and kept only the two irreducible-judgment points. This is a <strong>more</strong> aggressive automation thesis than scrape-everything, not a softer one.</p>
         <p>The human's contribution isn't secret data — the sources are public. And it isn't line-level curation: the operator doesn't pick the sentences. It's earlier and coarser — <em>this source is worth keeping, and here's the lens to read it through</em> (the author, a tool, a technical angle, the business, the landscape). Extraction is handed to the model, on purpose. <strong>Relevance and direction, not framing.</strong></p>
         <p>And that <strong>edge recedes</strong>. Today the operator sets relevance and direction; as the model gets better at proposing what's worth keeping, the call relocates up a level — from "is this worth keeping" to "which direction to bet, what to even look for." The task compresses; the position doesn't. The edge was never a fixed faculty — it's occupying the frontier that keeps receding.</p>
       </div>
@@ -609,7 +609,7 @@ function App(){
       <h2>The components are recombined known patterns. The dependency is the claim.</h2>
       <div className="prose">
         <p>Conceding this is what lets the keystone read as the real contribution: the priority × cost quadrant is Eisenhower / impact-effort; the provenance-inlined prompt is RAG with citations; insight clustering is affinity mapping; done → result-chain is OKR / outcome analytics. The novelty is the keystone dependency, not the assembly.</p>
-        <p>And the honest line, held throughout: <strong>the outcome loop is built and instrumented but unused.</strong> Zero real outcomes logged. The surface claims the mechanism, never the result — a thing built to grade itself by what acting on it produces, not a thing that has learned what works. Front-end calibration (corroboration, operator overrides, cost-from-actuals) is available today; the outcome loop is the slower back-end path. The dashed feedback arrow is real, and it hasn't carried data yet. That restraint is the point.</p>
+        <p>And the honest line, held throughout: <strong>the outcome loop is built and instrumented but unused.</strong> Zero real outcomes logged. The surface claims the mechanism, never the result — a thing built to grade itself by what acting on it produces, not a thing that has learned what works. Front-end calibration (corroboration, operator overrides, cost-from-actuals) is available today; the outcome loop is the slower back-end path. The dashed feedback arrow is real, and it hasn't carried data yet.</p>
       </div>
       <div className="footnote" style={{maxWidth:740}}>
         Trust is a property this surface happens to have — mistrust resolves into inlined provenance and measured priority. It makes the system trustworthy; it is not what makes it new. Built on the live <b>intel-v6</b> surface; data shown is seed/illustrative pending real outcome volume.
