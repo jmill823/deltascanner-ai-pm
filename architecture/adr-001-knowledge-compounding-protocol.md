@@ -48,7 +48,7 @@ Move the knowledge store out of the operator's hands and into the system's opera
 
 ## References
 
-- [Case study, Layer 4](../case-study-full.md)
+- [Case study, Layer 4](../one-pagers/case-study-onepager.md)
 - `examples/solution-files/hardcoded-filenames.md`
 - `examples/solution-files/forced-sale-file-finder.md`
 - `examples/solution-files/pipeline-gate-false-positive.md`
