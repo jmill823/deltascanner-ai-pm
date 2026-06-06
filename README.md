@@ -8,6 +8,11 @@ I'm a non-technical solo founder. I do not write build code. The agents write, b
 
 This repo is the working artifact of that approach. It contains the full case study, a shorter distillation, the compounded intelligence brief that informs the framing, and the supporting documents that make the case study verifiable rather than rhetorical — spec standards, handoff contracts, solution files showing the system catching regressions.
 
+## Featured
+
+- **[Structural Mistrust — an eval framework](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)** — the eval discipline behind the system: four failure classes, two tracks, one operator loop, and a freeze line that moves on outcomes.
+- **[Intel Launchpad — live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html)** — an interactive surface that compresses a compounding ledger into discrete, executable, provenance-carrying actions. A thing I run.
+
 ---
 
 ## What this repo is
