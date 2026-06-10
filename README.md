@@ -1,3 +1,15 @@
+# Start here: AI-PM proof in 3 minutes
+
+I'm a non-technical, AI-native PM. The whole portfolio in five lines — each links to the proof.
+
+1. **I operate a multi-agent system.** A 10-agent fleet on Claude that authors and validates a deterministic decision engine — ~223,000 property parcels scored across 13 US markets. → [Deltascanner](https://deltascanner.com)
+2. **The failure I kept hitting: AI systems overclaim and drift.** A model meets an underspecified spec with a confident, fluent answer instead of "I don't know" — and behavior drifts silently when the model changes, no error thrown.
+3. **Structural Mistrust is the discipline that catches it.** Confidence computed, not asserted; failures shipped marked, not laundered; the few high-stakes judgments frozen until they survive disagreement. → [the brief](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)
+4. **Ledger → Launchpad is the execution surface.** The operator loop made interactive: a compounding ledger compressed into discrete, executable, provenance-carrying actions. → [live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html)
+5. **The honest limit:** the outcome loop is instrumented but hasn't accumulated enough reality to score its predictions against — designed, not yet running. I won't claim otherwise. → [the receipts](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)
+
+---
+
 # Deltascanner as an AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an Operator Profile encoding how I work, model-agnostic, ported across the fleet. The layer it created didn't appear in any architecture diagram I'd seen.

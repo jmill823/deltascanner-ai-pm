@@ -14,7 +14,7 @@ The case study's pre-April/post-April first-pass acceptance rate (31% → 86%) i
 
 ## Adaptation notes
 
-This is the DeltaScanner version. The specific assertions reference DS's domain (scored CSVs, parcel data, property enrichment, YAML-configured scoring, 13-city pipeline, web CSV outputs). If you're adapting this standard:
+This is the Deltascanner version. The specific assertions reference DS's domain (scored CSVs, parcel data, property enrichment, YAML-configured scoring, 13-city pipeline, web CSV outputs). If you're adapting this standard:
 
 - Keep the structural requirement — every CC-bound spec must include acceptance tests written before build code
 - Replace the domain-specific assertions (scoring compliance, enrichment integrity) with whatever "correct" looks like in your system
@@ -263,5 +263,5 @@ The only new thing the operator might see: the health check output in pipeline r
 
 ---
 
-*CC Spec Standards | Adapted from DeltaScanner's production fleet*
+*CC Spec Standards | Adapted from Deltascanner's production fleet*
 *Standing rules: no CC spec ships without acceptance tests; no CC spec ships with soft-filter language.*

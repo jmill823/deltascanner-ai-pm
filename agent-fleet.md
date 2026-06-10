@@ -10,6 +10,7 @@ The fleet was designed under one constraint: **the founder is the reviewer, not 
 |---|---|---|---|
 | Strategy | Gate | v1 | Reconciliation hub, doctrine-bounded synthesis, spec authoring |
 | Product | Gate | v4 | CC build spec authoring with acceptance tests |
+| Claude Code (build) | Gate | — | Build executor; implements specs, runs acceptance tests, commits/pushes |
 | Outreach Drafter | Gate | v5 | Outreach DM/email drafting; gift-first second-touch framework |
 | PRR Tracker | Reviewer | v5 | Public-records-request operations; weekly digest |
 | CC Intel Queue | Reviewer | v3 | Per-email insight extraction; compile instructions for repo writes |
