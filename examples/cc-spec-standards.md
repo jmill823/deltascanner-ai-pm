@@ -14,7 +14,7 @@ The case study's pre-April/post-April first-pass acceptance rate (31% → 86%) i
 
 ## Adaptation notes
 
-This is the Deltascanner version. The specific assertions reference DS's domain (scored CSVs, parcel data, property enrichment, YAML-configured scoring, 13-city pipeline, web CSV outputs). If you're adapting this standard:
+This is the Deltascanner version. The specific assertions reference DS's domain (scored CSVs, parcel data, property enrichment, the centralized scoring config `web/src/config/city-config.json`, 13-city pipeline, web CSV outputs). If you're adapting this standard:
 
 - Keep the structural requirement — every CC-bound spec must include acceptance tests written before build code
 - Replace the domain-specific assertions (scoring compliance, enrichment integrity) with whatever "correct" looks like in your system
@@ -52,7 +52,7 @@ CC: Write these as automated tests BEFORE building. All must pass for the build 
 - [ ] No NaN or null values in score column
 
 ### Scoring Compliance
-- [ ] Weights in YAML config sum to 1.0 (±0.01)
+- [ ] Weights in the scoring config (`web/src/config/city-config.json`) sum to 1.0 (±0.01)
 - [ ] No recency-type components in config
 - [ ] Architecture type declared (Intersection / Tax-Primary)
 
@@ -122,14 +122,14 @@ A health check script (`scripts/tests/health_check.py`) that validates all live 
 
 ### Assertions Per City
 
-For EVERY city in `config/*.yml`:
+For EVERY city in the scoring config (`web/src/config/city-config.json`):
 
 **Scoring**
 1. Scored CSV exists at expected path
 2. Scored CSV has >0 rows
 3. All scores are 0-100
 4. No NaN in score column
-5. Weights in YAML config sum to 1.0 (±0.01)
+5. Weights in the scoring config (`web/src/config/city-config.json`) sum to 1.0 (±0.01)
 6. No recency-type components in config
 7. Architecture type is declared (Intersection or Tax-Primary)
 
@@ -150,7 +150,7 @@ For EVERY city in `config/*.yml`:
 17. Web CSV columns match city-config display columns
 
 **Config Consistency**
-18. City appears in YAML config
+18. City appears in the scoring config (`web/src/config/city-config.json`)
 19. City appears in web config (for UI rendering)
 20. MSA field populated
 

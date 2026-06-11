@@ -1,5 +1,7 @@
 # Solution — Pipeline Gate False Positive on Unweighted Metadata
 
+> **Historical artifact — documents the built-not-shipped universal-scorer rebuild, not current production.** The NYC config and YAML schema (`config/nyc.yml`, `scoring_composite`) referenced below belong to the `deltascanner-pipelines` rebuild (`score_city.py` + `cities.yml` + `schema.py`), which was built but never shipped. Production scoring runs the per-city scripts with weights in `web/src/config/city-config.json` via `shared/scoring_config.py`. See [ADR-003](../../architecture/adr-003-scoring-architecture.md).
+
 **Date:** April 3, 2026
 **Originating build:** PROD30 — Atomic Deploy Pipeline
 **Failure class:** Validation check tested symbol existence instead of real system state
