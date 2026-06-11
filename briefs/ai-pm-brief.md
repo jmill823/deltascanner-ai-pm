@@ -30,7 +30,7 @@ The two questions that separate builders from resume-updaters: *"Walk me through
 
 ### P2: A multi-agent product converges on a five-layer architecture.
 
-The five-layer stack (#170) is the skeleton most agentic systems converge toward: interaction → orchestration → specialized agents → data → model API. The case study walks each layer with its production implementation in DeltaScanner. Tradeoff calls within each layer are the differentiator in technical interviews.
+The five-layer stack (#170) is the skeleton most agentic systems converge toward: interaction → orchestration → specialized agents → data → model API. The case study walks each layer with its production implementation in Deltascanner. Tradeoff calls within each layer are the differentiator in technical interviews.
 
 | Layer | Name | Production implementation |
 |---|---|---|

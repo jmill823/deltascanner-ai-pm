@@ -1,4 +1,4 @@
-# DeltaScanner as an AI Product Management Case Study
+# Deltascanner as an AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an [Operator Profile](../examples/operator-profile.md) encoding how I work, model-agnostic, ported across the fleet. The layer didn't appear in any architecture diagram I'd seen. That's the case study. **The architecture wasn't designed; it was discovered through operating.**
 
