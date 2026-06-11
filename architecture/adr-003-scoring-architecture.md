@@ -1,6 +1,6 @@
 # ADR-003: Scoring Architecture — Per-City in Production, Universal Scorer Built but Not Shipped
 
-**Status:** Accepted · **Corrected [Jeff sets date]** — an earlier version described the universal scorer as the production architecture. It is built but never shipped; production runs the per-city scripts. Corrected against the live web repo and both pipeline repos.
+**Status:** Accepted · **Corrected June 11, 2026** — an earlier version described the universal scorer as the production architecture. It is built but never shipped; production runs the per-city scripts. Corrected against the live web repo and both pipeline repos.
 
 ## Context
 Scoring weights had drifted across cities — four ran drifted weights, and Miami's Tier B kept a banned recency signal. With weights hardcoded per script, a change in one place didn't propagate, and drift stayed invisible until it shipped.

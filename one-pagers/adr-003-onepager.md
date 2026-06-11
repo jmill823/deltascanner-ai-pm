@@ -1,6 +1,6 @@
 # ADR-003: Scoring Architecture — Per-City in Production, Universal Scorer Built but Not Shipped (one-pager)
 
-**Accepted · Corrected [Jeff sets date]** | Architecture / Scoring
+**Accepted · Corrected June 11, 2026** | Architecture / Scoring
 
 ## Correction
 
@@ -24,4 +24,4 @@ The universal scorer is real and complete, but unshipped — production is per-c
 
 ---
 
-**Full ADR** at [`architecture/adr-003-universal-yaml-scorer.md`](../architecture/adr-003-universal-yaml-scorer.md). Includes the drifted-weights context, the built-not-shipped rebuild, and the correction note on how the overclaim was caught.
+**Full ADR** at [`architecture/adr-003-scoring-architecture.md`](../architecture/adr-003-scoring-architecture.md). Includes the drifted-weights context, the built-not-shipped rebuild, and the correction note on how the overclaim was caught.

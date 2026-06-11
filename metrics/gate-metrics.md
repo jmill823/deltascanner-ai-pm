@@ -47,7 +47,7 @@ Logged per first-pass failure. Six categories cover the patterns observed pre-te
 2. **Missing or weak acceptance test.** Block 7 didn't include an assertion that would have caught the defect. Fix: extend the standard acceptance test set; update `cc-spec-standards.md`.
 3. **Documentation drift.** Spec referenced a file path or component that didn't exist (or had been renamed) in the actual repo. Fix: verify-against-repo step before spec finalization.
 4. **Scope creep.** CC built outside the approved scope boundary, even though the spec's "What NOT To Do" section was populated. Fix: tighten the boundary statement, add an explicit STOP-and-flag instruction.
-5. **Architecture mismatch.** Spec described an architecture that didn't match the actual repo (e.g., described as 13 scripts, actually a universal scorer). Fix: documentation-against-code audit before spec authoring.
+5. **Architecture mismatch.** Spec described an architecture that didn't match the actual repo (e.g., described as the universal scorer, when production actually runs the 13 per-city scripts and the universal scorer is a built-but-unshipped rebuild). Fix: documentation-against-code audit before spec authoring.
 6. **Cross-cutting regression.** Change to one component broke another (city A change broke city B; pipeline change broke frontend display). Fix: add the affected workflow to the standard regression check list.
 
 ### Log
