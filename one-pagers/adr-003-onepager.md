@@ -1,27 +1,27 @@
-# ADR-003: Universal Scorer with Per-City YAML Configs (one-pager)
+# ADR-003: Scoring Architecture — Per-City in Production, Universal Scorer Built but Not Shipped (one-pager)
 
-**Decided November 2025; schema-hardened April 1–2, 2026** | Architecture / Scoring
+**Accepted · Corrected [Jeff sets date]** | Architecture / Scoring
+
+## Correction
+
+An earlier version described the universal scorer as the production architecture. It is built but never shipped; production runs the per-city scripts. Corrected against the live web repo and both pipeline repos.
 
 ## Context
 
-Thirteen cities, each with a structurally different distress scoring model. Signals are similar — tax delinquency, code enforcement violations, sometimes liens — but available fields and useful weights vary because the underlying public data sources don't share a schema. Fort Lauderdale runs a 5-component model; Chicago runs 3 because its CE feed is thinner. The natural-feeling answer is thirteen city-specific scoring scripts — easy to write, easy to change one without touching another. I picked the harder answer.
+Scoring weights had drifted across cities — four ran drifted weights, and Miami's Tier B kept a banned recency signal. With weights hardcoded per script, a change in one place didn't propagate, and drift stayed invisible until it shipped.
 
-## Decision
+## Decision (what's in production)
 
-One universal scorer (`scripts/score/score_city.py`) that doesn't know which city it's running. Per-city YAML configs (`config/[city].yml`) declare weights, components, normalization, and city-specific modifiers. Schema validation is non-negotiable: weights sum to 1.0 ±0.01, no recency-named composite components (per ADR-005), required fields present, modifier effects declared explicitly. Schema fail blocks the deploy. New cities get a config file, not new code.
+Each city is scored by its own script (`*_score.py`), dispatched through `run_city.py` via the `CITY_SCRIPTS` table. Weights are centralized in one source of truth — `web/src/config/city-config.json`, read through `shared/scoring_config.py`, which validates weights sum to 1.0 and that no banned recency component is present. 13 of 14 cities load from the shared config; Charlotte still hardcodes. Outputs are normalized by `normalize_csv.py` and committed as static CSVs to the web repo, which Vercel serves with no deploy-time scoring.
 
-## Alternatives (one line each)
+## The universal-scorer rebuild (built, not shipped)
 
-Thirteen city-specific scripts — silent drift; a March 30 audit caught four cities with weight values that didn't match documented weights, only because a compliance validator ran across all configs. Shared library + per-city scripts — partial DRY, leaves city code as a maintenance surface and blurs the config boundary. ML-driven adaptive weights — breaks explainability ("tax balance: 0.45, years delinquent: 0.30" beats "the model learned…") and breaks rebuild-on-config-change auditability.
+A separate consolidation — `deltascanner-pipelines`: one universal config-driven scorer (`score_city.py` + per-city `cities.yml` + `schema.py`) — was built in March 2026 to replace the per-city scripts. It works and matches its own spec. It has not shipped: dormant since Mar 23, never committed a scored output, no deploy path. The production CSVs (committed Apr 14) come from the per-city scripts. Banked, not deployed — it earns the cutover when validated against the per-city baselines, not before.
 
-## Honest limit
+## Honest limits
 
-The scorer hasn't been stress-tested on a city with a *materially* different data shape. All 13 are some combination of county tax + city CE. A future city with only utility-shutoff records as the distress signal may need a schema extension or a new scorer — open. Pre-validator-era scoring (before April 2) has a measurement gap: the validator confirms current correctness but can't reconstruct how many drifted values existed before it.
-
-## Revisit triggers
-
-A new city's natural model has fewer than two of the existing component categories. A validator-passing config produces field-validated wrong rankings within 30 days of deploy. City configs collectively accumulate more than six explicit modifiers. Institutional buyers become primary revenue and run their own models on the scored outputs — re-litigate the ML-rejection reasoning.
+The universal scorer is real and complete, but unshipped — production is per-city until the cutover is validated. Charlotte is unmigrated from hardcoded weights; the shared config governs 13/14. `shared/scoring_config.py` is untracked in git while tracked city scripts import it — a fragility to close.
 
 ---
 
-**Full ADR** at [`architecture/adr-003-universal-yaml-scorer.md`](../architecture/adr-003-universal-yaml-scorer.md). Includes the four-drifted-weights audit, the modifier-proliferation risk, and the documentation-vs-code mismatch incident that produced a related standing rule.
+**Full ADR** at [`architecture/adr-003-universal-yaml-scorer.md`](../architecture/adr-003-universal-yaml-scorer.md). Includes the drifted-weights context, the built-not-shipped rebuild, and the correction note on how the overclaim was caught.

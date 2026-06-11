@@ -8,7 +8,7 @@ Through late 2025 and early 2026, seven of the platform's city scoring models in
 
 ## Decision
 
-Ban recency as a scoring component in any distress model. No `days_since_*`, `weeks_since_*`, or `recency_*` fields contribute weight to a composite distress score. Duration fields (`years_delinquent`, `years_since_first_violation`) are permitted and preferred. Recency-named fields may exist as **metadata** — surfaced in property cards, sort orders, filter inputs — but cannot enter the weighted composite. Enforcement is schema-level: the universal scorer (ADR-003) validates each city's YAML config before deploy and blocks recency-like patterns from contributing weight.
+Ban recency as a scoring component in any distress model. No `days_since_*`, `weeks_since_*`, or `recency_*` fields contribute weight to a composite distress score. Duration fields (`years_delinquent`, `years_since_first_violation`) are permitted and preferred. Recency-named fields may exist as **metadata** — surfaced in property cards, sort orders, filter inputs — but cannot enter the weighted composite. Enforcement is at config-load: `shared/scoring_config.py` (ADR-003) validates the centralized weight config when it's read and raises on a banned recency component, blocking recency-like patterns from contributing weight.
 
 ## Alternatives (one line each)
 

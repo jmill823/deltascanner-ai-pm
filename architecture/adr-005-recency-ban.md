@@ -29,7 +29,7 @@ Specifically:
 - Duration fields (`years_delinquent`, `years_since_first_violation`) are permitted and preferred.
 - Recency-named fields may exist as **metadata** — surfaced in property cards, sort orders, filter inputs — but cannot enter the weighted composite.
 
-Enforcement is schema-level. The universal scorer validates each city's YAML config before deploy and blocks recency-like patterns from contributing weight. Policy without tooling-level enforcement was insufficient (see Consequences).
+Enforcement is at config-load. `shared/scoring_config.py` validates the centralized weight config (`web/src/config/city-config.json`) when it's read and raises on a banned recency component, blocking recency-like patterns from contributing weight. Policy without tooling-level enforcement was insufficient (see Consequences).
 
 ## Alternatives considered
 
@@ -44,7 +44,7 @@ Enforcement is schema-level. The universal scorer validates each city's YAML con
 ## Consequences
 
 - Seven city models rebuilt in the March 20 batch. One city (Chicago) saw 54.6% of parcels move more than 20 points after rescore — large, but expected: tax-only parcels had been suppressed by absent CE-recency signal. The post-correction ranking matches operator intuition more closely on field validation.
-- The universal scorer enforces the ban through schema validation. Recency-named composite weights are blocked at config-load time, before any score is computed. Any future config change that tries to reintroduce recency-as-weight fails the deploy gate.
+- `shared/scoring_config.py` enforces the ban at config-load: it raises on a banned recency component, so recency-named composite weights are blocked before any score is computed. Any future config change that tries to reintroduce recency-as-weight fails on load.
 - One false positive surfaced April 3: NYC had a `score_recency` field as metadata only, with zero composite weight. The initial gate flagged it on field-name match. The refined gate checks the *weighted* composite, not field existence — a recency-named field with zero weight is permitted as metadata. Worth noting because the lesson is general: validation gates should check the operative property (weight) rather than the surface property (name).
 - Customer-facing scoring documentation got simpler. The composite is duration-weighted across tax and CE signals. Recency, if it appears at all, is a sort or filter input — not part of the conviction score.
 
@@ -64,6 +64,6 @@ Duration isn't a clean substitute everywhere. Two cities have thin tax-history r
 
 ## Related decisions
 
-- **Schema validation requirement** (April 1–2, 2026): all scoring config changes pass through `schema.py` before deploy. Origin partly here — policy without enforcement was insufficient.
+- **Config-load validation requirement** (April 1–2, 2026): all scoring config changes pass through `shared/scoring_config.py` validation at config-load. Origin partly here — policy without enforcement was insufficient.
 - **Rule-change verification** (March 30, 2026): a scoring rule is not "complete" until the live scored CSV reflects it. Origin: the partial-enforcement gap that surfaced this rule's incomplete rollout.
 - **External review gate** (April 2, 2026): scoring/architecture/config changes get an external code-audit pass before deploy. Same reinforcement pattern — catch documentation/code mismatches before they ship.

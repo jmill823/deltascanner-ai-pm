@@ -13,7 +13,7 @@ Without the first property, the curator degrades into a rubber stamp when the qu
 
 ## Adaptation notes
 
-This is the DeltaScanner version. The agent names (Outreach Drafter, PRR Tracker, QA Triage, Product, Strategy, CC Intel Queue, Data Discovery, Deliverable QA) and the project file names (DS-TODO, DS-PLAYBOOK, DS-CITY-PIPELINE, DS-SCORING-REGISTRY, DS-SALES-KIT, DS-OPS-PLAYBOOK) are specific to the fleet documented in the case study. If you're adapting this template:
+This is the Deltascanner version. The agent names (Outreach Drafter, PRR Tracker, QA Triage, Product, Strategy, CC Intel Queue, Data Discovery, Deliverable QA) and the project file names (DS-TODO, DS-PLAYBOOK, DS-CITY-PIPELINE, DS-SCORING-REGISTRY, DS-SALES-KIT, DS-OPS-PLAYBOOK) are specific to the fleet documented in the case study. If you're adapting this template:
 
 - Replace DS-specific file names with your own project's canonical files
 - Adjust the agent-specific learnings tables to match your fleet's agents
@@ -233,5 +233,5 @@ The better the handoff, the less interpretation required. Interpretation is wher
 
 ---
 
-*Agent Handoff Template | Adapted from DeltaScanner's production fleet*
+*Agent Handoff Template | Adapted from Deltascanner's production fleet*
 *"Tell the Strategy Agent exactly where things go. Don't make it guess."*
