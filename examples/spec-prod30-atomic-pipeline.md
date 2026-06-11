@@ -1,5 +1,7 @@
 # Spec Example — Atomic Pipeline Build (PROD30)
 
+> **Historical artifact — documents the built-not-shipped universal-scorer rebuild, not current production.** The universal scorer and YAML configs (`config/*.yml`) referenced below belong to the `deltascanner-pipelines` rebuild, which was built but never shipped. Production scoring runs the per-city scripts (`*_score.py` via `run_city.py`/`CITY_SCRIPTS`) with weights centralized in `web/src/config/city-config.json` (read via `shared/scoring_config.py`). See [ADR-003](../architecture/adr-003-scoring-architecture.md).
+
 A representative build spec following the feature-spec template referenced in the case study and `cc-spec-standards.md`. The PROD30 spec describes an atomic deploy pipeline — all steps pass or nothing ships — with validation gates running before any city rescore-and-deploy.
 
 *Note: This is a reconstructed spec based on the feature-spec template standards and the case study's description of what PROD30 did. The actual PROD30 build is the site of the pipeline-gate false positive documented in [`../solution-files/pipeline-gate-false-positive.md`](./solution-files/pipeline-gate-false-positive.md). The assertions shown here reflect the post-fix state — validation checks the weighted composite, not field existence.*

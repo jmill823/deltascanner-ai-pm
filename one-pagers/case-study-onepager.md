@@ -18,7 +18,7 @@ I'm a non-technical solo founder. I do not write build code. The agents write, b
 
 ## Evidence
 
-A March 30 architecture audit revealed 8 defects across 13 live market models — scoring components shouldn't have been active, weight drift, architecture labels that didn't match actual behavior. The structural response was four-part: a YAML-configured universal scorer, schema validation, [acceptance test standards](../examples/cc-spec-standards.md) required in every spec before build code, and a Codex external review gate.
+A March 30 architecture audit revealed 8 defects across 13 live market models — scoring components shouldn't have been active, weight drift, architecture labels that didn't match actual behavior. The structural response was four-part: a centralized scoring config (JSON) consumed by per-city scripts, config-load validation, [acceptance test standards](../examples/cc-spec-standards.md) required in every spec before build code, and a Codex external review gate.
 
 Before: 4 of 13 builds passed first-pass acceptance (31%).
 After: 6 of 7 builds passed first-pass acceptance (~86%).
