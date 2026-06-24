@@ -1,4 +1,4 @@
-# DeltaScanner as an AI Product Management Case Study
+# Deltascanner as an AI Product Management Case Study
 
 Last week a model upgrade broke my agent system.
 
@@ -12,7 +12,7 @@ That's the thesis of this case study. **The architecture wasn't designed. It was
 
 ## What this case study covers
 
-DeltaScanner is a distressed property intelligence platform. Live across thirteen U.S. markets and scaling, ~223,000 scored parcels, eight agents in production, one operator. The product thesis is workflow compression — turn validated parcel-level distress signal into operator decisions in seconds. That's the user-facing claim, and it's defensible.
+Deltascanner is a distressed property intelligence platform. Live across thirteen U.S. markets and scaling, ~223,000 scored parcels, eight agents in production, one operator. The product thesis is workflow compression — turn validated parcel-level distress signal into operator decisions in seconds. That's the user-facing claim, and it's defensible.
 
 The interesting claim isn't the product. It's the operating model that produced it. I'm a non-technical solo founder. I do not write build code. The agents write, build, deploy, and surface work for review. I approve, reject, or defer at scheduled gates. Between gates, my inbox is empty by design. That's not a workflow choice — it's a structural property the system is engineered to maintain.
 
@@ -46,7 +46,7 @@ The honest limit here: the Operator Profile is one operator's. It doesn't scale 
 
 ### What it is
 
-The routing layer. Decides which agent gets which task, which gates apply, what handoff contract a piece of work follows from agent to agent. In DeltaScanner, this layer is operated by a Strategy chat — categorization, spec generation, reconciliation across parallel agent outputs, session-close handoff into versioned project files. The Strategy chat is also where I sit. I'm not a separate layer; I'm an actor inside Layer 2.
+The routing layer. Decides which agent gets which task, which gates apply, what handoff contract a piece of work follows from agent to agent. In Deltascanner, this layer is operated by a Strategy chat — categorization, spec generation, reconciliation across parallel agent outputs, session-close handoff into versioned project files. The Strategy chat is also where I sit. I'm not a separate layer; I'm an actor inside Layer 2.
 
 ### The origin failure
 
@@ -86,7 +86,7 @@ Hialeah, Tampa, West Palm Beach, Los Angeles, and additional cities are in fligh
 
 ### What it is
 
-The agents themselves — eight in production, each with a single responsibility, a versioned skill file, and a defined handoff format. The fleet covers PRR research and tracking (PRR Tracker), data acquisition discovery (Data Discovery), build execution (Claude Code via spec routing), product intake and feature spec generation (Product Agent), site QA and triage (QA Triage Agent), prospect outreach drafting (Outreach Drafter), buyer-facing deliverable QA (Deliverable QA), and continuous intel extraction from cross-source reading (CC Intel Queue).
+The agents themselves — eight in production, each with a single responsibility, a versioned skill file, and a defined handoff format. The fleet covers reconciliation and spec authoring (Strategy), product intake and feature spec generation (Product Agent), prospect outreach drafting (Outreach Drafter), PRR research and tracking (PRR Tracker), continuous intel extraction from cross-source reading (CC Intel Queue), site QA and triage (QA Triage Agent), data acquisition discovery (Data Discovery), and buyer-facing deliverable QA (Deliverable QA). Build execution runs through Claude Code via spec routing — the execution layer, not counted among the eight.
 
 ### The origin failure
 

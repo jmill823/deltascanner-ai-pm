@@ -11,7 +11,7 @@ This is the story of what broke, what I built, and what disciplined failure-reco
 
 ## The Test
 
-I operate a 10-agent fleet for DeltaScanner, a distressed property intelligence platform. One of the agents — the CC Intel Queue — runs a recurring extraction pipeline. Every few days I capture articles, posts, and tool discoveries as self-sent emails with coded subject lines. The agent pulls those emails via Gmail MCP, extracts key concepts, ranks each insight by ROI, cross-references against a 180-insight knowledge base, produces compile instructions for a downstream build agent, and surfaces a "Not On Your Radar" synthesis of non-obvious connections.
+I operate an 8-agent fleet for Deltascanner, a distressed property intelligence platform. One of the agents — the CC Intel Queue — runs a recurring extraction pipeline. Every few days I capture articles, posts, and tool discoveries as self-sent emails with coded subject lines. The agent pulls those emails via Gmail MCP, extracts key concepts, ranks each insight by ROI, cross-references against a 180-insight knowledge base, produces compile instructions for a downstream build agent, and surfaces a "Not On Your Radar" synthesis of non-obvious connections.
 
 The skill file encoding this workflow is versioned, tested across 13 prior batches, and produces structured output (YAML frontmatter, wiki page routing, cluster assignments, index table rows). It's the most mature agent skill in the fleet — the right one to test under controlled conditions.
 
@@ -38,7 +38,7 @@ I switched back to 4.6 anyway.
 
 The rubric measured what the skill produced. It didn't measure what the operator paid to get it.
 
-4.7 was more verbose. It presented options without recommending. It speculated where 4.6 would have acted. For an operator running ten agents, every minute spent parsing verbose responses is a minute not spent making decisions. The synthesis advantage was real. The operator cost negated it.
+4.7 was more verbose. It presented options without recommending. It speculated where 4.6 would have acted. For an operator running eight agents, every minute spent parsing verbose responses is a minute not spent making decisions. The synthesis advantage was real. The operator cost negated it.
 
 This isn't a model quality issue. Both models are competent. It's a calibration issue: 4.7's default behavioral posture didn't match my working style. 4.6's did. But that calibration wasn't encoded anywhere — it was implicit in the accumulated feedback patterns of prior conversations, which reset on every new session and disappear entirely on a model upgrade.
 
@@ -82,7 +82,7 @@ The pattern wasn't "model was bad, I caught it." The pattern was: every miscalib
 
 Threaded through the same period: a miss of a different category. Both 4.6 and 4.7 ranked insight #180 — RealtyAPI, a unified real estate data API at $20/month — as MEDIUM/parked. Both reasoned: "competitor-adjacent data product."
 
-Both wrong. RealtyAPI isn't a competitor. It's an enrichment layer that closes a specific gap in the buyer's workflow. DeltaScanner produces a ranked list of distressed parcels. The buyer's next step is manually looking up each address on Zillow or Redfin to check listing status, get a price estimate, see photos. Five to ten minutes per parcel. For 50 high-score parcels, four to eight hours of manual work after the platform has already done the hard part. RealtyAPI closes that gap. The distress score becomes the signal; the enrichment data becomes the decision context.
+Both wrong. RealtyAPI isn't a competitor. It's an enrichment layer that closes a specific gap in the buyer's workflow. Deltascanner produces a ranked list of distressed parcels. The buyer's next step is manually looking up each address on Zillow or Redfin to check listing status, get a price estimate, see photos. Five to ten minutes per parcel. For 50 high-score parcels, four to eight hours of manual work after the platform has already done the hard part. RealtyAPI closes that gap. The distress score becomes the signal; the enrichment data becomes the decision context.
 
 Neither model caught this because neither had an instruction to check: *what does the project already produce, what does the buyer do next, does this insight close a gap in that step?* The miss was skill-file-dependent, not model-dependent. The fix is a **Composition Check** in the skill — five questions before any ROI assignment. Prevents the class of error, not just the instance. The intel queue skill is being upgraded v1 → v2 with the check baked in.
 
@@ -148,4 +148,4 @@ The architecture is an emergent property of disciplined operation. The interacti
 ---
 
 *Jeff Millett | April 26, 2026*
-*DeltaScanner | jmill823/intel*
+*Deltascanner | jmill823/intel*

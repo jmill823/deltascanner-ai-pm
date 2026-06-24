@@ -9,7 +9,7 @@
 
 ## Context
 
-By mid-April 2026 the agent fleet was nine agents deep. Strategy, Product, CC, and PRR Tracker were running active operational work. Outreach Drafter, QA Triage, Data Discovery, and Deliverable QA were skill-defined and queued for activation. All of them ran on Opus 4.6 by default — that was the model the chats were opened with, and nobody had asked which agents needed the frontier model and which didn't.
+By mid-April 2026 the agent fleet was eight agents deep. Strategy, Product, CC Intel Queue, and PRR Tracker were running active operational work. Outreach Drafter, QA Triage, Data Discovery, and Deliverable QA were skill-defined and queued for activation. All of them ran on Opus 4.6 by default — that was the model the chats were opened with, and nobody had asked which agents needed the frontier model and which didn't. (Claude Code, the build executor, also ran on Opus 4.6 but isn't counted in the fleet of eight.)
 
 Three pressures showed up in the same week.
 

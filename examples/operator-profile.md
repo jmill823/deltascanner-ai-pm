@@ -6,7 +6,7 @@
 
 ## About this file
 
-This is the sanitized public version of the Layer 1 calibration file referenced in the [DeltaScanner AI-PM case study](../case-study-full.md). The file the operator runs internally contains additional personal calibration — interpersonal preferences, project-specific terminology, and per-model shims tied to internal data sources. What's published here is the structure, the rules, and the version stack that demonstrates how the file evolved.
+This is the sanitized public version of the Layer 1 calibration file referenced in the [Deltascanner AI-PM case study](../case-study-full.md). The file the operator runs internally contains additional personal calibration — interpersonal preferences, project-specific terminology, and per-model shims tied to internal data sources. What's published here is the structure, the rules, and the version stack that demonstrates how the file evolved.
 
 The case study describes the origin failure that produced the first version: a model upgrade broke implicit calibration that had been running fine for months. The fix was the file. Three subsequent codified lessons (v2, v3, v4) were each caught in real time during a single April 26 session, which is what the changelog at the bottom records. The version stack is itself part of the evidence — three named failure modes, three discipline sections, all encoded at moment-of-catch.
 

@@ -1,4 +1,4 @@
-# DeltaScanner as an AI Product Management Case Study
+# Deltascanner as an AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an Operator Profile encoding how I work, model-agnostic, ported across the fleet. The layer it created didn't appear in any architecture diagram I'd seen.
 
@@ -22,7 +22,7 @@ A public record of one operator running an eight-agent fleet to ship a distresse
 
 ## What this repo is not
 
-A framework. A claim that this approach generalizes without modification. A finished system. DeltaScanner is in operation, not in retrospect. What's published here is what I learned running the system I have now — measured against the specific evidence available, with the limitations named where I can't defend a stronger claim.
+A framework. A claim that this approach generalizes without modification. A finished system. Deltascanner is in operation, not in retrospect. What's published here is what I learned running the system I have now — measured against the specific evidence available, with the limitations named where I can't defend a stronger claim.
 
 The "designed by operating" thesis is a description of the path that produced this system, not a methodology that generalizes to every multi-agent system. Whether it would have been faster to design these five layers upfront is unknowable; what's testable is whether the layers I have hold as the system scales.
 
@@ -30,7 +30,7 @@ The "designed by operating" thesis is a description of the path that produced th
 
 ## Architecture diagram
 
-![DeltaScanner agent fleet — five-layer architecture](./architecture/fleet-diagram.svg)
+![Deltascanner agent fleet — five-layer architecture](./architecture/fleet-diagram.svg)
 
 Visual companion to the case study. Each layer in the diagram corresponds to a section in [`case-study-full.md`](./case-study-full.md) that names the failure that produced it.
 
@@ -64,7 +64,7 @@ All five one-pagers live in [`/one-pagers/`](./one-pagers/). Each follows the sa
 - [`examples/spec-prod30-atomic-pipeline.md`](./examples/spec-prod30-atomic-pipeline.md) — Representative build spec following the template. The actual PROD30 build is the site of a pipeline-gate false positive, documented in the solution files.
 - [`examples/solution-files/`](./examples/solution-files/) — Three structured solution files from the Knowledge Compounding Protocol. Each one encodes a specific failure class the system caught in April 2026, with the rule that prevents recurrence. These are the files the fleet reads before every build.
 - [`examples/operator-profile.md`](./examples/operator-profile.md) — Sanitized v4 of the Layer 1 calibration file. Model-agnostic behavioral contract that ports across model versions. The v1→v4 changelog records four discipline sections added in real time as failure modes surfaced in a single April 26 session.
-- [`agent-fleet.md`](./agent-fleet.md) — Layer 3 expansion. Per-agent breakdown of the nine-agent fleet plus the CC spec standards doc: scope, what-it-does-NOT-do, handoff format, escalation paths, and version history for each.
+- [`agent-fleet.md`](./agent-fleet.md) — Layer 3 expansion. Per-agent breakdown of the eight-agent fleet plus the CC spec standards doc: scope, what-it-does-NOT-do, handoff format, escalation paths, and version history for each.
 - [`metrics/gate-metrics.md`](./metrics/gate-metrics.md) — Forward-logging template for first-pass acceptance rate, six-category reject-reason scheme, and 30-day defect traceback. Sample rows are illustrative; the live log lives in a separate working file. Exists to keep the case-study claim about gate effectiveness falsifiable.
 
 ### Architecture Decision Records
@@ -87,9 +87,9 @@ If you came in through a supporting artifact (someone linked you a spec standard
 
 ---
 
-## About DeltaScanner
+## About Deltascanner
 
-DeltaScanner is a distressed property intelligence platform — live across thirteen U.S. markets, ~223,000 scored parcels. The product thesis is workflow compression: turn validated parcel-level distress signal into operator decisions in seconds. The AI-PM case study is what I learned running it.
+Deltascanner is a distressed property intelligence platform — live across thirteen U.S. markets, ~223,000 scored parcels. The product thesis is workflow compression: turn validated parcel-level distress signal into operator decisions in seconds. The AI-PM case study is what I learned running it.
 
 The case study is an artifact of work in motion. It's not a retrospective written at the end of a completed project. It's a snapshot of a system that's still operating, still surfacing failures that reveal new layers, still being shaped by the work it's doing.
 
