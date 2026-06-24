@@ -1,7 +1,7 @@
 # ADR-004: Per-Agent Governance Tiers with Batched Review
 
-**Status:** Decided March 2026. Currently active across 10-agent fleet.
-**Scope:** All product-internal agents (PRR Tracker, CC Intel Queue, Strategy, Product, Outreach Drafter, QA Triage, Data Discovery, Deliverable QA, Claude Code, plus ad-hoc).
+**Status:** Decided March 2026. Currently active across the 8-agent fleet.
+**Scope:** All product-internal agents (PRR Tracker, CC Intel Queue, Strategy, Product, Outreach Drafter, QA Triage, Data Discovery, Deliverable QA) plus the Claude Code execution layer and ad-hoc agents.
 
 ---
 
@@ -55,7 +55,7 @@ For reviewer-tier agents, the audit surface is the agent's wiki section in `/wik
 
 ## Consequences
 
-- Ten agents currently mapped. Strategy / Product / Outreach Drafter = gate tier. PRR Tracker / CC / CC Intel Queue / QA Triage / Data Discovery / Deliverable QA = reviewer tier.
+- Eight agents currently mapped. Strategy / Product / Outreach Drafter = gate tier. PRR Tracker / CC Intel Queue / QA Triage / Data Discovery / Deliverable QA = reviewer tier. (Claude Code is the execution layer, not a tiered fleet agent.)
 - Founder review time has moved from continuous-availability to roughly 3.5 scheduled hours per week (45 min Sunday + 15 min × 2 weekday check-ins + ~1.5 hour ad-hoc gate approvals during the week).
 - Buyer-facing time has approximately doubled. Estimated from comparing pre-March vs post-March weekly schedules; not measured precisely.
 - The "silence is the signal" pattern works for a reviewer-tier agent only when the agent has a visible wiki/digest output. Two agents (Data Discovery, Deliverable QA) currently have skill files but no live activity — for them, the audit surface doesn't yet exist, and they're effectively neither gate nor reviewer until they're activated.
