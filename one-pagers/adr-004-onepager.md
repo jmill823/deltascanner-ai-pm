@@ -4,7 +4,7 @@
 
 ## Context
 
-Solo founder operating a 10-agent fleet. Without an explicit review architecture, founder review burden becomes the bounding constraint on the system. Two failure modes: approve every action (founder is a manual router; the fleet doesn't compound); approve nothing (drift is invisible until a customer surfaces a problem). A representative city build has 14 distinct steps, 2 requiring human judgment. The other 12 are mechanical, sequential, well-defined enough for an agent — but the founder was operating, not curating.
+Solo founder operating an 8-agent fleet. Without an explicit review architecture, founder review burden becomes the bounding constraint on the system. Two failure modes: approve every action (founder is a manual router; the fleet doesn't compound); approve nothing (drift is invisible until a customer surfaces a problem). A representative city build has 14 distinct steps, 2 requiring human judgment. The other 12 are mechanical, sequential, well-defined enough for an agent — but the founder was operating, not curating.
 
 ## Decision
 
@@ -24,4 +24,4 @@ Gate-tier approval queue exceeds 20 items at any single Sunday setup for 2+ cons
 
 ---
 
-**Full ADR** at [`architecture/adr-004-curator-mode-batched-review.md`](../architecture/adr-004-curator-mode-batched-review.md). Includes the 10-agent tier map, the founder-time delta versus pre-March, and the canary-file pattern that surfaces digest breakage.
+**Full ADR** at [`architecture/adr-004-curator-mode-batched-review.md`](../architecture/adr-004-curator-mode-batched-review.md). Includes the 8-agent tier map, the founder-time delta versus pre-March, and the canary-file pattern that surfaces digest breakage.

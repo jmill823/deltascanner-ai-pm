@@ -1,6 +1,6 @@
 # Agent Fleet
 
-The platform is operated by a fleet of ten bounded agents, each governed by an explicit skill file. This page is the layer-3 expansion of the operator profile and ADR-004: it covers what each agent does, what it explicitly does *not* do, how its output flows downstream, when it escalates, and how it has changed over time.
+The platform is operated by a fleet of eight bounded agents, each governed by an explicit skill file. This page is the layer-3 expansion of the operator profile and ADR-004: it covers what each agent does, what it explicitly does *not* do, how its output flows downstream, when it escalates, and how it has changed over time.
 
 The fleet was designed under one constraint: **the founder is the reviewer, not the router.** Each agent's scope is defined to make that constraint hold — agents that touch customer-facing surfaces require approval before action; agents that operate inside controlled bounds run autonomously and surface their work for batched review. ADR-004 covers the tier architecture; this page covers the agents.
 
@@ -10,7 +10,7 @@ The fleet was designed under one constraint: **the founder is the reviewer, not 
 |---|---|---|---|
 | Strategy | Gate | v1 | Reconciliation hub, doctrine-bounded synthesis, spec authoring |
 | Product | Gate | v4 | CC build spec authoring with acceptance tests |
-| Claude Code (build) | Gate | — | Build executor; implements specs, runs acceptance tests, commits/pushes |
+| Claude Code (build) | (execution layer) | — | Build executor; implements specs, runs acceptance tests, commits/pushes — not counted in the eight |
 | Outreach Drafter | Gate | v5 | Outreach DM/email drafting; gift-first second-touch framework |
 | PRR Tracker | Reviewer | v5 | Public-records-request operations; weekly digest |
 | CC Intel Queue | Reviewer | v3 | Per-email insight extraction; compile instructions for repo writes |
