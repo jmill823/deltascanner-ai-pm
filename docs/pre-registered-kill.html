@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>I killed my own winner — a pre-registered kill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0B0E14; --panel:#10151F; --panel2:#0D1119; --line:#212B3A; --line2:#2A3547;
+    --text:#E7ECF3; --muted:#8A93A7; --faint:#5A6478;
+    --blue:#5B9DFF; --coral:#FF6F61; --amber:#EBB347;
+    --serif:'Newsreader',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--ink);color:var(--text);}
+  body{font-family:var(--serif);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:clamp(40px,7vw,84px) clamp(20px,5vw,52px) 64px;}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 18px;}
+  .eyebrow b{color:var(--amber);font-weight:500;}
+  .standfirst{font-family:var(--mono);font-size:13px;line-height:1.7;color:var(--muted);margin:0 0 22px;padding:0 0 0 16px;border-left:2px solid var(--line2);}
+  .standfirst b{color:var(--text);font-weight:500;}
+  .standfirst .tee{color:var(--faint);}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,7vw,60px);line-height:1.04;letter-spacing:-.018em;margin:0 0 22px;}
+  p.lede{font-size:clamp(17px,2.3vw,21px);color:var(--text);margin:0 0 14px;}
+  p.lede b{font-weight:600;}
+  .block{margin-top:48px;padding:48px 0 0;border-top:1px solid var(--line);}
+  .keyb{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;}
+  .keyb b{color:var(--blue);font-weight:500;}
+  h2{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3.4vw,30px);line-height:1.14;letter-spacing:-.01em;margin:0 0 16px;}
+  p.body{font-size:16.5px;color:var(--muted);margin:0 0 14px;}
+  p.body b{color:var(--text);font-weight:500;}
+  p.body em{font-style:italic;color:var(--blue);}
+  .rcpt{font-family:var(--mono);font-size:12.5px;color:var(--faint);}
+  .stage{margin:8px 0 0;background:linear-gradient(180deg,var(--panel) 0%,var(--panel2) 100%);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,30px);}
+  svg{width:100%;height:auto;display:block;}
+  .barlist{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+  .barlist li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;font-size:16px;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:13px 16px;background:rgba(255,255,255,.012);}
+  .barlist .nm{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);white-space:nowrap;}
+  .barlist .nm.sig{color:var(--blue);} .barlist .nm.rep{color:var(--muted);}
+  .barlist em{font-style:normal;color:var(--muted);font-family:var(--mono);font-size:12.5px;}
+  .move{font-family:var(--serif);font-size:16.5px;color:var(--text);margin:18px 0 0;padding:14px 18px;border-left:2px solid var(--amber);background:rgba(235,179,71,.05);border-radius:0 9px 9px 0;}
+  .move b{color:var(--amber);font-weight:500;}
+  .proves{display:grid;gap:11px;margin:18px 0 0;}
+  .pv{border:1px solid var(--line);border-radius:11px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline;}
+  .pv .tg{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:6px;white-space:nowrap;border:1px solid var(--line2);}
+  .pv.p .tg{color:var(--blue);border-color:rgba(91,157,255,.4);}
+  .pv.inv .tg{color:var(--coral);border-color:rgba(255,111,97,.4);}
+  .pv.no .tg{color:var(--amber);border-color:rgba(235,179,71,.45);}
+  .pv .tx{font-size:15.5px;color:var(--text);} .pv .tx span{color:var(--muted);}
+  .closer{font-family:var(--serif);font-size:clamp(18px,2.4vw,22px);font-style:italic;color:var(--text);line-height:1.45;margin:0;}
+  .closer b{font-style:normal;font-weight:500;color:var(--blue);}
+  footer{border-top:1px solid var(--line);margin-top:48px;padding:24px 0 0;}
+  footer p{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--faint);margin:0 0 7px;line-height:1.6;}
+  footer a{color:var(--muted);text-decoration:none;} footer a:hover{color:var(--blue);}
+  @media(max-width:560px){.barlist li,.pv{grid-template-columns:1fr;gap:6px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow"><b>AI-PM</b> · decision quality</p>
+  <p class="standfirst">I author the discipline, specify the verification, and own the kill calls — <b>I don't write the code</b>. <span class="tee">This is the sharpest call I've made:</span></p>
+  <h1>I killed my own winner.</h1>
+  <p class="lede">Before I measured anything, I wrote down the bar a signal had to clear to be worth building on. Then I tested it against <b>eight years of history the system had never seen</b>.</p>
+  <p class="lede">One candidate came back <b>real</b> — better than chance, and it held in every year I could test. I killed it. "Real" wasn't the bar; "big enough to build on" was — and it missed by half a point.</p>
+
+  <div class="block">
+    <p class="keyb"><b>The bar</b> — written down before I looked</p>
+    <ul class="barlist">
+      <li><span class="nm">value bar</span><span><b>+1.5</b> on the outcome metric, over strong market baselines <em>— is it big enough to build on?</em></span></li>
+      <li><span class="nm sig">noise bar</span><span>clearly <b>better than random chance</b> <em>— is it more than luck?</em></span></li>
+      <li><span class="nm rep">replication bar</span><span>holds across <b>at least three separate years</b> <em>— does it travel?</em></span></li>
+    </ul>
+    <p class="move"><b>The move that matters:</b> "big enough to build on" is a <em style="font-style:italic;color:var(--amber)">separate</em> question from "is it real." Most edges die at "is it real." This one didn't — which is exactly what made the call hard.</p>
+  </div>
+
+  <div class="block">
+    <p class="keyb"><b>The result</b></p>
+    <p class="body">The candidate came back at <b>+0.997</b> — better than chance, holding in every year I tested, and it survived stress-testing. It cleared every bar except the one that mattered most: the <b>+1.5</b> I'd committed to in advance. So I killed it. <span class="rcpt">(logged as run 32aeb89, then independently reviewed)</span></p>
+    <div class="stage">
+      <svg viewBox="0 0 720 250" id="killSvg" aria-label="the pre-registered value bar and the killed signal"></svg>
+    </div>
+  </div>
+
+  <div class="block">
+    <p class="keyb"><b>Why the kill is the point</b></p>
+    <h2>A gate that only ever says yes is a rubber stamp.</h2>
+    <p class="body">Almost any team ships a real, repeatable signal — that's the trap. I had one, and the gate I'd built said no, because I'd defined "worth building" in advance and held to it against my own idea. Be exact about what that proves, and what it doesn't:</p>
+    <div class="proves">
+      <div class="pv p"><span class="tg">Proves</span><p class="tx">Committing to the bar before measuring · judging "worth it" separately from "real" · <span>killing my own idea on the evidence.</span></p></div>
+      <div class="pv inv"><span class="tg">Rules out</span><p class="tx">The automated edge — <span>the formula doesn't beat this market. Three other candidates failed outright; the market already prices them.</span></p></div>
+      <div class="pv no"><span class="tg">Doesn't prove</span><p class="tx">That anything I ship beats the market. <span>That's a forward question, and the track record starts later — I'm not claiming it here.</span></p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <p class="closer">The portable thing was never the code. It's the bar, the discipline to hold it, and the will to <b>kill my own winner</b>.</p>
+  </div>
+
+  <footer>
+    <p>caveats that travel · the separate 2025 fold awaits a data-parity check and isn't cited as settled · the "fade the slow decliner" pattern this surfaced is a lead, not a validated number</p>
+    <p>the full walkthrough sits behind this — <a href="operating-kernel.html">the operating-kernel deep dive</a> (one kernel, two domains, nine sections) · the engine it ran against is live</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  function txt(p,x,y,s,o){var t=el('text',Object.assign({x:x,y:y},o||{}));t.textContent=s;p.appendChild(t);return t;}
+  var MONO="'IBM Plex Mono',monospace";
+  var s=document.getElementById('killSvg');
+  var X0=80,X1=660,W=X1-X0,VMAX=2.0,AY=150;
+  function vx(v){return X0+v/VMAX*W;}
+  s.appendChild(el('rect',{x:vx(0.997),y:AY-30,width:(vx(1.5)-vx(0.997)),height:60,fill:'rgba(255,111,97,.08)'}));
+  txt(s,(vx(0.997)+vx(1.5))/2,AY-40,'a real signal — killed in this gap',{fill:'#FF6F61','font-family':MONO,'font-size':11,'text-anchor':'middle'});
+  s.appendChild(el('line',{x1:X0,y1:AY,x2:X1,y2:AY,stroke:'#2A3547','stroke-width':1.4}));
+  [0,0.5,1.0,1.5,2.0].forEach(function(v){
+    s.appendChild(el('line',{x1:vx(v),y1:AY-5,x2:vx(v),y2:AY+5,stroke:'#3A4458','stroke-width':1}));
+    txt(s,vx(v),AY+22,'+'+v.toFixed(1),{fill:'#5A6478','font-family':MONO,'font-size':10,'text-anchor':'middle'});
+  });
+  txt(s,X0,AY+40,'outcome metric · over baseline',{fill:'#5A6478','font-family':MONO,'font-size':10,'letter-spacing':'.05em'});
+  s.appendChild(el('line',{x1:vx(1.5),y1:AY-58,x2:vx(1.5),y2:AY+10,stroke:'#EBB347','stroke-width':2.4}));
+  txt(s,vx(1.5),AY-66,'VALUE BAR · +1.5',{fill:'#EBB347','font-family':MONO,'font-size':12,'text-anchor':'middle','font-weight':500});
+  txt(s,vx(1.5),AY+40,'set before I measured',{fill:'#EBB347','font-family':MONO,'font-size':10,'text-anchor':'middle',opacity:.85});
+  s.appendChild(el('circle',{cx:vx(0.997),cy:AY,r:8,fill:'#FF6F61',stroke:'#0B0E14','stroke-width':2.5}));
+  txt(s,vx(0.997),AY-16,'+0.997 — KILLED',{fill:'#FF6F61','font-family':MONO,'font-size':13,'text-anchor':'middle','font-weight':600});
+  txt(s,vx(0.997),AY+58,'better than chance · held every year tested',{fill:'#8A93A7','font-family':MONO,'font-size':10.5,'text-anchor':'middle'});
+  txt(s,(X0+X1)/2,AY+86,'three other candidates failed outright — the market already prices them',{fill:'#5A6478','font-family':MONO,'font-size':10.5,'text-anchor':'middle'});
+})();
+</script>
+</body>
+</html>
