@@ -4,8 +4,8 @@ I'm a non-technical, AI-native PM. The whole portfolio in five lines — each li
 
 1. **I operate a multi-agent system.** An 8-agent fleet on Claude that authors and validates a deterministic decision engine — ~223,000 property parcels scored across 13 US markets. → [Deltascanner](https://deltascanner.com)
 2. **The failure I kept hitting: AI systems overclaim and drift.** A model meets an underspecified spec with a confident, fluent answer instead of "I don't know" — and behavior drifts silently when the model changes, no error thrown.
-3. **Structural Mistrust is the discipline that catches it.** Confidence computed, not asserted; failures shipped marked, not laundered; the few high-stakes judgments frozen until they survive disagreement. → [the brief](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)
-4. **Ledger → Launchpad is the execution surface.** The operator loop made interactive: a compounding ledger compressed into discrete, executable, provenance-carrying actions. → [live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html)
+3. **Structural Mistrust is the discipline that catches it.** Confidence computed, not asserted; failures shipped marked, not laundered; the few high-stakes judgments frozen until they survive disagreement. → [the brief](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html) · [a kill call, live](https://jmill823.github.io/deltascanner-ai-pm/pre-registered-kill.html)
+4. **Ledger → Launchpad is the execution surface.** The operator loop made interactive: a compounding ledger compressed into discrete, executable, provenance-carrying actions. → [live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html) · [ported to a second domain](https://jmill823.github.io/deltascanner-ai-pm/operating-kernel.html)
 5. **The honest limit:** the outcome loop is instrumented but hasn't accumulated enough reality to score its predictions against — designed, not yet running. I won't claim otherwise. → [the receipts](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)
 
 ---
@@ -22,6 +22,8 @@ This repo is the working artifact of that approach. It contains the full case st
 
 ## Featured
 
+- **[I killed my own winner — a pre-registered kill](https://jmill823.github.io/deltascanner-ai-pm/pre-registered-kill.html)** — the judgment exhibit: a value bar set before I measured, and a real, better-than-chance signal killed anyway because it missed the bar. Start here.
+- **[The operating kernel, ported — the deep dive](https://jmill823.github.io/deltascanner-ai-pm/operating-kernel.html)** — one kernel, two domains, nine sections: Deltascanner's discipline ported live into an unrelated real-time decision system.
 - **[Structural Mistrust — an eval framework](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)** — the eval discipline behind the system: four failure classes, two tracks, one operator loop, and a freeze line that moves on outcomes.
 - **[Intel Launchpad — live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html)** — an interactive surface that compresses a compounding ledger into discrete, executable, provenance-carrying actions. A thing I run.
 
