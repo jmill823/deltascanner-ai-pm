@@ -518,7 +518,7 @@ function Surface(){
             <div className="block-lbl">result chain <span className="ln"></span></div>
             <div className="chain">
               <div className="step"><div className="k">launched</div><div className="v">compiled → {cl.dest}</div></div>
-              <div className="step"><div className="k">produced</div><div className="v">commit landed · PR #214 merged</div></div>
+              <div className="step"><div className="k">produced</div><div className="v">commit landed · PR merged — seeded example</div></div>
               <div className="step"><div className="k">terminal</div><div className="v">pending operator verdict</div></div>
             </div>
           </div>
@@ -529,8 +529,8 @@ function Surface(){
               <div className="tier machine">
                 <div className="th">machine label · proximate</div>
                 <div className="q">"did it produce?"</div>
-                <div className="d">Observable, no judgment. Auto-tracked as the unit executes — the live corpus watches commits land via GitHub MCP. Hard-measured, not self-reported.</div>
-                <div className="badge">✓ produced — auto-detected</div>
+                <div className="d">Observable, no judgment. Designed to be auto-tracked as the unit executes — a GitHub-MCP poller that watches commits land. That poller is specced, not yet built; today the produced label is entered by the operator.</div>
+                <div className="badge">✓ produced — seeded example · poller not yet built</div>
               </div>
               <div className="tier human">
                 <div className="th">human label · terminal</div>
@@ -607,7 +607,7 @@ function App(){
       <div className="sec-no">04 · the eval step</div>
       <h2>Two labels, split along observable vs. taste.</h2>
       <div className="prose">
-        <p>The outcome splits cleanly. The <span className="ma">machine label</span> answers <em>"did it produce?"</em> — observable, auto-tracked as the unit executes, no judgment. It fixes the usual input/output asymmetry: the proximate outcome becomes hard-measured, not self-reported. The <span className="hu">human label</span> answers <em>"did it matter?"</em> — offline, the taste verdict the machine can't see. Same judgment as the capture edge, now a much smaller edge: the machine took the mechanical "log what got produced" part.</p>
+        <p>The outcome splits cleanly. The <span className="ma">machine label</span> answers <em>"did it produce?"</em> — observable, no judgment, designed to be auto-tracked as the unit executes. The GitHub-MCP poller that would watch commits land is specced, not yet built — once it runs, the proximate outcome becomes hard-measured instead of self-reported. The <span className="hu">human label</span> answers <em>"did it matter?"</em> — offline, the taste verdict the machine can't see. Same judgment as the capture edge, now a much smaller edge: the machine took the mechanical "log what got produced" part.</p>
         <p>The readout learns from the <strong>mattered</strong> label, gated by the <strong>produced</strong> label. That gate is the keystone applied to the outcome step itself.</p>
       </div>
     </section>
