@@ -10,7 +10,7 @@ I'm a non-technical, AI-native PM. The whole portfolio in five lines — each li
 
 ---
 
-# Deltascanner as an AI Product Management Case Study
+# AI Product Management Case Study
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an Operator Profile encoding how I work, model-agnostic, ported across the fleet. The layer it created didn't appear in any architecture diagram I'd seen.
 
@@ -22,10 +22,20 @@ This repo is the working artifact of that approach. It contains the full case st
 
 ## Featured
 
-- **[I killed my own winner — a pre-registered kill](https://jmill823.github.io/deltascanner-ai-pm/pre-registered-kill.html)** — the judgment exhibit: a value bar set before I measured, and a real, better-than-chance signal killed anyway because it missed the bar. Start here.
-- **[The operating kernel, ported — the deep dive](https://jmill823.github.io/deltascanner-ai-pm/operating-kernel.html)** — one kernel, two domains, nine sections: Deltascanner's discipline ported live into an unrelated real-time decision system.
-- **[Structural Mistrust — an eval framework](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)** — the eval discipline behind the system: four failure classes, two tracks, one operator loop, and a freeze line that moves on outcomes.
-- **[Intel Launchpad — live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html)** — an interactive surface that compresses a compounding ledger into discrete, executable, provenance-carrying actions. A thing I run.
+🧠 **[Structural Mistrust — an eval framework](https://jmill823.github.io/deltascanner-ai-pm/structural-mistrust-brief.html)**
+The eval discipline behind the system: four failure classes, two tracks, one operator loop, and a freeze line that moves on outcomes.
+
+🚀 **[Intel Launchpad — live demo](https://jmill823.github.io/deltascanner-ai-pm/intel-launchpad.html)**
+An interactive surface that compresses a compounding ledger into discrete, executable, provenance-carrying actions. A thing I run.
+
+🎯 **[I killed my own winner — a pre-registered kill](https://jmill823.github.io/deltascanner-ai-pm/pre-registered-kill.html)**
+The judgment exhibit: a value bar set before I measured, and a real, better-than-chance signal killed anyway because it missed the bar. Start here.
+
+🔬 **[The operating kernel, ported — the deep dive](https://jmill823.github.io/deltascanner-ai-pm/operating-kernel.html)**
+One kernel, two domains, nine sections: Deltascanner's discipline ported live into an unrelated real-time decision system.
+
+📓 **[Catches — the catch ledger](https://jmill823.github.io/deltascanner-ai-pm/catches.html)**
+An append-only record of gates that caught their own defects — each catch a claim you can verify against `main`.
 
 ---
 
