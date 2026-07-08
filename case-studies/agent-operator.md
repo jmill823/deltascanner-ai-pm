@@ -150,4 +150,4 @@ Reviewer access requests and direct contact: **millett.jeffrey@gmail.com**
 
 ---
 
-*Case study captured 2026-05-08. The session's actual log is available in sanitized form on request. The excerpts above are verbatim from the session, with no retroactive editing.*
+*Case study captured 2026-05-08. The session's actual log is available in sanitized form on request. The excerpts above are reproduced from the session log; sanitization is the only editing applied — nothing was added, reworded, or reordered.*
