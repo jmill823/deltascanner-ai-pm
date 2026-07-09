@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deltascanner — AI-PM proof, funnel hub</title>
+<style>
+  :root{
+    --bg:#0c0d10; --bg2:#131519; --bg3:#1a1d23; --bg4:#21252d;
+    --line:#262a32; --line2:#323843;
+    --ink:#e9e7e1; --dim:#9aa0aa; --faint:#5c626d;
+    --machine:#5aa7d6;   /* mechanical / structural */
+    --human:#e2776b;     /* drift / failure / accountable hold */
+    --trust:#4ec9b0;     /* trust earned over time */
+    --pos:#7fb069;       /* validated / passing */
+    --mid:#e8a13c;       /* mid-stakes / ambiguous */
+    --defer:#717784;     /* designed, not yet running */
+    --serif:"Newsreader",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(900px 520px at 82% -8%, rgba(90,167,214,.07), transparent 60%),
+                     radial-gradient(760px 420px at -8% 8%, rgba(226,119,107,.05), transparent 60%);
+    background-attachment:fixed;}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px 100px}
+  a{color:var(--machine);text-decoration:none}
+  ::selection{background:rgba(90,167,214,.3)}
+
+  /* ---- masthead ---- */
+  .mast{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .kicker b{color:var(--machine);font-weight:500}
+  h1{font-family:var(--serif);font-weight:500;font-size:46px;line-height:1.04;letter-spacing:-.012em;margin:16px 0 0}
+  .lede{font-family:var(--serif);font-size:19px;line-height:1.52;color:var(--dim);max-width:780px;margin:18px 0 0}
+  .lede em{color:var(--ink);font-style:italic}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;padding:5px 10px;border:1px solid var(--line2);border-radius:2px;color:var(--dim);background:var(--bg2)}
+
+  /* ---- sections ---- */
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  .sec-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+  h2{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.01em;margin:8px 0 16px;line-height:1.12}
+  .prose{font-family:var(--serif);font-size:17px;line-height:1.62;color:#d6d3cc;max-width:none}
+  .prose p{margin:0 0 15px}
+
+  /* ---- routing grid (cards) ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:22px}
+  .card{display:block;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:22px 22px 20px;transition:.18s}
+  .card:hover{border-color:var(--machine)}
+  .card .ctag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--machine);border:1px solid var(--machine);border-radius:2px;padding:2px 8px;opacity:.9}
+  .card h3{font-family:var(--serif);font-weight:500;font-size:21px;letter-spacing:-.008em;margin:12px 0 8px;line-height:1.16;color:var(--ink)}
+  .card p{font-family:var(--serif);font-size:15px;line-height:1.5;color:var(--dim);margin:0}
+  .card .go{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faint);margin-top:16px}
+  .card:hover .go{color:var(--machine)}
+
+  /* ---- full record ---- */
+  .record{margin-top:8px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:22px}
+  .record a{font-weight:500}
+
+  footer{padding:30px 0 0;display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  footer .nm{color:var(--ink);font-weight:600}
+
+  @media(max-width:680px){
+    h1{font-size:34px}.lede{font-size:17px}h2{font-size:25px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ MASTHEAD (Pitch) ============ -->
+  <div class="mast">
+    <div class="kicker">AI-PM proof · <b>funnel hub</b></div>
+    <h1>Deltascanner, built by an AI-native PM.</h1>
+    <p class="lede">I'm a non-technical, AI-native PM. An <em>8-agent fleet on Claude</em> authors and validates a deterministic decision engine — <em>~223,000 property parcels</em> scored across <em>13 US markets</em>. The five exhibits below are the proof, each linked to what it claims.</p>
+    <div class="chips">
+      <span class="chip">8-agent fleet · Claude</span>
+      <span class="chip">~223,000 parcels · 13 US markets</span>
+      <span class="chip">deterministic decision engine</span>
+    </div>
+  </div>
+
+  <!-- ============ 01 · THE EXHIBITS ============ -->
+  <section>
+    <div class="sec-no">01 · the exhibits</div>
+    <h2>Five live surfaces, each proving one claim.</h2>
+    <div class="grid">
+      <a class="card" href="./structural-mistrust-brief.html">
+        <span class="ctag">the discipline</span>
+        <h3>Structural Mistrust</h3>
+        <p>The eval discipline behind the fleet — four failure classes, two tracks, one operator loop.</p>
+        <span class="go">read the brief →</span>
+      </a>
+      <a class="card" href="./pre-registered-kill.html">
+        <span class="ctag">the judgment</span>
+        <h3>I killed my own winner</h3>
+        <p>A value bar set before I measured — a real, better-than-chance signal, killed anyway because it missed the bar.</p>
+        <span class="go">see the kill call →</span>
+      </a>
+      <a class="card" href="./intel-launchpad.html">
+        <span class="ctag">the execution</span>
+        <h3>Ledger → Launchpad</h3>
+        <p>The operator loop made interactive — a compounding ledger compressed into discrete, provenance-carrying actions.</p>
+        <span class="go">open the live demo →</span>
+      </a>
+      <a class="card" href="./operating-kernel.html">
+        <span class="ctag">the port</span>
+        <h3>One kernel, second instance</h3>
+        <p>The same discipline, abstracted into an intel loop and ported live into a second, unrelated domain.</p>
+        <span class="go">see it ported →</span>
+      </a>
+      <a class="card" href="./catches.html">
+        <span class="ctag">the record</span>
+        <h3>The catch ledger</h3>
+        <p>The append-only record of what the discipline caught — before ship and after, with nothing quietly overwritten.</p>
+        <span class="go">read the ledger →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ 02 · THE FULL RECORD ============ -->
+  <section>
+    <div class="sec-no">02 · the full record</div>
+    <h2>Every mechanism named above has a file behind it.</h2>
+    <div class="prose">
+      <p>Case studies, the architecture diagram, ADRs, per-agent breakdowns, and the source ledger are indexed outside this site's five exhibits — off Pages, in the repo itself.</p>
+    </div>
+    <div class="record">
+      <a href="https://github.com/jmill823/deltascanner-ai-pm/blob/main/CONTENTS.md">CONTENTS.md — the full repository index →</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>funnel hub · Deltascanner</span>
+    <span class="nm">Jeff Millett</span>
+  </footer>
+
+</div>
+</body>
+</html>
