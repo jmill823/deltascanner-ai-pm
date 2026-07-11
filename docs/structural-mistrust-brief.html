@@ -263,6 +263,26 @@
     <p class="pull">This is the floor. A forgotten why becomes a skipped step, becomes a fragile path, becomes an overclaim the user feels. Defended here, none of it starts.</p>
   </section>
 
+  <!-- ============ 06 · CLASS 5 ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">06 · class 5</div>
+    <span class="ctag">false verification</span>
+    <h2>False verification</h2>
+    <div class="prose">
+      <p><span class="lbl">What.</span> &nbsp;Gates that pass by construction. The check was never valid, so nothing decayed — it passed on day one and every day after, measuring nothing the whole time. The other four classes defend a state that was once correct. This one never had one.</p>
+    </div>
+    <p class="lbl" style="margin-bottom:2px">How.</p>
+    <ul class="how">
+      <li><strong>Every gate must be able to fail</strong> — a check that cannot produce a red is not a check; a passing suite that ran zero tests is the canonical case.</li>
+      <li><strong>Gates assert properties across systems, not within them</strong> — a test that verifies a definition against itself is tautological by construction; the durable fix is an invariant that real behavior could violate.</li>
+    </ul>
+    <p class="lbl" style="margin-bottom:2px">Receipts.</p>
+    <div class="prose">
+      <p>Three rows from the catch ledger: a banding test that verified its own definition (<span class="rn">REC-002</span>), a suite reporting 24/24 green with zero tests run (<span class="rn">REC-003</span>), a scan reading clean while misfiring on 88% of its targets (<span class="rn">REC-004</span>).</p>
+    </div>
+    <p class="pull">The other four classes are caught by looking harder at the thing being checked. This one is only caught by turning around and checking the check. Three of five — derived in a cold review of this framework, from its own ledger, and adopted 2026-07-09.</p>
+  </section>
+
   <!-- ============ FIG 2 + 06 · COUPLING ============ -->
   <section style="--qc:var(--machine)">
     <div class="sec-no">06 · coupling</div>
