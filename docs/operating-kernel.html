@@ -55,6 +55,7 @@
   .stage{margin:26px 0 0;background:linear-gradient(180deg,var(--panel) 0%,var(--panel2) 100%);border:1px solid var(--line);border-radius:14px;padding:clamp(16px,3vw,26px);}
   svg{width:100%;height:auto;display:block;}
   .asof{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.05em;margin:14px 0 0;}
+  .rcpt{font-family:var(--mono);font-size:12.5px;color:var(--faint);margin:10px 0 0;}
   .stages{display:grid;grid-template-columns:1fr;gap:11px;margin:20px 0 0;}
   .lstage{border:1px solid var(--line);border-radius:11px;padding:15px 17px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;}
   .lstage .tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:5px;white-space:nowrap;border:1px solid var(--line2);}
@@ -246,20 +247,21 @@
     <p class="eyebrow"><b>08</b> &nbsp;The gate has teeth</p>
     <h2>I found a real signal, and killed it.</h2>
     <p class="body">Third rung of one ladder: in §04 the system caught itself; in §07 I caught what the system couldn't; here I kill my own winner.</p>
-    <p class="body">Before measuring anything, I committed to a pass bar in writing: an edge has to clear <b>+1.5 on the outcome metric</b> over its baseline, beat a random-chance null, and hold across at least three separate years. Then I ran that frozen gate four times against eight years of history it had never seen (2017–2024).</p>
+    <p class="body">Before measuring anything, I committed to a pass bar in writing: an edge has to clear <b>+1.5 on the outcome metric</b> over its baseline, beat a random-chance null, and hold across at least three separate years. Then I ran that frozen gate four times against five held-out years it had never seen (2021–2025).</p>
     <p class="body">Three candidate edges failed clean — the market already prices them in. The fourth came back <b>real</b>: <b>+0.997</b>, better than chance, holding in all five years I could test, and robust to stress. I killed it anyway — because +0.997 is under the +1.5 bar I'd set before I looked.</p>
+    <p class="rcpt">bar pre-registered 70976a2, 2026-06-27 13:21 PT — run logged 32aeb89 15 min 12 sec later</p>
     <div class="stage">
       <svg viewBox="0 0 620 200" id="killSvg" aria-label="pre-registered value bar and the killed signal"></svg>
     </div>
     <p class="kicker">A gate that only ever says yes is a rubber stamp; this one said no to a winner that wasn't big enough. Be exact about what that proves: the gate and the judgment — committing to the bar before measuring, judging "worth it" separately from "real," killing my own idea on the evidence. It <b style="color:var(--text)">rules out</b> the automated edge (these formulas don't beat this market). It does <b style="color:var(--text)">not</b> validate what ships — the forward track record starts in September. (This is a backward test against history; the forward outcome loop is the §09 seam — a different thing.)</p>
-    <p class="asof">caveats that travel · the separate 2025 year awaits a data-parity check and isn't cited as settled · the "fade the slow decliner" pattern this surfaced is a lead, not a validated number</p>
+    <p class="asof">caveats that travel · the "fade the slow decliner" pattern this surfaced is a lead, not a validated number</p>
   </section>
 
   <!-- 09 CLOSE -->
   <section class="sec reveal" id="s8">
     <p class="eyebrow"><b>09</b> &nbsp;Where the evidence stops</p>
     <h2>The backward question is answered. The forward one is the bet.</h2>
-    <p class="body">Two different questions hide under "did it work," and they don't have the same status. The backward one — does the mechanical edge hold up against history — has an answer: <b>no</b>. The gate ran it across eight past years it had never seen (2017–2024) and the formula collapsed (§08). I ran that test against my own idea, and the result came back negative.</p>
+    <p class="body">Two different questions hide under "did it work," and they don't have the same status. The backward one — does the mechanical edge hold up against history — has an answer: <b>no</b>. The gate ran it across five held-out years it had never seen (2021–2025) and the formula collapsed (§08). I ran that test against my own idea, and the result came back negative.</p>
     <p class="body">The forward question — does curated judgment, bounded and accrued over time, actually pay off against real outcomes — has no answer yet, and by its nature can't have one in advance. You can't pre-register a backtest for "was the operator right to log this"; its only proof is a track record, and that starts in September. So the outcome loop isn't a hedge that's "designed but not built" — it's the one stage that can only be earned forward. The forward record is the next stage for the kernel, not an MFL shortfall.</p>
     <div class="stage">
       <svg viewBox="0 0 620 260" id="tierSvg" aria-label="three states: produced live, backward check ran, forward outcome unbuilt"></svg>
@@ -490,7 +492,7 @@
     txt(s,vx(1.5),AY-46,'VALUE BAR · +1.5 · set in advance',{fill:'#EBB347','font-family':MONO,'font-size':10,'text-anchor':'middle','font-weight':500});
     s.appendChild(el('circle',{cx:vx(0.997),cy:AY,r:6,fill:'#FF6F61',stroke:'#0B0E14','stroke-width':2}));
     txt(s,vx(0.997),AY-12,'+0.997 · KILLED',{fill:'#FF6F61','font-family':MONO,'font-size':10,'text-anchor':'middle','font-weight':500});
-    txt(s,vx(0.997),AY+46,'better than chance · held every year · robust',{fill:'#8A93A7','font-family':MONO,'font-size':9,'text-anchor':'middle'});
+    txt(s,vx(0.997),AY+46,'better than chance · held all 5 years · robust',{fill:'#8A93A7','font-family':MONO,'font-size':9,'text-anchor':'middle'});
     var chips=[['the formula','FAIL'],['an edge','FAIL'],['an edge','dropped'],['the winner','KILLED']],cx=44;
     chips.forEach(function(c){
       var w=(c[0].length+c[1].length)*6.0+24;
