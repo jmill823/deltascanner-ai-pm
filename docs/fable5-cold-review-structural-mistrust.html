@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A cold review, by Fable 5 — Structural Mistrust</title>
+<meta property="og:type" content="article">
+<meta property="og:title" content="I asked Fable 5 to audit my own eval framework">
+<meta property="og:description" content="Cold, read-only, first pass only. Verdict: roughly half computed, half asserted — and it found the taxonomy's missing fifth class in my own catch ledger.">
+<meta property="og:image" content="https://jmill823.github.io/deltascanner-ai-pm/og-fable5-cold-review.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="I asked Fable 5 to audit my own eval framework">
+<meta name="twitter:description" content="Cold, read-only, first pass only. Verdict: roughly half computed, half asserted — and it found the taxonomy's missing fifth class in my own catch ledger.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0d10; --bg2:#131519; --bg3:#1a1d23; --bg4:#21252d;
+    --line:#262a32; --line2:#323843;
+    --ink:#e9e7e1; --dim:#9aa0aa; --faint:#5c626d;
+    --machine:#5aa7d6; --human:#e2776b; --trust:#4ec9b0;
+    --pos:#7fb069; --mid:#e8a13c; --defer:#717784;
+    --serif:"Newsreader",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(900px 520px at 82% -8%, rgba(90,167,214,.07), transparent 60%),
+                     radial-gradient(760px 420px at -8% 8%, rgba(226,119,107,.05), transparent 60%);
+    background-attachment:fixed;}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px 100px}
+  a{color:var(--machine);text-decoration:none;border-bottom:1px solid rgba(90,167,214,.35)}
+  a:hover{border-color:var(--machine)}
+  ::selection{background:rgba(90,167,214,.3)}
+
+  .mast{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .kicker b{color:var(--machine);font-weight:500}
+  h1{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.06;letter-spacing:-.012em;margin:16px 0 0}
+  .lede{font-family:var(--serif);font-size:18px;line-height:1.55;color:var(--dim);max-width:780px;margin:18px 0 0}
+  .lede b{color:var(--ink)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;padding:5px 10px;border:1px solid var(--line2);border-radius:2px;color:var(--dim);background:var(--bg2)}
+
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  .sec-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+  h2{font-family:var(--serif);font-weight:500;font-size:29px;letter-spacing:-.01em;margin:8px 0 16px;line-height:1.14}
+  .prose{font-family:var(--serif);font-size:17px;line-height:1.62;color:#d6d3cc;max-width:none}
+  .prose p{margin:0 0 15px}
+  .prose strong{color:var(--ink);font-weight:600}
+  .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500}
+
+  .pull{font-family:var(--serif);font-size:22px;line-height:1.4;color:var(--ink);font-style:italic;
+    border-left:2px solid var(--machine);padding:4px 0 4px 20px;margin:22px 0;max-width:720px}
+  .pull cite{display:block;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--faint);margin-top:10px}
+
+  /* fifth-class diagram */
+  .taxo{margin-top:24px}
+  .taxo-grid{display:grid;grid-template-columns:1fr 1fr auto 1.3fr;gap:12px;align-items:stretch}
+  .taxo-col{display:grid;gap:12px}
+  .tbox{background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:16px 16px;text-align:center}
+  .tbox .n{font-family:var(--sans);font-weight:600;font-size:14.5px;color:var(--ink)}
+  .tbox .c{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+  .tarrow{display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:20px}
+  .tfifth{background:linear-gradient(180deg,rgba(226,119,107,.08),rgba(226,119,107,.02));
+    border:1.5px solid var(--human);border-radius:10px;padding:20px 20px;text-align:center}
+  .tfifth .n{font-family:var(--sans);font-weight:700;font-size:19px;color:var(--ink)}
+  .tfifth .c{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--human);margin-top:6px}
+  .tfifth .adopted{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--trust);margin-top:10px}
+  .trecs{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .trec{font-family:var(--mono);font-size:10.5px;color:var(--dim);border:1px solid var(--line2);border-radius:12px;padding:3px 10px}
+  .taxo-foot{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:center;margin-top:16px}
+  @media(max-width:720px){.taxo-grid{grid-template-columns:1fr}.tarrow{transform:rotate(90deg);margin:4px 0}}
+
+  /* findings ledger table */
+  .ledger{margin-top:8px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg2)}
+  .ledger-head{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px;background:var(--bg);border-bottom:1px solid var(--line);flex-wrap:wrap;gap:6px}
+  .ledger-head h3{font-family:var(--sans);font-weight:600;font-size:13px;margin:0;color:var(--ink);letter-spacing:.02em}
+  .ledger-head .meta{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+    text-align:left;font-weight:500;padding:9px 14px;border-bottom:1px solid var(--line2)}
+  td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:#cfd2d8;font-family:var(--serif);font-size:14.5px;line-height:1.48}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--bg)}
+  .rn{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--machine);white-space:nowrap}
+  .sev{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint);white-space:nowrap}
+  .st{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;padding:2px 8px;border-radius:10px;white-space:nowrap;margin-bottom:4px}
+  .st.fixed{color:var(--trust);border:1px solid rgba(78,201,176,.4)}
+  .st.open{color:var(--defer);border:1px solid var(--line2)}
+  .st.pushback{color:var(--mid);border:1px solid rgba(232,161,60,.4)}
+  .st.superseded{color:var(--defer);border:1px dashed var(--line2)}
+  .st.partial{color:var(--mid);border:1px solid rgba(232,161,60,.4)}
+  .ann{font-family:var(--sans);font-size:12px;color:var(--dim);line-height:1.5;display:block}
+  .ann code{font-family:var(--mono);font-size:11px;color:var(--machine)}
+
+  .note{font-family:var(--serif);font-size:16px;line-height:1.58;color:var(--dim);max-width:none;
+    border-left:2px solid var(--human);padding:6px 0 6px 18px;margin-top:18px}
+  .note b{color:var(--ink);font-weight:600}
+  .how{list-style:none;padding:0;margin:4px 0 6px;max-width:none}
+  .how li{position:relative;padding-left:22px;margin-bottom:11px;font-family:var(--serif);font-size:16.5px;line-height:1.55;color:#d6d3cc}
+  .how li::before{content:"";position:absolute;left:3px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--machine)}
+  .how li strong{color:var(--ink);font-weight:600}
+
+  .record{margin-top:14px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:18px 20px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .record .t{font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+  .record .t b{color:var(--ink)}
+
+  footer{padding:30px 0 0;display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);flex-wrap:wrap;gap:10px}
+  footer .nm{color:var(--ink);font-weight:600}
+
+  @media(max-width:680px){
+    h1{font-size:32px}.lede{font-size:16.5px}h2{font-size:24px}
+    td,th{padding:10px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ MASTHEAD ============ -->
+  <div class="mast">
+    <div class="kicker">structural mistrust · <b>external review</b></div>
+    <h1>I asked Fable 5 to audit my own framework.</h1>
+    <p class="lede">Structural Mistrust's own rule is <b>confidence is computed, never asserted</b>. On 2026-07-07 I gave Claude Fable 5 cold, read-only access to the framework and its live catch ledger and asked it to hold that claim to its own standard. <b>First pass only. No rerun. Its text, quoted below, is never edited.</b></p>
+    <div class="chips">
+      <span class="chip">fable 5 · cold review</span>
+      <span class="chip">13 findings</span>
+      <span class="chip">first pass, unedited</span>
+      <span class="chip">class 5 adopted 2026-07-09</span>
+    </div>
+  </div>
+
+  <!-- ============ 01 · THE VERDICT ============ -->
+  <section>
+    <div class="sec-no">01 · the verdict</div>
+    <h2>Held to its own standard, the framework is —</h2>
+    <div class="prose">
+      <p>Feed set: the catch ledger, the Intel Launchpad, the pre-registered kill model, the operating kernel, the Structural Mistrust brief, and the Agent Operator case study. Excluded: anything MFL/ffl-season-side (confidential domain) and a second ledger file, by instruction.</p>
+    </div>
+    <blockquote class="pull">
+      "Held to its own standard, the framework is roughly half computed, half asserted."
+      <cite>Fable 5 · cold review · 2026-07-07</cite>
+    </blockquote>
+    <div class="prose">
+      <p>Fable independently verified four commit pins in the catch ledger against real git history — hashes, dates, and PR numbers all matched exactly — before concluding the framework's flagship story, the pre-registered kill, rested on an ordering claim with no receipt anywhere in the feed set. That finding was <b>correct</b>; it's row 1 below.</p>
+    </div>
+  </section>
+
+  <!-- ============ 02 · THE FIFTH CLASS ============ -->
+  <section>
+    <div class="sec-no">02 · the fifth class</div>
+    <h2>It found the taxonomy's missing class — in my own ledger.</h2>
+    <div class="prose">
+      <p>Structural Mistrust's four failure classes are all <b>decay</b> classes: each presumes a correct state that erodes. Fable's critique: the framework's most frequent real failure has no home there. <b>REC-002, REC-003, and REC-004</b> — the modal catches in the framework's own catch ledger — are gates that never worked, not gates that stopped working. A banding test that verified its own definition. A suite that printed 24/24 while running nothing. A keyword scan that read clean while misfiring on 88% of its targets.</p>
+    </div>
+    <div class="taxo">
+      <div class="taxo-grid">
+        <div class="taxo-col">
+          <div class="tbox"><div class="n">Calibration drift</div><div class="c">class 1</div></div>
+          <div class="tbox"><div class="n">Process rot</div><div class="c">class 2</div></div>
+        </div>
+        <div class="taxo-col">
+          <div class="tbox"><div class="n">Doc drift</div><div class="c">class 3</div></div>
+          <div class="tbox"><div class="n">Discipline drift</div><div class="c">class 4</div></div>
+        </div>
+        <div class="tarrow">→</div>
+        <div class="tfifth">
+          <div class="n">False verification</div>
+          <div class="c">class 5 · gates that pass by construction</div>
+          <div class="adopted">ADOPTED 2026-07-09</div>
+          <div class="trecs">
+            <span class="trec">REC-002</span>
+            <span class="trec">REC-003</span>
+            <span class="trec">REC-004</span>
+          </div>
+        </div>
+      </div>
+      <div class="taxo-foot">four classes defend a state that was once correct · this one never had one</div>
+    </div>
+    <blockquote class="pull">
+      "The other four classes are caught by looking harder at the thing being checked. This one is only caught by turning around and checking the check."
+      <cite>brief §06 · class 5 · adopted 2026-07-09</cite>
+    </blockquote>
+    <div class="record">
+      <span class="t"><b>Adopted, not just proposed.</b> Three ledger rows reclassified, brief amended.</span>
+      <span class="t">merged <a href="https://github.com/jmill823/deltascanner-ai-pm/commit/fddd5ff">fddd5ff</a> · PR #13</span>
+    </div>
+    <div class="prose" style="margin-top:18px">
+      <p>Fable also named two more candidate families the four classes don't cover — <b>wrong-at-birth</b> (a frozen judgment incorrect when frozen) and <b>world drift</b> (upstream reality changing under a correct system). Both are real observations. Neither is adopted here — the brief already left room for "a fifth class when one proves out," and one proving out from the framework's own receipts is different from three landing at once. Open candidates, not canon.</p>
+    </div>
+  </section>
+
+  <!-- ============ 03 · WHERE IT HOLDS UP ============ -->
+  <section>
+    <div class="sec-no">03 · where it holds up</div>
+    <h2>The least polished artifact was the most honest one.</h2>
+    <div class="prose">
+      <p>Fable's own words: "the ledger — the least polished artifact — is the most honest one, and the polished exhibits are where assertion creeps back in." What it verified directly:</p>
+    </div>
+    <ul class="how">
+      <li><strong>REC-002 through REC-005's commit pins are real.</strong> Every hash, date, and PR number matched the ledger exactly against `intel` git history.</li>
+      <li><strong>The claimed fixes are in the cited commits.</strong> REC-003's portability harness, REC-002's invariant assertions — checked line by line, not taken on faith.</li>
+      <li><strong>The disclosure discipline is real and consistent.</strong> "Designed, not yet running" appears everywhere it applies, including one voluntary self-downgrade Fable called "the single most credible sentence in the feed set."</li>
+    </ul>
+  </section>
+
+  <!-- ============ 04 · THE FINDINGS, ANNOTATED ============ -->
+  <section>
+    <div class="sec-no">04 · the findings, annotated</div>
+    <h2>All 13, first pass, with what happened after.</h2>
+    <div class="prose">
+      <p>The review text is frozen and unedited — quoted from the source document below. This column is mine, added after: what I did with each finding, and the commit that proves it where one exists.</p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-head"><h3>fable-5-cold-review.md · findings 1–13</h3><div class="meta">2026-07-07 · verbatim</div></div>
+      <table>
+        <thead><tr><th style="width:34px">#</th><th>Finding</th><th style="width:110px">Severity</th><th style="width:260px">Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="rn">1</td>
+            <td>The pre-registration ordering was asserted, not receipted — the kill's entire force rests on "the bar predates the run," with no timestamped artifact anywhere in the feed set.</td>
+            <td class="sev">Blocking</td>
+            <td><span class="st fixed">FIXED</span><span class="ann">Bar commit <code>70976a2</code> precedes run <code>32aeb89</code> by 15 min 12 sec, self-attested in the run commit. Pinned on both surfaces. <a href="https://github.com/jmill823/deltascanner-ai-pm/commit/b00e017">b00e017</a></span></td>
+          </tr>
+          <tr>
+            <td class="rn">2</td>
+            <td>Narrative catches (the brief's 4 receipts) and ledger rows (REC-001..005) are disjoint sets — no ID or key joins a narrative claim to a ledger row.</td>
+            <td class="sev">Material</td>
+            <td><span class="st open">OPEN</span><span class="ann">Accepted. Queued — not yet fixed.</span></td>
+          </tr>
+          <tr>
+            <td class="rn">3</td>
+            <td>"3 pinned to commits you can inspect" is asserted in the brief's receipts table with zero commit hashes shown.</td>
+            <td class="sev">Material</td>
+            <td><span class="st open">OPEN</span><span class="ann">Accepted. Queued — the brief's own receipts table still shows no pins.</span></td>
+          </tr>
+          <tr>
+            <td class="rn">4</td>
+            <td>The "append-only" ledger is retrospective at birth — file created 2026-07-04, pre-seeded with catches dated April–June.</td>
+            <td class="sev">Material</td>
+            <td><span class="st pushback">PUSHBACK</span><span class="ann">The seed rows carry real historical pins Fable itself verified. Wording conceded: seeded retrospectively 2026-07-04, append-only since creation.</span></td>
+          </tr>
+          <tr>
+            <td class="rn">5</td>
+            <td>REC-001 records no defect — a title that reads as a feature, no catch/fix/blast_radius fields, first row of a catch ledger isn't a catch.</td>
+            <td class="sev">Material</td>
+            <td><span class="st fixed">RESOLVED</span><span class="ann">Disclosed as a cross-reference, not a catch, via an appended <code>note</code> field. <code>5ff45a3</code> · intel PR #81 <i>(private repo — not publicly inspectable)</i></span></td>
+          </tr>
+          <tr>
+            <td class="rn">6</td>
+            <td>The kernel's envelope demo is a tautological gate — it runs against the page's own bounded reimplementation, which cannot fail no matter what production does.</td>
+            <td class="sev">Material</td>
+            <td><span class="st open">OPEN</span><span class="ann">Accepted. Queued — not yet fixed.</span></td>
+          </tr>
+          <tr>
+            <td class="rn">7</td>
+            <td>The Launchpad's machine tier fabricated the receipt it preaches — "PR #214 merged," badged "auto-detected," for a GitHub-MCP poller that was never built.</td>
+            <td class="sev">Material</td>
+            <td><span class="st fixed">FIXED</span><span class="ann">Badge now reads "seeded example · poller not yet built"; fake PR #214 removed. <a href="https://github.com/jmill823/deltascanner-ai-pm/commit/b1d8e07">b1d8e07</a> · PR #6</span></td>
+          </tr>
+          <tr>
+            <td class="rn">8</td>
+            <td>"Grounded in: #i01… — no outside claims introduced" is self-graded homework — the generator attesting to its own groundedness, which the brief's own rule bans.</td>
+            <td class="sev">Material</td>
+            <td><span class="st fixed">FIXED</span><span class="ann">Relabeled "the generator's own attestation, not independently checked." <a href="https://github.com/jmill823/deltascanner-ai-pm/commit/b1d8e07">b1d8e07</a> · PR #6</span></td>
+          </tr>
+          <tr>
+            <td class="rn">9</td>
+            <td>The exposure model has no escape channel and no denominator — every artifact only ever populates "caught before ship." A ledger that can only accumulate self-catches passes by construction.</td>
+            <td class="sev">Material — deepest gap</td>
+            <td><span class="st fixed">FIXED</span><span class="ann">Brief §08 names the three tiers + concedes the missing denominator (<a href="https://github.com/jmill823/deltascanner-ai-pm/commit/b1d8e07">b1d8e07</a>). Ledger <code>exposure</code> field live, schema 1.1 (<code>5ff45a3</code>, intel — private repo).</span></td>
+          </tr>
+          <tr>
+            <td class="rn">10</td>
+            <td>"Verbatim… no retroactive editing" contradicts "(sanitized)" in the same case-study document.</td>
+            <td class="sev">Cosmetic</td>
+            <td><span class="st fixed">FIXED</span><span class="ann">Scoped: "sanitization is the only editing applied — nothing added, reworded, or reordered." <a href="https://github.com/jmill823/deltascanner-ai-pm/commit/b1d8e07">b1d8e07</a> · PR #6</span></td>
+          </tr>
+          <tr>
+            <td class="rn">11</td>
+            <td>Case-study headline is fully asserted — "zero work lost," receipts "available on request," no ledger row supports any of it.</td>
+            <td class="sev">Material</td>
+            <td><span class="st pushback">PUSHBACK</span><span class="ann">Scope as unverified-private, don't delete — private repos are a real constraint. Not yet landed; queued.</span></td>
+          </tr>
+          <tr>
+            <td class="rn">12</td>
+            <td>The README commits to a mid-June 2026 update on the Outreach Drafter result; no update exists as of the review date.</td>
+            <td class="sev">Material</td>
+            <td><span class="st superseded">SUPERSEDED</span><span class="ann">The README carrying that line no longer exists — rewritten (<a href="https://github.com/jmill823/deltascanner-ai-pm/commit/084999b">084999b</a>) before this review batch, for unrelated reasons. No targeted fix; no live claim remains.</span></td>
+          </tr>
+          <tr>
+            <td class="rn">13</td>
+            <td>Cross-surface drift on the kill's replication claim — one surface implies 8 years tested, the other says 5 of 8; the noise-bar null is unspecified on both.</td>
+            <td class="sev">Cosmetic / Material</td>
+            <td><span class="st partial">PARTIAL</span><span class="ann">Phrasing aligned to "held in all five years I could test" on both surfaces + chart labels. <a href="https://github.com/jmill823/deltascanner-ai-pm/commit/b00e017">b00e017</a>. The noise-bar null is still unspecified — separate open item.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><b>Score, honestly:</b> 5 fixed with a merged, publicly verifiable commit · 1 resolved via a commit in a private repo — real, but not independently inspectable by you · 1 partially fixed, one half still open · 2 pushback (my call, not a diff) · 1 superseded by an unrelated rewrite · 3 still open, queued. Nothing here is claimed fixed without a hash — but not every hash is one you can click.</p>
+  </section>
+
+  <!-- ============ 05 · WHAT THIS IS, AND ISN'T ============ -->
+  <section>
+    <div class="sec-no">05 · what this is, and isn't</div>
+    <h2>The rules this page followed.</h2>
+    <ul class="how">
+      <li><strong>First pass only.</strong> No fix-everything-and-rerun. The review text above is the cold pass; a rerun would be scripted, not cold.</li>
+      <li><strong>Fable's text is never edited.</strong> Verbatim quotes, no smoothing, no reordering.</li>
+      <li><strong>Every "fixed" hash is real and merged.</strong> Not a branch, not a promise — click any hash above.</li>
+      <li><strong>The 15-minute pre-registration gap is stated, not discoverable.</strong> That's the exhibit's proof of discipline, not its embarrassment.</li>
+    </ul>
+    <div class="record">
+      <span class="t">Frozen source: <b>reviews/fable-5-cold-review.md</b></span>
+      <span class="t">sha256 <code style="color:var(--dim)">14e4d979…62043b</code></span>
+    </div>
+  </section>
+
+  <footer>
+    <span>external review · Structural Mistrust</span>
+    <span class="nm">Jeff Millett</span>
+  </footer>
+
+</div>
+</body>
+</html>

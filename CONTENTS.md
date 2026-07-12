@@ -7,6 +7,10 @@ Everything below is the verification layer for the [README](./README.md) pitch. 
 - [`case-studies/agent-operator.md`](./case-studies/agent-operator.md) — *How I operate the agents that build.* A four-hour session retrofitting three private repos onto a unified architecture; the moment a 1,205-line commit was almost discarded as drift before an operator-side gate reversed the call.
 - Architecture case study (long-form, ~3,500 words) — *What was built and the failures that produced each layer.* Available on request; compressed version at [`one-pagers/case-study-onepager.md`](./one-pagers/case-study-onepager.md).
 
+## External reviews
+
+- [`reviews/fable-5-cold-review.md`](./reviews/fable-5-cold-review.md) — Frozen, verbatim cold review by Claude Fable 5, 2026-07-07. First pass, unedited; 13 findings against the framework's own "computed, never asserted" standard. sha256 companion: [`reviews/fable-5-cold-review.md.sha256`](./reviews/fable-5-cold-review.md.sha256). Rendered with operator annotations at [`docs/fable5-cold-review-structural-mistrust.html`](./docs/fable5-cold-review-structural-mistrust.html).
+
 ## Architecture diagram
 
 ![Deltascanner agent fleet — five-layer architecture](./architecture/fleet-diagram.svg)
