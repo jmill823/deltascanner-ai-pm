@@ -6,11 +6,11 @@
 <title>Structural Mistrust — an eval framework</title>
 <meta property="og:type" content="article">
 <meta property="og:title" content="Structural Mistrust — an eval framework">
-<meta property="og:description" content="The eval discipline behind a live 8-agent system: four failure classes, two tracks, one operator loop, and a freeze line that moves as outcomes earn trust.">
+<meta property="og:description" content="The eval discipline behind a live 8-agent system: five failure classes, two tracks, one operator loop, and a freeze line that moves as outcomes earn trust.">
 <meta property="og:image" content="https://jmill823.github.io/deltascanner-ai-pm/og-structural-mistrust.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Structural Mistrust — an eval framework">
-<meta name="twitter:description" content="The eval discipline behind a live 8-agent system: four failure classes, two tracks, one operator loop, and a freeze line that moves as outcomes earn trust.">
+<meta name="twitter:description" content="The eval discipline behind a live 8-agent system: five failure classes, two tracks, one operator loop, and a freeze line that moves as outcomes earn trust.">
 <meta name="twitter:image" content="https://jmill823.github.io/deltascanner-ai-pm/og-structural-mistrust.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,7 +135,7 @@
     <h1>Structural Mistrust</h1>
     <p class="lede">I build trustworthy surfaces through one discipline: structural mistrust. Nothing freezes as settled until it survives disagreement, and the trust that produces is meant to be verified over time — <em>earned, not asserted</em>.</p>
     <div class="chips">
-      <span class="chip">four classes · two tracks · one operator loop</span>
+      <span class="chip">five classes · two tracks · one operator loop</span>
       <span class="chip">first person · numbers earn their place</span>
       <span class="chip warn">outcome loop: instrumented, not yet running</span>
     </div>
@@ -169,7 +169,7 @@
         <path d="M392 69 L442 69" stroke="#5aa7d6" stroke-width="1.5" marker-end="url(#ol-b)"/>
         <rect x="444" y="40" width="190" height="58" rx="7" fill="#5aa7d6"/>
         <text x="539" y="65" font-size="12.5" text-anchor="middle" fill="#08222f" font-weight="600">Guard at runtime</text>
-        <text x="539" y="82" font-size="10.5" text-anchor="middle" fill="#0c3a4d">the four classes</text>
+        <text x="539" y="82" font-size="10.5" text-anchor="middle" fill="#0c3a4d">the five classes</text>
 
         <path d="M539 100 L539 150" stroke="#5aa7d6" stroke-width="1.5" marker-end="url(#ol-b)"/>
 
@@ -263,9 +263,29 @@
     <p class="pull">This is the floor. A forgotten why becomes a skipped step, becomes a fragile path, becomes an overclaim the user feels. Defended here, none of it starts.</p>
   </section>
 
-  <!-- ============ FIG 2 + 06 · COUPLING ============ -->
+  <!-- ============ 06 · CLASS 5 ============ -->
   <section style="--qc:var(--machine)">
-    <div class="sec-no">06 · coupling</div>
+    <div class="sec-no">06 · class 5</div>
+    <span class="ctag">false verification</span>
+    <h2>False verification</h2>
+    <div class="prose">
+      <p><span class="lbl">What.</span> &nbsp;Gates that pass by construction. The check was never valid, so nothing decayed — it passed on day one and every day after, measuring nothing the whole time. The other four classes defend a state that was once correct. This one never had one.</p>
+    </div>
+    <p class="lbl" style="margin-bottom:2px">How.</p>
+    <ul class="how">
+      <li><strong>Every gate must be able to fail</strong> — a check that cannot produce a red is not a check; a passing suite that ran zero tests is the canonical case.</li>
+      <li><strong>Gates assert properties across systems, not within them</strong> — a test that verifies a definition against itself is tautological by construction; the durable fix is an invariant that real behavior could violate.</li>
+    </ul>
+    <p class="lbl" style="margin-bottom:2px">Receipts.</p>
+    <div class="prose">
+      <p>Three rows from the catch ledger: a banding test that verified its own definition (<span class="rn">REC-002</span>), a suite reporting 24/24 green with zero tests run (<span class="rn">REC-003</span>), a scan reading clean while misfiring on 88% of its targets (<span class="rn">REC-004</span>).</p>
+    </div>
+    <p class="pull">The other four classes are caught by looking harder at the thing being checked. This one is only caught by turning around and checking the check. Three of five — derived in a cold review of this framework, from its own ledger, and adopted 2026-07-09.</p>
+  </section>
+
+  <!-- ============ FIG 2 + 07 · COUPLING ============ -->
+  <section style="--qc:var(--machine)">
+    <div class="sec-no">07 · coupling</div>
     <h2>A system fails two ways — it can overclaim or it can erode.</h2>
 
     <div class="fig">
@@ -310,9 +330,9 @@
     </div>
   </section>
 
-  <!-- ============ 07 · THE ENGINE ============ -->
+  <!-- ============ 08 · THE ENGINE ============ -->
   <section style="--qc:var(--machine)">
-    <div class="sec-no">07 · the engine</div>
+    <div class="sec-no">08 · the engine</div>
     <h2>The judgment has to be authored well enough to freeze.</h2>
     <div class="prose">
       <p>Before any of this guards a live surface, that authoring is design-time work. For decisions that come down to a pick from a short list, I run the same authoring decision across multiple model runs and count how often the answer forks; where the runs split is where judgment is load-bearing and a human should look before freezing. The freeze line itself is set by three readings — blast radius, trust, and cost to reopen — and it moves: as outcomes earn trust, a frozen decision defrosts back to the live model.</p>
@@ -342,9 +362,9 @@
     </div>
   </section>
 
-  <!-- ============ 08 · RECEIPTS ============ -->
+  <!-- ============ 09 · RECEIPTS ============ -->
   <section style="--qc:var(--trust)">
-    <div class="sec-no">08 · receipts</div>
+    <div class="sec-no">09 · receipts</div>
     <h2>The bar is strict.</h2>
     <div class="prose">
       <p>A check fired on a real error that would have shipped — provably wrong, with real blast radius. Four caught before ship:</p>
@@ -385,21 +405,21 @@
     <p class="note"><b>Exposure, named exactly.</b> A defect is graded by where it landed: <b>caught before ship</b> · <b>shipped, then caught</b> · <b>shipped, and it changed a real decision</b>. Every entry above sits in the first tier. The second tier is empty — and that can't be read as strength, because this ledger records catches, not escapes: a defect that shipped unseen appears nowhere, so the catch count has no denominator. It measures activity, not coverage. The standing rule: an escape gets appended the day it's found, marked <i>shipped-then-caught</i> — the empty tier is a claim this ledger can now lose.</p>
   </section>
 
-  <!-- ============ 09 · HONEST LIMITS ============ -->
+  <!-- ============ 10 · HONEST LIMITS ============ -->
   <section style="--qc:var(--human)">
-    <div class="sec-no">09 · honest limits</div>
+    <div class="sec-no">10 · honest limits</div>
     <h2>Built and defensible — but not yet validated by outcomes.</h2>
     <div class="prose">
       <p>The over-time reconciliation is instrumented but hasn't accumulated enough reality to score against. So three parts — the <span class="hu">outcome loop</span>, <span class="hu">Class 4's automated seeing</span>, and the <span class="hu">freeze line's defrost</span> — are designed, not yet claimed as running.</p>
     </div>
   </section>
 
-  <!-- ============ 10 · CLOSE ============ -->
+  <!-- ============ 11 · CLOSE ============ -->
   <section style="--qc:var(--machine);border-bottom:none">
-    <div class="sec-no">10 · close</div>
+    <div class="sec-no">11 · close</div>
     <h2>What's new isn't the parts.</h2>
     <div class="prose">
-      <p>Goodhart, error budgets, immutable logs are all borrowed. It's the stack: four classes, two tracks, and a freeze line that moves on outcomes, knitted into one operator loop, with room for a fifth class when one proves out.</p>
+      <p>Goodhart, error budgets, immutable logs are all borrowed. It's the stack: five classes, two tracks, and a freeze line that moves on outcomes, knitted into one operator loop — the fifth slotted in when false verification proved load-bearing, and the same bar stays open for a sixth.</p>
       <p class="pull" style="border-color:var(--trust)">The claim is small and exact: not that the system is correct, but that it's honest about what it knows — and instrumented to stay honest over time.</p>
     </div>
   </section>
