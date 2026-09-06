@@ -2,7 +2,7 @@
 
 A model upgrade broke my agent system last week. The fix was a file I'd never thought to write — an [Operator Profile](../examples/operator-profile.md) encoding how I work, model-agnostic, ported across the fleet. The layer didn't appear in any architecture diagram I'd seen. That's the case study. **The architecture wasn't designed; it was discovered through operating.**
 
-I'm a non-technical solo founder. I do not write build code. The agents write, build, deploy, and surface work for review. I approve, reject, or defer at scheduled gates. Between gates, my inbox is empty by design. That's not a workflow choice — it's a structural property the system is engineered to maintain. Every layer in the stack exists because something specific broke and I encoded the fix.
+I'm a non-technical sole builder and operator; this is an independent, non-commercial system. I do not write build code. The agents write, build, deploy, and surface work for review. I approve, reject, or defer at scheduled gates. Between gates, my inbox is empty by design. That's not a workflow choice — it's a structural property the system is engineered to maintain. Every layer in the stack exists because something specific broke and I encoded the fix.
 
 ## The architecture, top-down
 

@@ -131,7 +131,7 @@ The through-line is: **I treat agents as I would treat a junior engineer whose m
 
 ## Background context
 
-I'm Jeff Millett — non-technical solo founder operating Deltascanner (an 8-agent fleet on Claude scoring ~223,000 property parcels across 13 US markets for distressed property intelligence), building Tilt, and other fun tools, while conducting a structured AI-PM job search. Prior: product leadership at Deepblocks (B2B SaaS PropTech, B2C-to-B2B pivot, scaled 0 to 100+ clients in 10 months). M.Arch from Columbia. Computational art practice that informs my systems-thinking discipline.
+I'm Jeff Millett — non-technical sole builder and operator of Deltascanner, an independent, non-commercial system (an 8-agent fleet on Claude scoring ~223,000 property parcels across 13 US markets in a spring 2026 scoring run, for distressed property intelligence), building Tilt, and other fun tools, while conducting a structured AI-PM job search. Prior: product leadership at Deepblocks (B2B SaaS PropTech, B2C-to-B2B pivot, scaled 0 to 100+ clients in 10 months). M.Arch from Columbia. Computational art practice that informs my systems-thinking discipline.
 
 The "Agent Operator" positioning is the actual work I do daily — running agents through structural problems, catching their drift before it compounds, producing artifacts that survive context windows.
 
