@@ -1,6 +1,6 @@
 # AI-PM proof, in 3 minutes
 
-I'm a non-technical, AI-native PM — former Head of Product / COO at Deepblocks (0→100+ B2B clients). What follows is solo-built, self-operated, and non-commercial. Five lines, each linked to the proof.
+I'm a non-technical, AI-native PM — former Head of Product / COO at Deepblocks (0→100+ clients). What follows is solo-built, self-operated, and non-commercial. Five lines, each linked to the proof.
 
 1. **I operate a multi-agent system.** An 8-agent fleet on Claude that authors and validates a deterministic decision engine — live docket monitoring across multiple Florida counties, hand-verified weekly, thousands of property parcels under watch. → [Deltascanner](https://deltascanner.com)
 2. **The failure I kept hitting:** AI systems overclaim and drift — a confident, fluent answer instead of "I don't know," and behavior that drifts silently when the model changes, no error thrown.
